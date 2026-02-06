@@ -5,19 +5,19 @@ import { Button } from "@/components/ui/button";
 const reviews = [
   {
     id: 1,
-    name: "Ayobami",
-    role: "09 February",
+    name: "Ahmed Al Balushi",
+    role: "Local Musician",
     rating: 5,
-    text: "It is really stable in the weather, and what a logic area it keeps you for experience. We love the fact that you can easily switch up fashion. We had the first time brand with exactly what I wanted.",
-    avatar: "https://placehold.co/40x40",
+    text: "Talentz is my go-to shop for all my musical needs in Oman. I recently bought a Roland synthesizer, and the service was exceptional. The staff really knows their gear!",
+    avatar: "https://i.pravatar.cc/150?u=ahmed",
   },
   {
     id: 2,
-    name: "Jimmy",
-    role: "09 February",
+    name: "Sarah Williams",
+    role: "Event Planner",
     rating: 5,
-    text: "I've been using this brand daily for a month, and it stands across. My outfit has never felt so powerful! Everyone asks me where I get my fresh items!",
-    avatar: "https://placehold.co/40x40",
+    text: "We hired Talentz for our corporate event's sound and lighting. The production quality was world-class, and their team was professional throughout. Highly recommended for event production!",
+    avatar: "https://i.pravatar.cc/150?u=sarah",
   },
 ];
 

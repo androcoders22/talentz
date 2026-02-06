@@ -7,64 +7,65 @@ export function Features() {
         {/* Card 1 */}
         <div className="bg-[#fef3eb] p-6 rounded-[1.5rem] flex flex-col justify-between min-h-[220px]">
           <div>
-            <h3 className="text-xl font-bold mb-2">100% Authentic Product</h3>
+            <h3 className="text-xl font-bold mb-2">100% Original Products</h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Prominently display a clear "100% Authentic Guarantee"
+              We guarantee 100% authentic gear from world-renowned brands.
             </p>
           </div>
           <Button
             variant="outline"
             className="rounded-full px-4 py-1.5 w-fit bg-white hover:bg-muted text-[10px] text-foreground border-muted-foreground/10 self-end mt-2 h-auto"
           >
-            See More
+            Our Brands
           </Button>
         </div>
 
         {/* Card 2 */}
         <div className="bg-muted/20 p-6 rounded-[1.5rem] flex flex-col justify-between min-h-[220px]">
           <div>
-            <h3 className="text-xl font-bold mb-2">Free & Easy Return</h3>
+            <h3 className="text-xl font-bold mb-2">Professional Support</h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Provide customers with prepaid return labels hassle-free.
+              Expert technicians available for all your service and repair
+              needs.
             </p>
           </div>
           <Button
             variant="outline"
             className="rounded-full px-4 py-1.5 w-fit bg-white hover:bg-muted text-[10px] text-foreground border-muted-foreground/10 self-end mt-2 h-auto"
           >
-            See More
+            Get Help
           </Button>
         </div>
 
         {/* Card 3 */}
         <div className="bg-muted/20 p-6 rounded-[1.5rem] flex flex-col justify-between min-h-[220px]">
           <div>
-            <h3 className="text-xl font-bold mb-2">Safe Payments</h3>
+            <h3 className="text-xl font-bold mb-2">Oman-wide Delivery</h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Use fraud detection tools to identify suspicious activity.
+              Fast and secure shipping across the Sultanate of Oman.
             </p>
           </div>
           <Button
             variant="outline"
             className="rounded-full px-4 py-1.5 w-fit bg-white hover:bg-muted text-[10px] text-foreground border-muted-foreground/10 self-end mt-2 h-auto"
           >
-            See More
+            Shipping Info
           </Button>
         </div>
 
-        {/* Card 4 - Summer Cloth */}
-        <div className="relative group overflow-hidden rounded-[1.5rem] min-h-[220px]">
+        {/* Card 4 - Music Institute */}
+        <div className="relative group overflow-hidden rounded-[1.5rem] min-h-[220px] bg-slate-900">
           <img
-            src="https://placehold.co/600x600"
-            alt="Summer Cloth"
-            className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-110"
+            src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&h=600&fit=crop"
+            alt="Music Institute"
+            className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-110 opacity-60"
           />
-          <div className="absolute inset-0 bg-black/5" />
+          <div className="absolute inset-0 bg-black/10" />
           <div className="absolute inset-x-6 bottom-6">
             <h3 className="text-2xl font-bold text-white leading-tight">
-              Summer
+              Music
               <br />
-              Cloth
+              Institute
             </h3>
           </div>
         </div>

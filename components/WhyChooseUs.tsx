@@ -21,62 +21,67 @@ export function WhyChooseUs() {
 
         <div className="p-8 lg:p-10 bg-white border border-muted rounded-[1.5rem] flex flex-col justify-center">
           <h2 className="text-4xl font-bold mb-4 tracking-tight">
-            Why Choose Us
+            Why Talentz?
           </h2>
           <p className="text-xs text-muted-foreground mb-6 leading-relaxed max-w-md">
-            We pride ourselves on offering products that meet the highest
-            standards of quality. Each item is carefully selected and crafted.
+            Since 2002, Talentz has been Oman's premier destination for
+            professional audio, video, lighting, and musical instruments. We
+            combine expertise with passion to deliver excellence.
           </p>
 
           <Accordion className="w-full">
             <AccordionItem value="item-1" className="border-b py-1">
               <AccordionTrigger className="text-base font-medium hover:no-underline py-2">
-                Unrivaled Quality
+                20+ Years of Excellence
               </AccordionTrigger>
               <AccordionContent className="text-xs text-muted-foreground pb-2">
-                Our products are made with the highest quality materials and
-                craftsmanship.
+                Established in 2002, we have over two decades of experience
+                serving the Omani market with top-tier AV solutions.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2" className="border-b py-1">
               <AccordionTrigger className="text-base font-medium hover:no-underline py-2">
-                Sustains bullous
+                Official Brand Distribution
               </AccordionTrigger>
               <AccordionContent className="text-xs text-muted-foreground pb-2">
-                We focus on sustainability and durability in every piece we
-                offer.
+                We are official distributors for world-renowned brands like
+                Roland, Boss, Kawai, Sennheiser, and more.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3" className="border-b py-1">
               <AccordionTrigger className="text-base font-medium hover:no-underline py-2">
-                Unrivaled Variety
+                Certified Service Center
               </AccordionTrigger>
-              <AccordionContent className="text-xs text-muted-foreground pb-2 italic">
-                We believe in offering great value
+              <AccordionContent className="text-xs text-muted-foreground pb-2">
+                Our workshop provides professional repairs for audio gear,
+                lighting, LED screens, and musical instruments.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4" className="border-b py-1">
               <AccordionTrigger className="text-base font-medium hover:no-underline py-2">
-                Legacy Of Excellence
+                Event Production Experts
               </AccordionTrigger>
               <AccordionContent className="text-xs text-muted-foreground pb-2">
-                Over 10 years of providing top-notch services to our clients.
+                From intimate gatherings to large-scale productions, we provide
+                complete sound, lighting, and staging solutions.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-5" className="border-b py-1">
               <AccordionTrigger className="text-base font-medium hover:no-underline py-2">
-                Eco-Friendly Mining
+                Quality Music Education
               </AccordionTrigger>
               <AccordionContent className="text-xs text-muted-foreground pb-2">
-                We use sustainable mining practices to protect our environment.
+                Talentz Music Institute follows ABRSM & Trinity curriculum,
+                offering affordable and high-quality lessons.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-6" className="border-b py-1">
               <AccordionTrigger className="text-base font-medium hover:no-underline py-2">
-                Global Shipping
+                Muscat Based Showroom
               </AccordionTrigger>
               <AccordionContent className="text-xs text-muted-foreground pb-2">
-                Fast and reliable shipping to over 50 countries worldwide.
+                Visit our showroom in downtown Muscat to experience our products
+                firsthand or shop online for home delivery.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

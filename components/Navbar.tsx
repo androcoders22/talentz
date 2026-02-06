@@ -9,36 +9,30 @@ export function Navbar() {
     <header className="sticky top-6 z-50 flex justify-center px-4">
       <nav className="container mx-auto flex h-16 items-center justify-between rounded-full border bg-background/60 px-8 py-2 shadow-sm backdrop-blur-md">
         <div className="flex items-center gap-8">
-          <Link href="/" className="text-2xl font-bold tracking-tighter">
-            Meher
+          <Link
+            href="/"
+            className="text-2xl font-bold tracking-tighter text-primary font-serif"
+          >
+            Talentz
           </Link>
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
-            <Link href="/" className="hover:text-foreground transition-colors">
+          <div className="hidden lg:flex items-center gap-6 text-sm font-medium text-muted-foreground">
+            <Link href="/" className="hover:text-primary transition-colors">
               Home
             </Link>
-            <Link
-              href="/shop"
-              className="hover:text-foreground transition-colors"
-            >
-              Products
+            <Link href="#" className="hover:text-primary transition-colors">
+              Shop
             </Link>
-            <Link
-              href="/about"
-              className="hover:text-foreground transition-colors"
-            >
-              About Us
+            <Link href="#" className="hover:text-primary transition-colors">
+              Events
             </Link>
-            <Link
-              href="/contact"
-              className="hover:text-foreground transition-colors"
-            >
-              Contact
+            <Link href="#" className="hover:text-primary transition-colors">
+              Institute
             </Link>
-            <Link
-              href="/blog"
-              className="hover:text-foreground transition-colors"
-            >
-              Blog
+            <Link href="#" className="hover:text-primary transition-colors">
+              Services
+            </Link>
+            <Link href="#" className="hover:text-primary transition-colors">
+              About
             </Link>
           </div>
         </div>

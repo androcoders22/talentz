@@ -8,31 +8,35 @@ import {
 const products = [
   {
     id: 1,
-    name: "Summer griles dress",
-    price: "$150",
-    rating: 3.4,
-    image: "https://placehold.co/400x500",
+    name: "Roland TD-17KVX2 V-Drums",
+    price: "OMR 645",
+    rating: 4.9,
+    image:
+      "https://img.freepik.com/free-photo/man-plays-acoustic-guitar-closeup_169016-20618.jpg",
   },
   {
     id: 2,
-    name: "Summer Cloth",
-    price: "$120",
-    rating: 3.2,
-    image: "https://placehold.co/400x600",
+    name: "Ibanez JEM7V Steve Vai",
+    price: "OMR 890",
+    rating: 5.0,
+    image:
+      "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?w=400&h=600&fit=crop",
   },
   {
     id: 3,
-    name: "Water Bottle",
-    price: "$67",
-    rating: 4.2,
-    image: "https://placehold.co/400x500",
+    name: "Yamaha C40 Classical",
+    price: "OMR 55",
+    rating: 4.7,
+    image:
+      "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400&h=500&fit=crop",
   },
   {
     id: 4,
-    name: "Cap",
-    price: "$67",
-    rating: 4.2,
-    image: "https://placehold.co/400x400",
+    name: "Sennheiser EW-D wireless",
+    price: "OMR 245",
+    rating: 4.8,
+    image:
+      "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=400&h=400&fit=crop",
   },
 ];
 
@@ -41,23 +45,23 @@ export function TopSelling() {
     <section className="container mx-auto px-4 py-8 border-t border-muted">
       <div className="flex flex-col md:flex-row justify-between items-start mb-8 gap-8">
         <div className="max-w-xl">
-          <Badge className="mb-4">See More product</Badge>
+          <Badge className="mb-4">Official Distributor</Badge>
           <h2 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight text-foreground">
-            Top-Selling Product
+            Top-Selling Gear
             <br />
-            of the year Collection
+            of the Year Collection
           </h2>
         </div>
         <div className="max-w-xs md:text-left mt-4 md:mt-10">
           <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-            We do not divide our collections to seasons we create new models
-            every week.
+            Discover our most popular musical instruments and professional audio
+            equipment trusted by artists across Oman.
           </p>
           <Button
             variant="outline"
             className="rounded-full px-6 py-4 h-auto text-xs font-medium hover:bg-foreground hover:text-background transition-colors"
           >
-            Shop Now
+            Explore All
           </Button>
         </div>
       </div>

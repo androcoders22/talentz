@@ -1,50 +1,37 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-
 const products = [
   {
     id: 1,
-    name: "Winter cloth collection",
-    price: "$325.00",
-    rating: 4,
-    image: "https://placehold.co/400x400",
+    name: "Roland Fantom-08 Synthesizer",
+    price: "OMR 845.000",
+    rating: 5,
+    image:
+      "https://images.unsplash.com/photo-1593106410288-caf65eca7c9d?w=400&h=400&fit=crop",
   },
   {
     id: 2,
-    name: "One oil water fabric",
-    price: "$230.00",
-    rating: 4,
-    image: "https://placehold.co/400x400",
+    name: "Sennheiser MD 421-II",
+    price: "OMR 155.000",
+    rating: 5,
+    image:
+      "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=400&h=400&fit=crop",
   },
   {
     id: 3,
-    name: "Handphone collection",
-    price: "$145.00",
-    rating: 4,
-    image: "https://placehold.co/400x400",
+    name: "Kawai KDP120 Digital Piano",
+    price: "OMR 425.000",
+    rating: 5,
+    image:
+      "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=400&h=400&fit=crop",
   },
   {
     id: 4,
-    name: "New shoes",
-    price: "$359.00",
-    rating: 4,
-    image: "https://placehold.co/400x400",
-  },
-  {
-    id: 5,
-    name: "Fashionable women bag",
-    price: "$740.00",
-    rating: 4,
-    image: "https://placehold.co/400x400",
-  },
-  {
-    id: 6,
-    name: "Luxury table lamp",
-    price: "$210.00",
-    rating: 4,
-    image: "https://placehold.co/400x400",
+    name: "Yamaha HS5 Studio Monitor",
+    price: "OMR 120.000",
+    rating: 5,
+    image:
+      "https://images.unsplash.com/photo-1545048702-79362596cdc9?w=400&h=400&fit=crop",
   },
 ];
 
@@ -54,12 +41,12 @@ export function ProductGrid() {
       <div className="mb-8">
         <div className="flex flex-col md:flex-row justify-between items-end mb-6 gap-4">
           <div>
-            <h2 className="text-3xl font-bold">Our All Products</h2>
+            <h2 className="text-3xl font-bold">Featured Equipment</h2>
           </div>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {products.slice(0, 4).map((product) => (
+          {products.map((product) => (
             <div key={product.id} className="group">
               <div className="aspect-square bg-muted/40 rounded-2xl overflow-hidden mb-3 relative">
                 <img
