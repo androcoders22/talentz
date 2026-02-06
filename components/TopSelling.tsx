@@ -38,7 +38,7 @@ const products = [
 
 export function TopSelling() {
   return (
-    <section className="container mx-auto px-4 py-16 border-t border-muted">
+    <section className="container mx-auto px-4 py-8 border-t border-muted">
       <div className="flex flex-col md:flex-row justify-between items-start mb-8 gap-8">
         <div className="max-w-xl">
           <Badge className="mb-4">See More product</Badge>
@@ -88,7 +88,7 @@ export function TopSelling() {
               key={product.id}
               className="group cursor-pointer flex flex-col justify-end"
             >
-              <div className="relative overflow-hidden rounded-[2.5rem] bg-muted mb-4 h-[300px] transition-all duration-500 ease-in-out group-hover:h-[400px]">
+              <div className="relative overflow-hidden rounded-[2.5rem] bg-muted mb-4 h-[300px] transition-all duration-1000 ease-in-out group-hover:h-[400px]">
                 <img
                   src={product.image}
                   alt={product.name}

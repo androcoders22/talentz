@@ -19,9 +19,9 @@ export default function Home() {
         <Features />
         <LatherBagCollection />
         <ProductGrid />
-        <Testimonials />
+        {/* <Testimonials /> */}
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

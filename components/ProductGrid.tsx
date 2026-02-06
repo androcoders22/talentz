@@ -50,85 +50,44 @@ const products = [
 
 export function ProductGrid() {
   return (
-    <section className="container mx-auto px-4 py-20">
-      <div className="mb-12">
-        <h2 className="text-4xl font-bold mb-4">Our All Products</h2>
-        <p className="text-muted-foreground mb-8">
-          Exclusive collections and trending items for you.
-        </p>
+    <section className="container mx-auto px-4 pt-4 pb-12">
+      <div className="mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-6 gap-4">
+          <div>
+            <h2 className="text-3xl font-bold">Our All Products</h2>
+          </div>
+        </div>
 
-        <Tabs defaultValue="shoes" className="w-full">
-          <TabsList className="bg-transparent border gap-2 p-1 rounded-full mb-12">
-            <TabsTrigger
-              value="shoes"
-              className="rounded-full data-[state=active]:bg-foreground data-[state=active]:text-background"
-            >
-              Shoes
-            </TabsTrigger>
-            <TabsTrigger
-              value="clothing"
-              className="rounded-full data-[state=active]:bg-foreground data-[state=active]:text-background"
-            >
-              Clothing
-            </TabsTrigger>
-            <TabsTrigger
-              value="accessories"
-              className="rounded-full data-[state=active]:bg-foreground data-[state=active]:text-background"
-            >
-              Accessories
-            </TabsTrigger>
-            <TabsTrigger
-              value="jewelry"
-              className="rounded-full data-[state=active]:bg-foreground data-[state=active]:text-background"
-            >
-              Jewelry
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="shoes">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {products.map((product) => (
-                <div key={product.id} className="group">
-                  <div className="aspect-square bg-muted/50 rounded-3xl overflow-hidden mb-4 relative">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-lg">{product.name}</h3>
-                    <p className="font-bold">{product.price}</p>
-                  </div>
-                  <div className="flex text-yellow-400 text-sm">
-                    {"★".repeat(product.rating)}
-                    <span className="text-xs ml-2 text-muted-foreground hover:text-foreground cursor-pointer">
-                      View Details
-                    </span>
-                  </div>
-                </div>
-              ))}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {products.slice(0, 4).map((product) => (
+            <div key={product.id} className="group">
+              <div className="aspect-square bg-muted/40 rounded-2xl overflow-hidden mb-3 relative">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="flex justify-between items-center mb-1">
+                <h3 className="font-semibold text-sm truncate mr-2">
+                  {product.name}
+                </h3>
+                <p className="font-bold text-sm whitespace-nowrap">
+                  {product.price}
+                </p>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="text-yellow-400 text-[10px]">★</span>
+                <span className="text-[10px] text-muted-foreground mr-auto">
+                  ({product.rating})
+                </span>
+                <span className="text-[10px] text-muted-foreground hover:text-foreground cursor-pointer underline underline-offset-2">
+                  Details
+                </span>
+              </div>
             </div>
-          </TabsContent>
-          <TabsContent
-            value="clothing"
-            className="py-20 text-center text-muted-foreground"
-          >
-            Browse our clothing collection (coming soon)
-          </TabsContent>
-          <TabsContent
-            value="accessories"
-            className="py-20 text-center text-muted-foreground"
-          >
-            Browse our accessories collection (coming soon)
-          </TabsContent>
-          <TabsContent
-            value="jewelry"
-            className="py-20 text-center text-muted-foreground"
-          >
-            Browse our jewelry collection (coming soon)
-          </TabsContent>
-        </Tabs>
+          ))}
+        </div>
       </div>
     </section>
   );
