@@ -53,27 +53,42 @@ export function Footer() {
             </h4>
             <ul className="space-y-4 text-sm text-gray-400">
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link
+                  href="/shop"
+                  className="hover:text-primary transition-colors"
+                >
                   Guitars & Bass
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link
+                  href="/shop"
+                  className="hover:text-primary transition-colors"
+                >
                   Keyboards & Pianos
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link
+                  href="/shop"
+                  className="hover:text-primary transition-colors"
+                >
                   Studio & Recording
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link
+                  href="/shop"
+                  className="hover:text-primary transition-colors"
+                >
                   Drums & Percussion
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link
+                  href="/shop"
+                  className="hover:text-primary transition-colors"
+                >
                   Microphones & Audio
                 </Link>
               </li>
