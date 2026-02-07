@@ -21,10 +21,10 @@ export default function ServicesPage() {
           transition={{ duration: 0.5 }}
           className="text-center max-w-4xl mx-auto mb-12"
         >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
             Service & <span className="text-primary">Repairs</span>
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
             Keep your gear in top working condition. Expert repairs for musical
             instruments and professional audio equipment in Oman.
           </p>

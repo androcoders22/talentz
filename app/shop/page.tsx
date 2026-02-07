@@ -7,7 +7,7 @@ export default function ShopPage() {
   return (
     <>
       {/* Shop Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -15,7 +15,7 @@ export default function ShopPage() {
             transition={{ duration: 0.2 }}
             className="max-w-3xl"
           >
-            <h1 className="text-5xl md:text-7xl font-light tracking-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-light tracking-tight mb-6 leading-[1.1]">
               Musical Instruments
               <br />
               <span className="font-bold text-primary">& Pro Audio</span> Shop

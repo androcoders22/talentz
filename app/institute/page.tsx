@@ -20,10 +20,10 @@ export default function InstitutePage() {
           transition={{ duration: 0.5 }}
           className="text-center max-w-4xl mx-auto mb-12"
         >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
             Talentz <span className="text-primary">Music Institute</span>
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
             An innovative learning center for music and creativity in Muscat,
             Oman. Welcoming students since April 2002.
           </p>
@@ -152,12 +152,12 @@ export default function InstitutePage() {
       {/* Guitar Options */}
       <section className="container mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold mb-8">Guitar Lesson Options</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { type: "Classical", desc: "Nylon string, classical repertoire" },
-            { type: "Acoustic", desc: "Steel string, pop & folk music" },
-            { type: "Electric", desc: "Rock, metal, and contemporary" },
-            { type: "Bass", desc: "Electric bass fundamentals" },
+            { type: "Classical", desc: "Nylon string" },
+            { type: "Acoustic", desc: "Steel string" },
+            { type: "Electric", desc: "Rock & Metal" },
+            { type: "Bass", desc: "Fundamentals" },
           ].map((guitar, index) => (
             <motion.div
               key={guitar.type}

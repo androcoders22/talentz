@@ -15,10 +15,10 @@ export default function EventProductionPage() {
           transition={{ duration: 0.5 }}
           className="text-center max-w-4xl mx-auto mb-12"
         >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
             World-Class <span className="text-primary">Event Production</span>
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
             Oman's leading partner for events and entertainment production
             solutions. Sound, Light, LED screens, staging and more for events of
             all sizes.
