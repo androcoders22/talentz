@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { IconArrowRight } from "@tabler/icons-react";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -12,44 +13,18 @@ export function Hero() {
           <span className="font-bold text-primary">Music & Event</span> Partner
           <br />
           since 2002{" "}
-          <IconArrowRight className="inline-block h-12 w-12 ml-2 text-primary" />
+          <IconArrowRight className="inline-block h-16 w-16 ml-2 text-primary" />
         </h1>
-
-        <div className="flex flex-col items-center md:items-end gap-2">
-          <div className="flex -space-x-3 overflow-hidden">
-            <img
-              className="inline-block h-10 w-10 rounded-full ring-2 ring-background object-cover"
-              src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&h=100&fit=crop"
-              alt="User"
-            />
-            <img
-              className="inline-block h-10 w-10 rounded-full ring-2 ring-background object-cover"
-              src="https://images.unsplash.com/photo-1514525253361-bee8a487400e?w=100&h=100&fit=crop"
-              alt="User"
-            />
-            <img
-              className="inline-block h-10 w-10 rounded-full ring-2 ring-background object-cover"
-              src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=100&h=100&fit=crop"
-              alt="User"
-            />
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-xs font-medium ring-2 ring-background">
-              +
-            </div>
-          </div>
-          <div className="text-center md:text-right">
-            <p className="text-sm font-bold">20+ Years</p>
-            <p className="text-xs text-muted-foreground">
-              Of Excellence in Oman
-            </p>
-          </div>
-        </div>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[400px]">
         {/* Event Production */}
-        <div className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-4 flex-1 min-h-[300px] md:min-h-0">
+        <Link
+          href="/event-production"
+          className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-4 flex-1 min-h-[300px] md:min-h-0 block"
+        >
           <img
-            src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800&q=80"
+            src="/production-hero.jpg"
             alt="Event Production"
             className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-105 opacity-60"
           />
@@ -58,9 +33,9 @@ export function Hero() {
             <Button
               variant="secondary"
               size="icon"
-              className="rounded-full bg-white/20 backdrop-blur border-none hover:bg-white/40 text-white"
+              className="h-16 w-16 rounded-full bg-white/20 backdrop-blur border-none hover:bg-white/40 text-white pointer-events-none"
             >
-              <IconArrowRight className="h-4 w-4" />
+              <IconArrowRight className="h-8 w-8 transition-transform duration-300 group-hover:-rotate-45" />
             </Button>
           </div>
           <div className="absolute bottom-6 left-6 right-6">
@@ -68,17 +43,20 @@ export function Hero() {
               Event Production
             </h3>
             <p className="text-white/80 text-sm">
-              Rentals to make your events a reality: Sound, Light, LED screens
-              and more!
+              World-class event production resources. Sound, Light, LED screens,
+              tents, staging and more for events of all sizes.
             </p>
           </div>
-        </div>
+        </Link>
 
         {/* Music Institute Oman */}
-        <div className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-[300px] md:min-h-0">
+        <Link
+          href="/institute"
+          className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-[300px] md:min-h-0 block"
+        >
           <img
-            src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800&q=80"
-            alt="Music Institute Oman"
+            src="/DJ-hero.jpg"
+            alt="Talentz Music Institute (TMI)"
             className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-105 opacity-60"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent" />
@@ -86,26 +64,29 @@ export function Hero() {
             <Button
               variant="secondary"
               size="icon"
-              className="rounded-full bg-white/20 backdrop-blur border-none hover:bg-white/40 text-white"
+              className="h-16 w-16 rounded-full bg-white/20 backdrop-blur border-none hover:bg-white/40 text-white pointer-events-none"
             >
-              <IconArrowRight className="h-4 w-4" />
+              <IconArrowRight className="transition-transform duration-300 group-hover:-rotate-45" />
             </Button>
           </div>
           <div className="absolute bottom-6 left-6 right-6">
             <h3 className="text-2xl font-bold text-white mb-2">
-              Music Institute Oman
+              Talentz Music Institute
             </h3>
             <p className="text-white/80 text-sm">
-              Affordable quality music lessons following ABRSM & Trinity
-              curriculum.
+              Innovative music learning since 2002. Piano, Guitar, Violin, Drums
+              & more with ABRSM & RSL exam preparation.
             </p>
           </div>
-        </div>
+        </Link>
 
         {/* Service & Repairs */}
-        <div className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-[300px] md:min-h-0">
+        <Link
+          href="/services"
+          className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-[300px] md:min-h-0 block"
+        >
           <img
-            src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80"
+            src="/repair-hero.jpg"
             alt="Service & Repairs"
             className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-105 opacity-60"
           />
@@ -114,9 +95,9 @@ export function Hero() {
             <Button
               variant="secondary"
               size="icon"
-              className="rounded-full bg-white/20 backdrop-blur border-none hover:bg-white/40 text-white"
+              className="h-16 w-16 rounded-full bg-white/20 backdrop-blur border-none hover:bg-white/40 text-white pointer-events-none"
             >
-              <IconArrowRight className="h-4 w-4" />
+              <IconArrowRight className="h-8 w-8 transition-transform duration-300 group-hover:-rotate-45" />
             </Button>
           </div>
           <div className="absolute bottom-6 left-6 right-6">
@@ -124,11 +105,11 @@ export function Hero() {
               Service & Repairs
             </h3>
             <p className="text-white/80 text-sm">
-              Expert repairs of Professional Audio, Lighting gear, LED Screens
-              and instruments.
+              Expert repairs for Pro Audio, Lighting gear, LED Screens & musical
+              instruments. Guitar luthier with 30+ years experience.
             </p>
           </div>
-        </div>
+        </Link>
       </div>
     </section>
   );

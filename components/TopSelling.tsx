@@ -1,42 +1,31 @@
 import { Button } from "@/components/ui/button";
-import {
-  IconChevronLeft,
-  IconChevronRight,
-  IconArrowUpRight,
-} from "@tabler/icons-react";
+import Image from "next/image";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 const products = [
   {
     id: 1,
-    name: "Roland TD-17KVX2 V-Drums",
-    price: "OMR 645",
+    name: "Stellar TX-1940 Zoom",
     rating: 4.9,
-    image:
-      "https://img.freepik.com/free-photo/man-plays-acoustic-guitar-closeup_169016-20618.jpg",
+    image: "/steller-tx-1940-zoom.jpg",
   },
   {
     id: 2,
-    name: "Ibanez JEM7V Steve Vai",
-    price: "OMR 890",
+    name: "Avid S6L Console",
     rating: 5.0,
-    image:
-      "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?w=400&h=600&fit=crop",
+    image: "/avid-s6l.png",
   },
   {
     id: 3,
-    name: "Yamaha C40 Classical",
-    price: "OMR 55",
-    rating: 4.7,
-    image:
-      "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400&h=500&fit=crop",
+    name: "Sennheiser HD 1000",
+    rating: 4.8,
+    image: "/hz1000.jpeg",
   },
   {
     id: 4,
-    name: "Sennheiser EW-D wireless",
-    price: "OMR 245",
-    rating: 4.8,
-    image:
-      "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=400&h=400&fit=crop",
+    name: "GrandMA3 Lighting Console",
+    rating: 4.9,
+    image: "/grandMA3.png",
   },
 ];
 
@@ -92,11 +81,12 @@ export function TopSelling() {
               key={product.id}
               className="group cursor-pointer flex flex-col justify-end"
             >
-              <div className="relative overflow-hidden rounded-[2.5rem] bg-muted mb-4 h-[300px] transition-all duration-1000 ease-in-out group-hover:h-[400px]">
-                <img
+              <div className="relative overflow-hidden rounded-[2.5rem] bg-white mb-4 h-[300px] transition-all duration-1000 ease-in-out group-hover:h-[400px]">
+                <Image
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  fill
+                  className="object-contain transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
 
@@ -104,7 +94,9 @@ export function TopSelling() {
                 <h3 className="font-semibold text-base text-foreground truncate mr-2">
                   {product.name}
                 </h3>
-                <p className="font-bold text-base">{product.price}</p>
+                <p className="text-xs text-muted-foreground whitespace-nowrap">
+                  Search for details
+                </p>
               </div>
               <div className="flex items-center gap-1">
                 <span className="text-yellow-400 text-[10px]">★</span>

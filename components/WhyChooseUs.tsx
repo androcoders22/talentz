@@ -6,16 +6,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Image from "next/image";
 
 export function WhyChooseUs() {
   return (
     <section className="container mx-auto px-4 py-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch mx-auto">
         <div className="relative h-[300px] lg:h-auto">
-          <img
-            src="https://placehold.co/800x600"
+          <Image
+            src="/why-talentz.jpg"
+            width={800}
+            height={600}
             alt="Why Choose Us"
-            className="w-full h-full object-cover rounded-[1.5rem]"
+            className="w-full h-full object-cover rounded-[1.5rem] "
           />
         </div>
 
@@ -35,53 +38,58 @@ export function WhyChooseUs() {
                 20+ Years of Excellence
               </AccordionTrigger>
               <AccordionContent className="text-xs text-muted-foreground pb-2">
-                Established in 2002, we have over two decades of experience
-                serving the Omani market with top-tier AV solutions.
+                Since 2002, we have grown from a music instrument store to
+                become Oman's leading event production company and trusted
+                musical instrument retailer.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2" className="border-b py-1">
               <AccordionTrigger className="text-base font-medium hover:no-underline py-2">
-                Official Brand Distribution
+                Official Brand Distributors
               </AccordionTrigger>
               <AccordionContent className="text-xs text-muted-foreground pb-2">
-                We are official distributors for world-renowned brands like
-                Roland, Boss, Kawai, Sennheiser, and more.
+                Authorized dealers for Roland, Boss, Kawai, Sennheiser, Shure,
+                Ibanez, Tama, Adamson, Presonus, D'Addario, Taylor, Ortega and
+                many more global brands.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3" className="border-b py-1">
               <AccordionTrigger className="text-base font-medium hover:no-underline py-2">
-                Certified Service Center
+                World-Class Event Production
               </AccordionTrigger>
               <AccordionContent className="text-xs text-muted-foreground pb-2">
-                Our workshop provides professional repairs for audio gear,
-                lighting, LED screens, and musical instruments.
+                From Grammy Award-winning concerts to destination weddings, we
+                deliver the largest inventory of professional audiovisual
+                equipment in Oman.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4" className="border-b py-1">
               <AccordionTrigger className="text-base font-medium hover:no-underline py-2">
-                Event Production Experts
+                Expert Repairs & Service
               </AccordionTrigger>
               <AccordionContent className="text-xs text-muted-foreground pb-2">
-                From intimate gatherings to large-scale productions, we provide
-                complete sound, lighting, and staging solutions.
+                Our luthier has 30+ years experience with guitars and stringed
+                instruments. Electronic technicians with 10+ years repairing pro
+                audio and lighting gear.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-5" className="border-b py-1">
               <AccordionTrigger className="text-base font-medium hover:no-underline py-2">
-                Quality Music Education
+                Talentz Music Institute (TMI)
               </AccordionTrigger>
               <AccordionContent className="text-xs text-muted-foreground pb-2">
-                Talentz Music Institute follows ABRSM & Trinity curriculum,
-                offering affordable and high-quality lessons.
+                Piano, Keyboard, Guitar, Violin, Drums & Ukulele classes with
+                ABRSM & RSL exam preparation. Qualified teachers and comfortable
+                learning environment.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-6" className="border-b py-1">
               <AccordionTrigger className="text-base font-medium hover:no-underline py-2">
-                Muscat Based Showroom
+                Downtown Muscat Showroom
               </AccordionTrigger>
               <AccordionContent className="text-xs text-muted-foreground pb-2">
-                Visit our showroom in downtown Muscat to experience our products
-                firsthand or shop online for home delivery.
+                Visit our Ruwi showroom to test instruments, have a jam session,
+                or discuss your needs. Shop online with delivery across Oman.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

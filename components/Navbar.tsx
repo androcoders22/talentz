@@ -15,6 +15,14 @@ export function Navbar() {
   const pathname = usePathname();
   const isShop = pathname === "/shop";
 
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/shop", label: "Shop" },
+    { href: "/event-production", label: "Events" },
+    { href: "/institute", label: "Institute" },
+    { href: "/services", label: "Services" },
+  ];
+
   return (
     <header className="sticky top-6 z-50 flex flex-col items-center px-4 gap-2">
       <nav className="container mx-auto flex h-16 items-center justify-between rounded-full border bg-background/60 px-8 py-2 backdrop-blur-md relative z-10">
@@ -25,30 +33,23 @@ export function Navbar() {
           >
             Talentz
           </Link>
-          <div className="hidden lg:flex items-center gap-6 text-sm font-medium text-primary/80">
-            <Link href="/" className="hover:text-primary transition-colors">
-              Home
-            </Link>
-            <Link
-              href="/shop"
-              className={`hover:text-primary transition-colors ${
-                isShop ? "text-primary font-bold" : ""
-              }`}
-            >
-              Shop
-            </Link>
-            <Link href="#" className="hover:text-primary transition-colors">
-              Events
-            </Link>
-            <Link href="#" className="hover:text-primary transition-colors">
-              Institute
-            </Link>
-            <Link href="#" className="hover:text-primary transition-colors">
-              Services
-            </Link>
-            <Link href="#" className="hover:text-primary transition-colors">
-              About
-            </Link>
+          <div className="hidden lg:flex items-center gap-2 text-sm font-medium text-primary/80">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-4 py-1.5 rounded-full transition-all ${
+                    isActive
+                      ? "bg-black text-white font-semibold"
+                      : "hover:bg-muted/50 hover:text-primary"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
         </div>
 
@@ -77,12 +78,12 @@ export function Navbar() {
       </nav>
 
       {/* Second Level Strip for Shop Page */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isShop && (
           <motion.nav
             initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.3 } }}
+            exit={{ opacity: 0, y: -20, transition: { duration: 0 } }}
             className="container mx-auto "
           >
             <div className="bg-black text-white py-3 rounded-full px-8 relative z-0 mx-1.5">

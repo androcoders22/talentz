@@ -15,11 +15,12 @@ export default function ShopPage() {
             transition={{ duration: 0.2 }}
             className="max-w-3xl"
           >
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 font-serif">
-              Musical instrument <br />
-              <span className="text-primary">& Pro Audio Shop</span>
+            <h1 className="text-5xl md:text-7xl font-light tracking-tight mb-6">
+              Musical Instruments
+              <br />
+              <span className="font-bold text-primary">& Pro Audio</span> Shop
             </h1>
-            <p className="text-xl text-muted-foreground max-w-xl">
+            <p className="text-sm text-muted-foreground max-w-xl leading-relaxed">
               Explore our curated collection of world-class instruments and
               professional audio gear. From Muscat to the world, we bring you
               the finest tools for your art.
