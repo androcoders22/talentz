@@ -4,7 +4,7 @@ import { WhyChooseUs } from "@/components/WhyChooseUs";
 import { Features } from "@/components/Features";
 import { LatherBagCollection } from "@/components/LatherBagCollection";
 import { ProductGrid } from "@/components/ProductGrid";
-import { Testimonials } from "@/components/Testimonials";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
       <Features />
       <LatherBagCollection />
       <ProductGrid />
-      {/* <Testimonials /> */}
+      <Footer />
     </>
   );
 }

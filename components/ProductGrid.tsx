@@ -18,7 +18,7 @@ const products = [
     brand: "Shure",
     price: "OMR 45.000",
     rating: 5,
-    image: "https://www.musicstores.in/img/p/8/8/6/886.jpg",
+    image: "/bose-mic.jpg",
   },
   {
     id: 3,

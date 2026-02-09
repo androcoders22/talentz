@@ -7,11 +7,11 @@ export function Hero() {
     <section className="container mx-auto px-4 pt-8 md:pt-12 pb-10">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 gap-8">
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-light tracking-tight leading-[1.1]">
-          Oman's Premier
+          Where Events
           <br />
-          <span className="font-bold text-primary">Music & Event</span> Partner
+          <span className="font-bold text-primary">Music & Expertise</span> Come
           <br />
-          since 2002{" "}
+          Together Seamlessly
           <IconArrowRight className="inline-block h-10 w-10 md:h-16 md:w-16 ml-1 md:ml-2 text-primary align-middle" />
         </h1>
       </div>
