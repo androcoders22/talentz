@@ -2,7 +2,7 @@
 
 import { ProductGrid } from "@/components/ProductGrid";
 import { motion } from "framer-motion";
-
+import { Footer } from "@/components/Footer";
 export default function ShopPage() {
   return (
     <>
@@ -37,6 +37,7 @@ export default function ShopPage() {
       {/* Categories / Filters Strip would go here if needed, but the user asked for a 2nd level strip on Navbar */}
 
       <ProductGrid />
+      <Footer />
     </>
   );
 }
