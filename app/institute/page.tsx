@@ -3,213 +3,498 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
+  IconArrowRight,
   IconPhone,
   IconMail,
+  IconMusic,
+  IconArtboard,
+  IconSchool,
+  IconUsers,
+  IconCertificate,
+  IconMicrophone,
+  IconDeviceSpeaker,
+  IconCheck,
+  IconBrandInstagram,
+  IconPlayerPlay,
   IconClock,
+  IconInfoCircle,
   IconMapPin,
+  IconCalendar,
+  IconQuestionMark,
+  IconChevronDown,
 } from "@tabler/icons-react";
+import Link from "next/link";
+import { useState } from "react";
 
 export default function InstitutePage() {
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  const fadeIn = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.5 },
+  };
+
+  const schedule = [
+    { cat: "Morning", sat: "9:00 to 10:00 am", weekdays: "9:30 to 10:30 am" },
+    { cat: "Morning", sat: "10:00 to 11:00 am", weekdays: "10:30 to 11:30 am" },
+    {
+      cat: "Morning",
+      sat: "11:00 am to 12:00 pm",
+      weekdays: "11:30 am to 12:30 pm",
+    },
+    { cat: "Afternoon / Evening", sat: "2:30 to 3:30 pm", weekdays: "–" },
+    {
+      cat: "Afternoon / Evening",
+      sat: "3:30 to 4:30 pm",
+      weekdays: "3:30 to 4:30 pm",
+    },
+    {
+      cat: "Afternoon / Evening",
+      sat: "5:00 to 6:00 pm",
+      weekdays: "5:00 to 6:00 pm",
+    },
+    {
+      cat: "Afternoon / Evening",
+      sat: "6:00 to 7:00 pm",
+      weekdays: "6:00 to 7:00 pm",
+    },
+    {
+      cat: "Afternoon / Evening",
+      sat: "7:00 to 8:00 pm",
+      weekdays: "7:00 to 8:00 pm",
+    },
+  ];
+
+  const fees = [
+    { instrument: "KEYBOARD", b1: "21", b2: "25", b3: "29", b4: "35" },
+    { instrument: "GUITAR*", b1: "25", b2: "29", b3: "35", b4: "39" },
+    { instrument: "PIANO", b1: "25", b2: "29", b3: "35", b4: "39" },
+    { instrument: "VIOLIN", b1: "25", b2: "29", b3: "35", b4: "39" },
+    {
+      instrument: "DRUMS & PERCUSSION",
+      b1: "25",
+      b2: "29",
+      b3: "35",
+      b4: "39",
+    },
+  ];
+
+  const faqs = [
+    {
+      q: "When do you need an instrument?",
+      a: "When a student begins to learn music!",
+    },
+    {
+      q: "Where do you find your instruments & how do you get your best price?",
+      a: "Talentz has a full line of standard instruments, many of which are used in classrooms at TMI. All enrolled students are eligible for an additional discount on most instruments and products. A beginner student does not need the top-of-the-line instrument; however, a poor quality instrument must be avoided to help maintain a student’s interest and desire to pursue music.",
+    },
+    {
+      q: "Any tips for parents?",
+      a: "Kids are interested in everything; It’s up to you to help your child narrow his focus and concentrate on pursuits that will be rewarding.",
+    },
+    {
+      q: "What is the difference between Piano Lessons and Keyboard Lessons?",
+      a: "A Piano is an acoustic instrument with weighted keys taught hand-separately combining into pieces (Classical focus). A Keyboard is an electronic instrument with un-weighted keys taught as Right-Hand melody and Left-Hand chords with rhythms (Pop/Contemporary focus).",
+    },
+    {
+      q: "What is a good guitar for a student to begin learning?",
+      a: "Generally, Nylon String (Classical) guitars are easiest for young beginners. As you progress, you may choose Steel String (Acoustic) or Electric guitars based on your preferred genre like Rock, Metal, or Folk.",
+    },
+  ];
+
   return (
-    <>
+    <div className="bg-background min-h-screen">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-12 pb-16">
+      <section className="container mx-auto px-4 pt-16 md:pt-24 pb-12 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center max-w-4xl mx-auto mb-12"
+          className="max-w-5xl mx-auto mb-16"
         >
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
-            Talentz <span className="text-primary">Music Institute</span>
+          <h1 className="text-5xl sm:text-7xl md:text-9xl font-light tracking-tight leading-[1.05] mb-8">
+            Muscat's Center for
+            <br />
+            <span className="font-bold text-primary italic">
+              Music & Creativity
+            </span>
           </h1>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            An innovative learning center for music and creativity in Muscat,
-            Oman. Welcoming students since April 2002.
+
+          <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed">
+            Talentz Music Institute (TMI) is an innovative learning center
+            located in Muscat. Educating and building confidence in music lovers
+            since 2002.
           </p>
+
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Button size="lg" className="rounded-full px-10 h-14 text-lg">
+              Book Lessons
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="rounded-full px-10 h-14 text-lg"
+            >
+              View Fees
+            </Button>
+          </div>
         </motion.div>
 
         {/* Hero Image */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative rounded-3xl overflow-hidden h-[400px] md:h-[500px] mb-16"
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="relative h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden group mb-24"
         >
           <img
-            src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1600&h=800&fit=crop"
-            alt="Music Institute"
-            className="w-full h-full object-cover"
+            src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=192 0&h=1080&fit=crop"
+            alt="Talentz Music Institute"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
-          <div className="absolute bottom-8 left-8 right-8">
-            <p className="text-white/80 text-lg max-w-2xl">
-              Prepare for internationally recognized ABRSM & RSL exams, or
-              simply enjoy music as a hobby.
-            </p>
+          <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent opacity-60" />
+          <div className="absolute bottom-10 left-10 text-white text-left">
+            <span className="bg-primary px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4 inline-block">
+              Est. 2002
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold italic text-white leading-tight">
+              A Quest to Educate <br /> & Build Confidence
+            </h2>
           </div>
         </motion.div>
-      </section>
 
-      {/* Available Classes */}
-      <section className="container mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-8">Available Classes</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {/* Teaching System Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
           {[
-            "Piano",
-            "Keyboard",
-            "Guitar",
-            "Violin",
-            "Recorder",
-            "Drums",
-            "Ukulele",
-            "Theory",
-          ].map((instrument, index) => (
+            {
+              title: "Notation Rudiments",
+              desc: "Applicable theory and instrument specific skills correctly taught from the start.",
+            },
+            {
+              title: "Age 7+ to Adults",
+              desc: "Theory & Practical combined for children and adults of all skill levels.",
+            },
+            {
+              title: "Sing/Play Along",
+              desc: "Interactive format designed to make learning engaging and intuitive.",
+            },
+            {
+              title: "Pro Instruments",
+              desc: "Piano & Keyboards provided by TMI in professional teaching facilities.",
+            },
+          ].map((item, i) => (
             <motion.div
-              key={instrument}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="bg-muted/30 p-6 rounded-2xl text-center hover:bg-muted/50 transition-colors"
+              key={i}
+              {...fadeIn}
+              transition={{ delay: i * 0.1 }}
+              className="p-8 bg-card border border-border rounded-3xl"
             >
-              <h3 className="text-lg font-bold">{instrument}</h3>
+              <div className="h-10 w-10 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                <IconCheck className="h-5 w-5 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                {item.desc}
+              </p>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* TMI Benefits */}
-      <section className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-primary/10 p-8 rounded-2xl">
-            <h2 className="text-2xl font-bold mb-6">Why Choose TMI?</h2>
-            <ul className="space-y-3 text-muted-foreground">
-              <li className="flex items-start gap-3">
-                <span className="text-primary font-bold">✓</span>
-                Dedicated and qualified ABRSM/RSL-trained teachers
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-primary font-bold">✓</span>
-                Professional instruments in teaching facilities
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-primary font-bold">✓</span>
-                Small group classes (max 4 students) for personalized attention
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-primary font-bold">✓</span>
-                ABRSM & RSL exam preparation offered
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-primary font-bold">✓</span>
-                Central location in Downtown Muscat (Ruwi)
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-primary font-bold">✓</span>
-                Online lessons available (45 minutes, 1:1)
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-slate-900 text-white p-8 rounded-2xl">
-            <h2 className="text-2xl font-bold mb-6">Class Information</h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-semibold text-primary mb-2">
-                  Group Lessons (In-person)
-                </h3>
-                <p className="text-white/70 text-sm">
-                  60 minutes per week, max 4 students per batch
-                </p>
+      {/* Language of Music Section */}
+      <section className="bg-muted/30 py-24 border-y border-border">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div {...fadeIn}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-8 italic">
+                Learning the <br />
+                <span className="text-primary italic">Language of Music</span>
+              </h2>
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                If music is a language then musicians should be ‘literate’ in
+                every sense. Our music theory program helps you:
+              </p>
+              <div className="space-y-4">
+                {[
+                  "Sight-read music with confidence",
+                  "Develop musical interpretation and general musicianship",
+                  "Write down your own compositions and arrangements",
+                  "Prepare for internationally recognized ABRSM & RSL exams",
+                ].map((point) => (
+                  <div key={point} className="flex items-center gap-4">
+                    <div className="h-2 w-2 rounded-full bg-primary" />
+                    <span className="text-foreground/80 font-medium">
+                      {point}
+                    </span>
+                  </div>
+                ))}
               </div>
-              <div>
-                <h3 className="font-semibold text-primary mb-2">
-                  Online Lessons
-                </h3>
-                <p className="text-white/70 text-sm">
-                  45 minutes, 1:1 private lessons
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-primary mb-2">
-                  Individual Lessons
-                </h3>
-                <p className="text-white/70 text-sm">
-                  30 minutes, personalized instruction
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-primary mb-2">Exams</h3>
-                <p className="text-white/70 text-sm">
-                  ABRSM/RSL exams held in April/May & Nov/Dec
-                </p>
+            </motion.div>
+            <div className="relative">
+              <img
+                src="https://images.unsplash.com/photo-1507838596058-a563b7af29ad?w=800&h=600&fit=crop"
+                alt="Music Theory"
+                className="rounded-[2.5rem] shadow-2xl border border-border"
+              />
+              <div className="absolute -top-6 -right-6 bg-primary text-white p-8 rounded-3xl shadow-xl">
+                <div className="text-4xl font-bold mb-1">ABRSM</div>
+                <div className="text-xs uppercase tracking-widest font-bold opacity-80 text-center">
+                  RSL RockSchool
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Guitar Options */}
-      <section className="container mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-8">Guitar Lesson Options</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { type: "Classical", desc: "Nylon string" },
-            { type: "Acoustic", desc: "Steel string" },
-            { type: "Electric", desc: "Rock & Metal" },
-            { type: "Bass", desc: "Fundamentals" },
-          ].map((guitar, index) => (
-            <motion.div
-              key={guitar.type}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="bg-muted/30 p-6 rounded-2xl"
-            >
-              <h3 className="text-lg font-bold mb-2">{guitar.type}</h3>
-              <p className="text-sm text-muted-foreground">{guitar.desc}</p>
-            </motion.div>
-          ))}
+      {/* Class Schedule Table */}
+      <section className="container mx-auto px-4 py-24">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 uppercase italic">
+            TMI <span className="text-primary">TIME SLOTS</span>
+          </h2>
+          <p className="text-muted-foreground uppercase tracking-widest text-xs">
+            Group in-person Lessons — Closed on Fridays
+          </p>
+        </div>
+
+        <div className="max-w-5xl mx-auto overflow-hidden rounded-[2rem] border border-border bg-card shadow-sm">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-muted text-muted-foreground uppercase text-xs tracking-widest">
+                <th className="px-8 py-6">Category</th>
+                <th className="px-8 py-6">Saturdays (Weekend)</th>
+                <th className="px-8 py-6">Sun to Thu (Weekdays)</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {schedule.map((row, i) => (
+                <tr key={i} className="hover:bg-muted/50 transition-colors">
+                  <td className="px-8 py-6 text-sm font-bold text-primary">
+                    {row.cat}
+                  </td>
+                  <td className="px-8 py-6 text-sm font-medium">{row.sat}</td>
+                  <td className="px-8 py-6 text-sm font-medium text-muted-foreground">
+                    {row.weekdays}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* Detailed Investment Table */}
+      <section className="bg-card py-24 border-y border-border">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 uppercase italic">
+              MONTHLY <span className="text-primary">FEES</span>
+            </h2>
+            <div className="flex flex-wrap justify-center gap-4 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+              <span>Admission: OMR 7</span>
+              <span className="text-primary opacity-20 hidden md:block">|</span>
+              <span>4 Classes / Month</span>
+              <span className="text-primary opacity-20 hidden md:block">|</span>
+              <span>60 Min Group Lessons</span>
+            </div>
+          </div>
+
+          <div className="max-w-5xl mx-auto overflow-hidden rounded-[2rem] border border-border bg-background shadow-xl">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-primary/5 text-muted-foreground uppercase text-[10px] sm:text-xs tracking-[0.2em]">
+                  <th className="px-8 py-8">Classes</th>
+                  <th className="px-4 py-8 text-center bg-primary/5">
+                    Beginner-Gr 2
+                  </th>
+                  <th className="px-4 py-8 text-center">Grades 3 & 4</th>
+                  <th className="px-4 py-8 text-center bg-primary/5">
+                    Grades 5 & 6
+                  </th>
+                  <th className="px-4 py-8 text-center uppercase text-primary font-black">
+                    Grades 7 & 8
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {fees.map((row, i) => (
+                  <tr
+                    key={i}
+                    className="group hover:bg-muted/30 transition-colors"
+                  >
+                    <td className="px-8 py-6 font-bold text-foreground">
+                      {row.instrument}
+                    </td>
+                    <td className="px-4 py-6 text-center text-sm font-medium bg-primary/5">
+                      OMR {row.b1}
+                    </td>
+                    <td className="px-4 py-6 text-center text-sm font-medium">
+                      OMR {row.b2}
+                    </td>
+                    <td className="px-4 py-6 text-center text-sm font-medium bg-primary/5">
+                      OMR {row.b3}
+                    </td>
+                    <td className="px-4 py-6 text-center text-lg font-black text-primary">
+                      OMR {row.b4}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="p-8 bg-muted/20 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-xs text-muted-foreground max-w-lg">
+                *GUITAR OPTIONS: CLASSICAL, ACOUSTIC, ELECTRIC, BASS. <br />
+                Other instruments (Ukulele, Recorder, Viola): Consult
+                Administrator for availability.
+              </p>
+              <div className="flex gap-4">
+                <div className="text-center">
+                  <div className="text-lg font-bold">OMR 8</div>
+                  <div className="text-[10px] uppercase opacity-60">
+                    Online/1:1 (30-45m)
+                  </div>
+                </div>
+                <div className="text-center text-primary">
+                  <div className="text-lg font-black italic underline decoration-2">
+                    Individual
+                  </div>
+                  <div className="text-[10px] uppercase opacity-60 font-bold">
+                    Personalized Pace
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TMI Benefits & Philosophy */}
+      <section className="container mx-auto px-4 py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                "Dedicated and qualified teachers",
+                "Timely and integrated curriculum",
+                "Professional instruments provided",
+                "Learning with current technology",
+                "Undivided attention to students",
+                "International exam prep (ABRSM/RSL)",
+                "Comfortable learning environment",
+                "Central Location (Downtown Muscat)",
+              ].map((benefit, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-3 p-4 bg-muted/30 rounded-2xl border border-border/50"
+                >
+                  <IconCheck className="h-5 w-5 text-primary shrink-0" />
+                  <span className="text-sm font-medium text-foreground/80">
+                    {benefit}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="p-10 bg-primary text-primary-foreground rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+              <IconInfoCircle className="absolute -bottom-8 -right-8 h-48 w-48 opacity-10 group-hover:scale-110 transition-transform" />
+              <h3 className="text-2xl font-bold mb-4 italic">
+                TMI Tips to Students
+              </h3>
+              <p className="text-lg opacity-90 leading-relaxed mb-6">
+                "Study after study has proven that Music education dramatically
+                increases early brain development and improves overall academic
+                performance."
+              </p>
+              <p className="font-bold flex items-center gap-2">
+                <span className="h-1 w-8 bg-white/30 rounded-full" />
+                Essential habit: 30 minutes practice daily.
+              </p>
+            </div>
+          </div>
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold italic mb-6">
+              Frequently <br /> Asked Questions
+            </h3>
+            <div className="space-y-3 font-medium">
+              {faqs.map((faq, i) => (
+                <div key={i} className="border-b border-border pb-4">
+                  <button
+                    onClick={() => setActiveFaq(activeFaq === i ? null : i)}
+                    className="w-full flex justify-between items-center text-left py-2 hover:text-primary transition-colors text-sm"
+                  >
+                    <span>{faq.q}</span>
+                    <IconChevronDown
+                      className={`h-4 w-4 transform transition-transform ${activeFaq === i ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {activeFaq === i && (
+                    <motion.p
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      className="text-xs text-muted-foreground mt-2 leading-relaxed"
+                    >
+                      {faq.a}
+                    </motion.p>
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className="p-6 bg-muted/50 border border-border rounded-3xl mt-8">
+              <h4 className="font-bold mb-2">Notice:</h4>
+              <p className="text-xs text-muted-foreground">
+                Public holidays follow government declarations. Schools closed
+                on public holidays with no make-ups organized.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="bg-black text-white rounded-3xl p-8 md:p-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Start Your Musical Journey
-              </h2>
-              <p className="text-white/70 mb-6">
-                Visit us to book your lessons today. Classes available for
-                children (age 7+) and adults.
-              </p>
-              <div className="space-y-3 text-white/80">
-                <div className="flex items-center gap-3">
-                  <IconPhone className="h-5 w-5 text-primary" />
-                  <span>9385-8803</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <IconMail className="h-5 w-5 text-primary" />
-                  <span>institute@talentz.net</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <IconMapPin className="h-5 w-5 text-primary" />
-                  <span>Downtown Muscat (Ruwi)</span>
-                </div>
+      <section className="bg-card/50 py-24 border-t border-border text-center">
+        <div className="container mx-auto px-4">
+          <IconBrandInstagram className="h-12 w-12 text-primary mx-auto mb-6" />
+          <h2 className="text-3xl md:text-5xl font-bold mb-8 italic uppercase">
+            Join the TMI Family
+          </h2>
+          <div className="flex flex-wrap justify-center gap-12 mb-12">
+            <div className="text-left">
+              <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">
+                Call Us
               </div>
+              <div className="text-xl font-bold">9385-8803</div>
             </div>
-            <div className="text-center">
-              <p className="text-sm text-white/50 mb-2">Admission Fee</p>
-              <p className="text-4xl font-bold mb-4">OMR 7</p>
-              <Button className="rounded-full px-8 py-6 h-auto bg-white text-black hover:bg-white/90">
-                Enroll Now
-              </Button>
+            <div className="text-left">
+              <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">
+                Email Us
+              </div>
+              <div className="text-xl font-bold">institute@talentz.net</div>
             </div>
+            <div className="text-left">
+              <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">
+                Visit Us
+              </div>
+              <div className="text-xl font-bold">CBD / Downtown Muscat</div>
+            </div>
+          </div>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button
+              size="lg"
+              className="rounded-full px-12 h-16 text-lg hover:scale-105 transition-transform shadow-xl shadow-primary/20"
+            >
+              Enroll Today
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="rounded-full px-12 h-16 text-lg"
+            >
+              Follow @talentzmusicinstitute
+            </Button>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
