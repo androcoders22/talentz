@@ -24,9 +24,9 @@ export function Navbar() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/shop", label: "Shop" },
-    { href: "/event-production", label: "Events" },
-    { href: "/institute", label: "Institute" },
-    { href: "/services", label: "Services" },
+    { href: "/#", label: "Events" },
+    { href: "/#", label: "Institute" },
+    { href: "/#", label: "Services" },
   ];
 
   const shopCategories = [
