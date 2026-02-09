@@ -7,7 +7,7 @@ export default function ShopPage() {
   return (
     <>
       {/* Shop Hero Section */}
-      <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 overflow-hidden">
+      <section className="relative pt-24 md:pt-16 pb-12 md:pb-16 overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
