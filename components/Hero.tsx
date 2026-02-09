@@ -24,7 +24,7 @@ export function Hero() {
       <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[400px]">
         {/* Event Production */}
         <Link
-          href="/event-production"
+          href="/#"
           className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-4 flex-1 min-h-[300px] md:min-h-0 block"
         >
           <img
@@ -55,7 +55,7 @@ export function Hero() {
 
         {/* Music Institute Oman */}
         <Link
-          href="/institute"
+          href="/##"
           className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-[300px] md:min-h-0 block"
         >
           <img
@@ -86,7 +86,7 @@ export function Hero() {
 
         {/* Service & Repairs */}
         <Link
-          href="/services"
+          href="/###"
           className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-[300px] md:min-h-0 block"
         >
           <img
