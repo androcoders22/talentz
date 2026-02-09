@@ -6,7 +6,12 @@ export function Hero() {
   return (
     <section className="container mx-auto px-4 pt-8 md:pt-12 pb-10">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 gap-8">
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-light tracking-tight leading-[1.1]">
+        <h1
+          className="text-4xl sm:text-5xl md:text-7xl font-light tracking-tight leading-[1.1]"
+          style={{
+            textShadow: "0 0 60px rgba(255,255,255,0.5)",
+          }}
+        >
           Where Events
           <br />
           <span className="font-bold text-primary">Music & Expertise</span> Come
