@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { IconArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
 

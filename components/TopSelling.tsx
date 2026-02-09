@@ -19,7 +19,7 @@ const products = [
     id: 3,
     name: "Sennheiser HD 1000",
     rating: 4.8,
-    image: "/hz1000.jpeg",
+    image: "/hz1000.png",
   },
   {
     id: 4,
