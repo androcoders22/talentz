@@ -14,7 +14,7 @@ export default function Home() {
       <section className="relative overflow-hidden -mt-20 pt-20">
         {/* Background Video with White Overlay and Blur */}
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute inset-0 backdrop-blur-[100px] bg-linear-to-b from-white/40 via-white/40 to-white z-10" />
+          <div className="absolute inset-0 bg-linear-to-b from-white/40 to-white z-10" />
           <div className="w-full h-full select-none">
             <BgVideo />
           </div>
