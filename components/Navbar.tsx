@@ -170,7 +170,7 @@ export function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="container mx-auto w-full"
+            className="container mx-auto w-full mt-4"
           >
             <motion.div
               animate={{ height: isCategoriesOpen ? "auto" : "50px" }}
