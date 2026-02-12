@@ -116,7 +116,7 @@ const BgVideo: React.FC<BgVideoProps> = ({ style }) => {
       />
       <div
         id="yt-bg-player"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-[4] md:scale-150 w-full h-full"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-[6] md:scale-150 w-full h-full bg-white"
       />
     </div>
   );

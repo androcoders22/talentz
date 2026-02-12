@@ -1,24 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { IconArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
+import { RainbowButton } from "./ui/rainbow-button";
 
 export function Hero() {
   return (
     <section className="container mx-auto px-4 pt-8 md:pt-12 pb-10">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 gap-8">
+      <div className="flex flex-col items-start mb-4 md:mb-8 gap-8">
         <h1
-          className="text-4xl sm:text-5xl md:text-7xl font-light tracking-tight leading-[1.1]"
+          className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.1]"
           style={{
             textShadow: "0 0 60px rgba(255,255,255,0.5)",
           }}
         >
-          Where Events
+          <span className="font-bold text-primary">Redy for Every Stage.</span>
           <br />
-          <span className="font-bold text-primary">Music & Expertise</span> Come
-          <br />
-          Together Seamlessly
+          AVL Rentals, Pro Audio, Music Gears.
           <IconArrowRight className="inline-block h-10 w-10 md:h-16 md:w-16 ml-1 md:ml-2 text-primary align-middle" />
         </h1>
+
+        <div className="flex flex-wrap gap-3">
+          <RainbowButton size="lg">Explore Event Production</RainbowButton>
+          <RainbowButton variant="light" size="lg">
+            View Our Work
+          </RainbowButton>
+        </div>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[400px]">

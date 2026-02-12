@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   IconSearch,
   IconShoppingCart,
-  IconUser,
   IconChevronDown,
   IconMenu2,
   IconX,
@@ -22,11 +22,9 @@ export function Navbar() {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/shop", label: "Shop" },
-    { href: "/#", label: "Events" },
-    { href: "/##", label: "Institute" },
-    { href: "/###", label: "Services" },
+    { href: "/#", label: "Events Productions" },
+    { href: "/##", label: "Music Store" },
+    { href: "/###", label: "Distribution & Dealership" },
   ];
 
   const shopCategories = [
@@ -69,11 +67,16 @@ export function Navbar() {
               <IconMenu2 className="h-5 w-5" />
             )}
           </Button>
-          <Link
-            href="/"
-            className="text-xl md:text-2xl font-bold tracking-tighter text-primary font-serif shrink-0 italic"
-          >
-            Talentz
+          <Link href="/" className="shrink-0 flex items-center gap-2">
+            <Image
+              src="/logov2.png"
+              alt="Talentz"
+              width={256}
+              height={256}
+              className="h-5 md:h-8 w-auto mt-[0.5] object-contain"
+              priority
+            />
+            <h2 className="text-2xl font-bold text-primary">TALENTZ</h2>
           </Link>
           <div className="hidden lg:flex items-center gap-2">
             {navLinks.map((link) => {

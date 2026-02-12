@@ -1,45 +1,115 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
+import { MagicCard } from "@/components/ui/magic-card";
+import { RainbowButton } from "./ui/rainbow-button";
+import {
+  IconGuitarPick,
+  IconKeyboard,
+  IconDisc,
+  IconMicrophone,
+  IconMusic,
+  IconHeadphones,
+} from "@tabler/icons-react";
+
+const categories = [
+  {
+    title: "Guitars",
+    desc: "Classical, Acoustic, Electric & Bass",
+    icon: IconGuitarPick,
+  },
+  {
+    title: "Keyboards & Pianos",
+    desc: "Digital pianos, synthesizers & MIDI",
+    icon: IconKeyboard,
+  },
+  {
+    title: "Drums & Percussion",
+    desc: "Acoustic kits, electronic & cajons",
+    icon: IconDisc,
+  },
+  {
+    title: "Pro Audio",
+    desc: "Microphones, mixers & studio recording",
+    icon: IconMicrophone,
+  },
+  {
+    title: "Strings & Accessories",
+    desc: "Strings, picks, cases & more",
+    icon: IconMusic,
+  },
+  {
+    title: "Ukuleles & More",
+    desc: "Ukuleles, violins, recorders & viola",
+    icon: IconHeadphones,
+  },
+];
 
 export function LatherBagCollection() {
   return (
     <section className="container mx-auto px-4 py-4 mb-4">
-      <div className="relative bg-white rounded-[2rem] overflow-hidden min-h-[300px] md:min-h-[350px] flex items-center shadow-sm border border-black/5">
-        {/* Background Image with Perfect Fade */}
-        <div className="absolute inset-0 w-full h-full">
-          <img
-            src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&h=800&fit=crop"
-            alt="Event Production Background"
-            className="absolute right-0 top-0 w-full md:w-[85%] h-full object-cover grayscale opacity-20 md:opacity-100"
-          />
-          {/* Multi-stage gradient to ensure no sharp lines */}
-          <div className="absolute inset-0 bg-linear-to-r from-white from-25% via-white/90 via-45% to-transparent md:from-white md:from-30% md:via-white/80 md:via-50% md:to-transparent" />
-        </div>
+      <div className="w-full rounded-[2rem] border-none p-0 shadow-none overflow-hidden">
+        <MagicCard gradientColor="#D9D9D955" className="p-0">
+          {/* Background Image Layer - positioned behind content but not fighting MagicCard */}
+          <div className="relative overflow-hidden">
+            {/* Top Row: Text + Images */}
+            <div className="relative flex flex-col md:grid md:grid-cols-3 gap-4 px-4 pt-5 pb-4 md:px-8 md:pt-8 md:pb-8">
+              {/* Text Content */}
+              <div className="flex flex-col justify-center">
+                <RainbowButton variant="dark" className="w-fit">
+                  Music Store
+                </RainbowButton>
+                <h2 className="text-2xl md:text-5xl font-light tracking-tight mb-2 md:mb-3 text-black leading-[1.1]">
+                  Music & <br />
+                  <span className="font-bold">Pro Audio Store.</span>
+                </h2>
+                <p className="text-xs md:text-sm text-black/60 leading-relaxed max-w-sm">
+                  Retail & eCommerce for musicians, venues and professionals.
+                </p>
+              </div>
 
-        {/* Content */}
-        <div className="relative z-10 p-6 md:p-14 max-w-xl">
-          <div className="inline-block px-3 py-1 bg-black text-white text-[9px] font-bold uppercase tracking-[0.2em] rounded-full mb-4 italic">
-            World-Class Resources
+              {/* Images - side by side on both mobile and desktop */}
+              <div className="grid grid-cols-2 gap-3 md:contents">
+                <div className="overflow-hidden rounded-xl md:rounded-2xl min-h-[120px] md:min-h-[180px]">
+                  <img
+                    src="https://placehold.co/600x200?text=IMG"
+                    alt="Placeholder"
+                    className="w-full h-full object-cover rounded-xl md:rounded-2xl"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-xl md:rounded-2xl min-h-[120px] md:min-h-[180px]">
+                  <img
+                    src="https://placehold.co/600x200?text=IMG"
+                    alt="Placeholder"
+                    className="w-full h-full object-cover rounded-xl md:rounded-2xl"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Category Cards */}
+            <div className="relative z-10 px-6 md:px-6 pb-6 md:pb-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+                {categories.map((cat) => (
+                  <div
+                    key={cat.title}
+                    className="group bg-white/80 backdrop-blur-sm border border-black/5 rounded-xl p-3 hover:bg-white hover:shadow-md transition-all duration-300 cursor-pointer"
+                  >
+                    <cat.icon
+                      size={18}
+                      className="text-black/30 mb-1.5 group-hover:text-primary transition-colors"
+                    />
+                    <h3 className="text-xs font-bold text-black mb-0.5 group-hover:text-primary transition-colors">
+                      {cat.title}
+                    </h3>
+                    <p className="text-[10px] text-black/40 leading-snug">
+                      {cat.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-light tracking-tight mb-3 text-black leading-[1.1]">
-            Professional <br />
-            <span className="font-bold">Event Production</span>
-          </h2>
-          <p className="text-xs md:text-sm text-black/60 mb-6 leading-relaxed max-w-sm">
-            Oman's largest inventory of professional audiovisual equipment. From
-            intimate gatherings to large-scale concerts.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <Button className="rounded-full px-6 py-4 h-auto font-bold uppercase tracking-widest text-[9px] bg-black text-white hover:bg-black/90 transition-all">
-              Get a Quote
-            </Button>
-            <Button
-              variant="outline"
-              className="rounded-full px-6 py-4 h-auto font-bold uppercase tracking-widest text-[9px] border-black/10 text-black hover:bg-black/5 transition-all"
-            >
-              Portfolio
-            </Button>
-          </div>
-        </div>
+        </MagicCard>
       </div>
     </section>
   );

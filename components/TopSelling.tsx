@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { RainbowButton } from "./ui/rainbow-button";
 
 const products = [
   {
@@ -34,23 +35,23 @@ export function TopSelling() {
     <section className="container mx-auto px-4 py-8 border-t border-muted">
       <div className="flex flex-col lg:flex-row justify-between items-start mb-8 gap-6 md:gap-8">
         <div className="max-w-xl">
-          <Badge className="mb-4">Official Distributor</Badge>
+          <RainbowButton variant="light">Premium Fleet</RainbowButton>
           <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-foreground">
-            Top-Selling Gear
+            Most Requested Gear
             <br />
-            of the Year Collection
+            Ready When You Are
           </h2>
         </div>
         <div className="max-w-xs text-left lg:mt-10">
           <p className="text-xs md:text-sm text-muted-foreground mb-4 leading-relaxed">
-            Discover our most popular musical instruments and professional audio
-            equipment trusted by artists across Oman.
+            Industry-standard instruments and professional audio equipment,
+            maintained to perfection and ready for your next project.
           </p>
           <Button
             variant="outline"
             className="rounded-full px-6 py-4 h-auto text-[10px] md:text-xs font-medium hover:bg-foreground hover:text-background transition-colors"
           >
-            Explore All Collection
+            Browse Full Inventory
           </Button>
         </div>
       </div>
