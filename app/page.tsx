@@ -1,9 +1,9 @@
 import { Hero } from "@/components/Hero";
-import { TopSelling } from "@/components/TopSelling";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
 // import { Features } from "@/components/Features";
 import { LatherBagCollection } from "@/components/LatherBagCollection";
 // import { ProductGrid } from "@/components/ProductGrid";
+import Gallery from "@/components/Gallery";
 import { Footer } from "@/components/Footer";
 import BgVideo from "@/components/BgVideo";
 
@@ -25,8 +25,9 @@ export default function Home() {
           <Hero />
         </div>
       </section>
-      <TopSelling />
+
       <WhyChooseUs />
+      <Gallery />
       {/* <Features /> */}
       <LatherBagCollection />
       {/* <ProductGrid /> */}

@@ -3,28 +3,13 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
-  IconArrowRight,
-  IconPhone,
-  IconMail,
-  IconMusic,
-  IconArtboard,
-  IconSchool,
-  IconUsers,
-  IconCertificate,
-  IconMicrophone,
-  IconDeviceSpeaker,
   IconCheck,
   IconBrandInstagram,
-  IconPlayerPlay,
-  IconClock,
   IconInfoCircle,
-  IconMapPin,
-  IconCalendar,
-  IconQuestionMark,
   IconChevronDown,
 } from "@tabler/icons-react";
-import Link from "next/link";
 import { useState } from "react";
+import { TopSelling } from "@/components/TopSelling";
 
 export default function InstitutePage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -201,7 +186,6 @@ export default function InstitutePage() {
           ))}
         </div>
       </section>
-
       {/* Language of Music Section */}
       <section className="bg-muted/30 py-24 border-y border-border">
         <div className="container mx-auto px-4">
@@ -247,7 +231,6 @@ export default function InstitutePage() {
           </div>
         </div>
       </section>
-
       {/* Class Schedule Table */}
       <section className="container mx-auto px-4 py-24">
         <div className="text-center mb-16">
@@ -284,7 +267,6 @@ export default function InstitutePage() {
           </table>
         </div>
       </section>
-
       {/* Detailed Investment Table */}
       <section className="bg-card py-24 border-y border-border">
         <div className="container mx-auto px-4">
@@ -369,7 +351,7 @@ export default function InstitutePage() {
           </div>
         </div>
       </section>
-
+      <TopSelling />
       {/* TMI Benefits & Philosophy */}
       <section className="container mx-auto px-4 py-24">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -450,7 +432,6 @@ export default function InstitutePage() {
           </div>
         </div>
       </section>
-
       {/* CTA Section */}
       <section className="bg-card/50 py-24 border-t border-border text-center">
         <div className="container mx-auto px-4">

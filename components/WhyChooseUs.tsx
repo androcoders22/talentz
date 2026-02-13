@@ -5,45 +5,55 @@ import { RainbowButton } from "./ui/rainbow-button";
 const brands = [
   {
     name: "Yamaha",
-    logo: "https://placehold.co/200x80/ffffff/333333?text=Yamaha",
+    logo: "https://in.yamaha.com/assets/common/images/logo/logo-yamaha-purple-01.svg",
   },
   {
     name: "Sennheiser",
-    logo: "https://placehold.co/200x80/ffffff/333333?text=Sennheiser",
+    logo: "/Sennheiser-logo-new.png",
   },
   {
     name: "Shure",
-    logo: "https://placehold.co/200x80/ffffff/333333?text=Shure",
+    logo: "/shure-logo.webp",
   },
   {
     name: "Roland",
-    logo: "https://placehold.co/200x80/ffffff/333333?text=Roland",
+    logo: "https://static.roland.com/global/css/fonts/roland.svg",
+    invert: true,
   },
-  { name: "Boss", logo: "https://placehold.co/200x80/ffffff/333333?text=Boss" },
   {
     name: "Kawai",
-    logo: "https://placehold.co/200x80/ffffff/333333?text=Kawai",
+    logo: "https://www.kawaipianoshouston.com/wp-content/uploads/2025/08/Kawai-Logo-1024x262.png",
+  },
+  {
+    name: "Boss",
+    logo: "/boos-logo.png",
   },
   {
     name: "Ibanez",
-    logo: "https://placehold.co/200x80/ffffff/333333?text=Ibanez",
+    logo: "https://www.ibanez.com/images/logo.png",
+    invert: true,
   },
-  { name: "Tama", logo: "https://placehold.co/200x80/ffffff/333333?text=Tama" },
+  {
+    name: "Tama",
+    logo: "https://www.tama.com/images/logo.png",
+    invert: true,
+  },
   {
     name: "Taylor",
-    logo: "https://placehold.co/200x80/ffffff/333333?text=Taylor",
+    logo: "https://www.taylorguitars.com/themes/custom/tg_theme/images/desktop-logo.svg?v1",
+    invert: true,
   },
   {
     name: "D'Addario",
-    logo: "https://placehold.co/200x80/ffffff/333333?text=D'Addario",
-  },
-  {
-    name: "PreSonus",
-    logo: "https://placehold.co/200x80/ffffff/333333?text=PreSonus",
+    logo: "https://cdn.cookielaw.org/logos/e7c993a5-a748-4f49-9722-251e47ce622d/28da6178-33a9-42ba-a80a-15ae2627e31b/8f6dcc1c-4f99-4513-9ea4-65aeb935aa3e/logo_daddario_1color_on_white.png",
   },
   {
     name: "Adamson",
-    logo: "https://placehold.co/200x80/ffffff/333333?text=Adamson",
+    logo: "https://adamson.ai/logo.svg",
+  },
+  {
+    name: "PreSonus",
+    logo: "https://intl.presonus.com/cdn/shop/files/presonus_logo.svg?v=1723628827&width=145",
   },
 ];
 
@@ -76,7 +86,7 @@ export function WhyChooseUs() {
               <img
                 src={brand.logo}
                 alt={brand.name}
-                className="h-8 md:h-10 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                className={`h-8 md:h-10 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 ${brand.invert ? "invert" : ""}`}
                 title={brand.name}
               />
             </div>
