@@ -80,9 +80,7 @@ export function Hero() {
             </Button>
           </div>
           <div className="absolute bottom-6 left-6 right-6">
-            <h3 className="text-2xl font-bold text-white mb-2">
-              Talentz Music Institute
-            </h3>
+            <h3 className="text-2xl font-bold text-white mb-2">Music Store</h3>
             <p className="text-white/80 text-sm">
               Innovative music learning since 2002. Piano, Guitar, Violin, Drums
               & more with ABRSM & RSL exam preparation.
@@ -112,7 +110,7 @@ export function Hero() {
           </div>
           <div className="absolute bottom-6 left-6 right-6">
             <h3 className="text-2xl font-bold text-white mb-2">
-              Service & Repairs
+              Distribution & Dealership
             </h3>
             <p className="text-white/80 text-sm">
               Expert repairs for Pro Audio, Lighting gear, LED Screens & musical

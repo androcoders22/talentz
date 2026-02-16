@@ -52,9 +52,9 @@ export function LatherBagCollection() {
           {/* Background Image Layer - positioned behind content but not fighting MagicCard */}
           <div className="relative overflow-hidden">
             {/* Top Row: Text + Images */}
-            <div className="relative flex flex-col md:grid md:grid-cols-3 gap-4 px-4 pt-5 pb-4 md:px-8 md:pt-8 md:pb-8">
+            <div className="relative flex flex-col md:flex-row gap-4 px-4 pt-5 pb-4 md:px-8 md:pt-8 md:pb-8">
               {/* Text Content */}
-              <div className="flex flex-col justify-center">
+              <div className="flex flex-col justify-start md:w-1/3 shrink-0">
                 <RainbowButton variant="dark" className="w-fit">
                   Music Store
                 </RainbowButton>
@@ -65,47 +65,46 @@ export function LatherBagCollection() {
                 <p className="text-xs md:text-sm text-black/60 leading-relaxed max-w-sm">
                   Retail & eCommerce for musicians, venues and professionals.
                 </p>
-              </div>
 
-              {/* Images - side by side on both mobile and desktop */}
-              <div className="grid grid-cols-2 gap-3 md:contents">
-                <div className="overflow-hidden rounded-xl md:rounded-2xl min-h-[120px] md:min-h-[180px]">
-                  <img
-                    src="https://placehold.co/600x200?text=IMG"
-                    alt="Placeholder"
-                    className="w-full h-full object-cover rounded-xl md:rounded-2xl"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl md:rounded-2xl min-h-[120px] md:min-h-[180px]">
-                  <img
-                    src="https://placehold.co/600x200?text=IMG"
-                    alt="Placeholder"
-                    className="w-full h-full object-cover rounded-xl md:rounded-2xl"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Category Cards */}
-            <div className="relative z-10 px-6 md:px-6 pb-6 md:pb-6">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-                {categories.map((cat) => (
-                  <div
-                    key={cat.title}
-                    className="group bg-white/80 backdrop-blur-sm border border-black/5 rounded-xl p-3 hover:bg-white hover:shadow-md transition-all duration-300 cursor-pointer"
-                  >
-                    <cat.icon
-                      size={18}
-                      className="text-black/30 mb-1.5 group-hover:text-primary transition-colors"
-                    />
-                    <h3 className="text-xs font-bold text-black mb-0.5 group-hover:text-primary transition-colors">
-                      {cat.title}
-                    </h3>
-                    <p className="text-[10px] text-black/40 leading-snug">
-                      {cat.desc}
-                    </p>
+                {/* Category Cards */}
+                <div className="mt-6">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {categories.map((cat) => (
+                      <div
+                        key={cat.title}
+                        className="group bg-white/80 backdrop-blur-sm border border-black/5 rounded-xl p-2 hover:bg-white hover:shadow-md transition-all duration-300 cursor-pointer"
+                      >
+                        <cat.icon
+                          size={16}
+                          className="text-black/30 mb-1 group-hover:text-primary transition-colors"
+                        />
+                        <h3 className="text-[10px] font-bold text-black mb-0.5 group-hover:text-primary transition-colors truncate">
+                          {cat.title}
+                        </h3>
+                        <p className="text-[9px] text-black/40 leading-snug line-clamp-1 hidden sm:block">
+                          {cat.desc}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+              </div>
+              {/* Images - side by side on both mobile and desktop */}
+              <div className="grid grid-cols-2 gap-3 md:w-2/3 md:gap-4">
+                <div className="relative overflow-hidden rounded-xl md:rounded-2xl min-h-[120px] md:min-h-0 md:h-full w-full">
+                  <img
+                    src="/lather-strore.jpeg"
+                    alt="Music Store Interior"
+                    className="w-full h-full object-cover rounded-xl md:rounded-2xl md:absolute md:inset-0"
+                  />
+                </div>
+                <div className="relative overflow-hidden rounded-xl md:rounded-2xl min-h-[120px] md:min-h-0 md:h-full w-full">
+                  <img
+                    src="/lather-strore2.jpeg"
+                    alt="Music Equipment Display"
+                    className="w-full h-full object-cover rounded-xl md:rounded-2xl md:absolute md:inset-0"
+                  />
+                </div>
               </div>
             </div>
           </div>

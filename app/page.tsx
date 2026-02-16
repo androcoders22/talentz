@@ -26,8 +26,8 @@ export default function Home() {
         </div>
       </section>
 
-      <WhyChooseUs />
       <Gallery />
+      <WhyChooseUs />
       {/* <Features /> */}
       <LatherBagCollection />
       {/* <ProductGrid /> */}
