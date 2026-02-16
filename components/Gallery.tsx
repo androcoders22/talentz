@@ -86,8 +86,8 @@ const Gallery = () => {
   };
 
   return (
-    <section className="py-24 relative overflow-hidden bg-white text-black">
-      <div className="max-w-7xl mx-auto px-4 mb-16 relative z-10">
+    <section className="relative overflow-hidden bg-white text-black">
+      <div className="max-w-7xl mx-auto px-4  relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-6 tracking-tight text-black">
           Our Work
         </h2>
@@ -101,14 +101,14 @@ const Gallery = () => {
         {/* Navigation Buttons - Hidden on Mobile */}
         <button
           onClick={handlePrev}
-          className="absolute left-8 lg:left-64 z-50 p-4 rounded-full bg-black/80 hover:bg-black text-white shadow-xl transition-all hidden md:flex"
+          className="absolute left-8 lg:left-64 z-50 p-4 rounded-full bg-black/30 hover:bg-black text-white shadow-xl transition-all hidden md:flex"
           aria-label="Previous project"
         >
           <IconChevronLeft size={32} />
         </button>
         <button
           onClick={handleNext}
-          className="absolute right-8 lg:right-64 z-50 p-4 rounded-full bg-black/80 hover:bg-black text-white shadow-xl transition-all hidden md:flex"
+          className="absolute right-8 lg:right-64 z-50 p-4 rounded-full bg-black/30 hover:bg-black text-white shadow-xl transition-all hidden md:flex"
           aria-label="Next project"
         >
           <IconChevronRight size={32} />

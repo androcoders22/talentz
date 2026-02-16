@@ -52,7 +52,7 @@ export function Navbar() {
   ];
 
   return (
-    <header className="sticky top-6 z-50 flex flex-col items-center px-4">
+    <header className="sticky top-6 z-9999 flex flex-col items-center px-4 ">
       <nav className="container mx-auto flex h-16 items-center justify-between rounded-full border bg-background/60 px-6 md:px-8 py-2 backdrop-blur-md relative z-50 shadow-sm">
         <div className="flex items-center gap-4 lg:gap-8">
           <Button
