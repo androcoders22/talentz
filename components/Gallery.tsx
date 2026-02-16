@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, useSpring, useTransform, useMotionValue } from "framer-motion";
 import TiltedCard from "./TiltedCard";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
@@ -30,121 +30,121 @@ const projects = [
 
 const Gallery = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  // x is not directly used as a MotionValue for drag, but springX drives the activeIndex
+  const springX = useSpring(activeIndex, { stiffness: 300, damping: 30 });
 
-  const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % projects.length);
-  };
+  // Update spring target when activeIndex changes or on snap
+  useEffect(() => {
+    springX.set(activeIndex);
+  }, [activeIndex, springX]);
 
-  const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + projects.length) % projects.length);
-  };
+  const total = projects.length;
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const offset = isMobile ? 220 : 450;
 
-  const getCardStyle = (index: number) => {
-    const total = projects.length;
-    let dist = (index - activeIndex + total) % total;
-    if (dist > total / 2) dist -= total;
-
-    // Responsive offsets - using approximate mobile width detection
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-    const offset = isMobile ? 220 : 400;
-    const centerScale = isMobile ? 1.2 : 1.4;
-    const sideScale = isMobile ? 0.8 : 1.0;
-
-    if (dist === 0) {
-      return {
-        x: 0,
-        scale: centerScale,
-        zIndex: 50,
-        opacity: 1,
-        filter: "blur(0px)",
-      };
-    } else if (dist === 1) {
-      return {
-        x: offset,
-        scale: sideScale,
-        zIndex: 30,
-        opacity: 0.8,
-        filter: "blur(2px)",
-      };
-    } else if (dist === -1) {
-      return {
-        x: -offset,
-        scale: sideScale,
-        zIndex: 30,
-        opacity: 0.8,
-        filter: "blur(2px)",
-      };
-    } else {
-      return {
-        x: dist > 0 ? offset * 1.5 : -offset * 1.5,
-        scale: sideScale * 0.8,
-        zIndex: 10,
-        opacity: 0,
-        filter: "blur(4px)",
-      };
-    }
-  };
+  const handleNext = () => setActiveIndex((p) => (p + 1) % total);
+  const handlePrev = () => setActiveIndex((p) => (p - 1 + total) % total);
 
   return (
-    <section className="relative overflow-hidden bg-white text-black">
-      <div className="max-w-7xl mx-auto px-4  relative z-10">
+    <section className="relative overflow-hidden bg-white text-black py-10 md:py-20">
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-6 tracking-tight text-black">
           Our Work
         </h2>
-        <p className="text-center text-gray-600 max-w-2xl mx-auto text-base md:text-lg px-4">
+        <p className="text-center text-gray-600 max-w-2xl mx-auto text-base md:text-lg px-4 mb-10">
           Explore the breadth of what we do — from world-class audio to global
           distribution.
         </p>
       </div>
 
-      <div className="relative h-[500px] md:h-[700px] w-full flex items-center justify-center">
+      <div className="relative h-[450px] md:h-[600px] w-full flex items-center justify-center">
         {/* Navigation Buttons - Hidden on Mobile */}
         <button
           onClick={handlePrev}
-          className="absolute left-8 lg:left-64 z-50 p-4 rounded-full bg-black/30 hover:bg-black text-white shadow-xl transition-all hidden md:flex"
+          className="absolute left-4 lg:left-20 z-50 p-4 rounded-full bg-black/10 hover:bg-black/30 backdrop-blur-md transition-all text-black hover:text-white"
           aria-label="Previous project"
         >
           <IconChevronLeft size={32} />
         </button>
         <button
           onClick={handleNext}
-          className="absolute right-8 lg:right-64 z-50 p-4 rounded-full bg-black/30 hover:bg-black text-white shadow-xl transition-all hidden md:flex"
+          className="absolute right-4 lg:right-20 z-50 p-4 rounded-full bg-black/10 hover:bg-black/30 backdrop-blur-md transition-all text-black hover:text-white"
           aria-label="Next project"
         >
           <IconChevronRight size={32} />
         </button>
 
-        {/* Carousel Items */}
-        <div className="relative w-full h-full max-w-5xl mx-auto flex items-center justify-center touch-none">
+        {/* Carousel Drag Surface */}
+        <motion.div
+          className="relative w-full h-full max-w-7xl mx-auto flex items-center justify-center touch-none cursor-grab active:cursor-grabbing"
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          onDrag={(_, info) => {
+            // Real-time feedback by shifting the spring target slightly or setting x
+            // For smooth real-time drag, we drive the spring target with the drag progress
+            const dragOffset = info.offset.x / offset;
+            springX.set(activeIndex - dragOffset);
+          }}
+          onDragEnd={(_, info) => {
+            const dragDistance = info.offset.x;
+            const threshold = 50;
+            if (dragDistance < -threshold) {
+              handleNext();
+            } else if (dragDistance > threshold) {
+              handlePrev();
+            } else {
+              // Snap back to current
+              springX.set(activeIndex);
+            }
+          }}
+        >
           {projects.map((project, index) => {
-            const style = getCardStyle(index);
+            // Using a continuous motion value for properties
+            // We calculate distance from active including wrapping
+            const cardProgress = useTransform(springX, (val: number) => {
+              let diff = index - val;
+              // Wrap diff to -total/2 to total/2
+              while (diff > total / 2) diff -= total;
+              while (diff < -total / 2) diff += total;
+              return diff;
+            });
+
+            const cardX = useTransform(cardProgress, (p: number) => p * offset);
+            const scale = useTransform(
+              cardProgress,
+              [-1, 0, 1],
+              [
+                isMobile ? 0.8 : 0.9,
+                isMobile ? 1.2 : 1.4,
+                isMobile ? 0.8 : 0.9,
+              ],
+            );
+            const opacity = useTransform(
+              cardProgress,
+              [-1.5, -1, 0, 1, 1.5],
+              [0, 0.6, 1, 0.6, 0],
+            );
+            const zIndex = useTransform(cardProgress, [-1, 0, 1], [10, 50, 10]);
+            const blur = useTransform(
+              cardProgress,
+              [-1, 0, 1],
+              ["4px", "0px", "4px"],
+            );
 
             return (
               <motion.div
                 key={index}
-                className="absolute top-1/2 left-1/2 cursor-grab active:cursor-grabbing"
-                initial={false}
-                animate={{
-                  x: `calc(-50% + ${style.x}px)`,
-                  y: "-50%",
-                  scale: style.scale,
-                  zIndex: style.zIndex,
-                  opacity: style.opacity,
-                  filter: style.filter,
-                }}
-                transition={{
-                  duration: 0.5,
-                  ease: [0.32, 0.72, 0, 1],
-                  opacity: { duration: 0.3 },
-                }}
+                className="absolute top-1/2 left-1/2 rounded-xl overflow-hidden" // Added rounded-xl and overflow-hidden for corner fix
                 style={{
+                  x: cardX,
+                  translateX: "-50%",
+                  translateY: "-50%",
+                  scale,
+                  zIndex,
+                  opacity,
+                  filter: blur, // Use blur directly as a MotionValue
                   transformStyle: "preserve-3d",
-                }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={(_, info) => {
-                  if (info.offset.x < -50) handleNext();
-                  if (info.offset.x > 50) handlePrev();
                 }}
               >
                 <div className="pointer-events-none sm:pointer-events-auto">
@@ -152,24 +152,33 @@ const Gallery = () => {
                     imageSrc={project.src}
                     altText={project.title}
                     captionText={project.title}
-                    containerHeight="min(400px, 60vw)"
-                    containerWidth="min(400px, 60vw)"
-                    imageHeight="min(400px, 60vw)"
-                    imageWidth="min(400px, 60vw)"
-                    rotateAmplitude={10}
+                    containerHeight={
+                      isMobile ? "min(350px, 50vw)" : "min(450px, 70vw)"
+                    }
+                    containerWidth={
+                      isMobile ? "min(350px, 50vw)" : "min(800px, 85vw)"
+                    }
+                    imageHeight={
+                      isMobile ? "min(350px, 50vw)" : "min(450px, 70vw)"
+                    }
+                    imageWidth={
+                      isMobile ? "min(350px, 50vw)" : "min(800px, 85vw)"
+                    }
+                    imageObjectFit="cover"
+                    rotateAmplitude={5}
                     scaleOnHover={1.02}
                     showMobileWarning={false}
                     showTooltip={false}
                     displayOverlayContent={true}
                     overlayContent={
-                      <div className="w-full h-full relative p-6 flex flex-col justify-end bg-linear-to-t from-black/80 via-black/20 to-transparent rounded-[15px]" />
+                      <div className="w-full h-full bg-linear-to-t from-black/40 via-transparent to-transparent" />
                     }
                   />
                 </div>
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Swipe Hint for mobile */}
         <div className="absolute bottom-10 left-0 w-full text-center md:hidden pointer-events-none">
