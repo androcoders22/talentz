@@ -43,7 +43,7 @@ void main() {
 `;
 
 const fragment = `#version 300 es
-precision highp float;
+precision mediump float;
 uniform vec2 iResolution;
 uniform float iTime;
 uniform float uTimeSpeed;
@@ -156,11 +156,17 @@ const Grainient: React.FC<GrainientProps> = ({
   useEffect(() => {
     if (!containerRef.current) return;
 
+    const isMobile =
+      window.matchMedia('(max-width: 768px)').matches ||
+      window.matchMedia('(pointer: coarse)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const effectiveDpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 2);
+
     const renderer = new Renderer({
       webgl: 2,
       alpha: true,
       antialias: false,
-      dpr: Math.min(window.devicePixelRatio || 1, 2)
+      dpr: effectiveDpr
     });
 
     const gl = renderer.gl;
@@ -220,8 +226,38 @@ const Grainient: React.FC<GrainientProps> = ({
     setSize();
 
     let raf = 0;
+    let isVisible = true;
+    const targetFps = prefersReducedMotion ? 24 : isMobile ? 30 : 60;
+    const frameInterval = 1000 / targetFps;
     const t0 = performance.now();
+    let lastFrameTime = t0;
+
+    const onVisibilityChange = () => {
+      isVisible = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    let inViewport = true;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inViewport = entry.isIntersecting;
+      },
+      { threshold: 0 }
+    );
+    io.observe(container);
+
     const loop = (t: number) => {
+      if (!isVisible || !inViewport) {
+        raf = requestAnimationFrame(loop);
+        return;
+      }
+
+      if (t - lastFrameTime < frameInterval) {
+        raf = requestAnimationFrame(loop);
+        return;
+      }
+
+      lastFrameTime = t;
       (program.uniforms.iTime as { value: number }).value = (t - t0) * 0.001;
       renderer.render({ scene: mesh });
       raf = requestAnimationFrame(loop);
@@ -231,6 +267,8 @@ const Grainient: React.FC<GrainientProps> = ({
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       try {
         container.removeChild(canvas);
       } catch {
