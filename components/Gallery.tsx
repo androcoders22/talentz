@@ -161,7 +161,7 @@ const Gallery = () => {
   return (
     <section className="container mx-auto px-4">
       <div className="rounded-[2rem] relative">
-        <div className="pt-12 md:pt-16 pb-0 md:pb-8 relative z-10 px-6 text-center">
+        <div className="pt-2 md:pt-4 pb-0 md:pb-8 relative z-10 px-6 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 md:mb-6 tracking-tight text-black">
             Our Work
           </h2>

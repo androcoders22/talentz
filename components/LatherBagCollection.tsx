@@ -91,14 +91,14 @@ export function LatherBagCollection() {
               </div>
               {/* Images - side by side on both mobile and desktop */}
               <div className="grid grid-cols-2 gap-3 md:w-2/3 md:gap-4">
-                <div className="relative overflow-hidden rounded-xl md:rounded-2xl min-h-[120px] md:min-h-0 md:h-full w-full">
+                <div className="relative overflow-hidden rounded-xl md:rounded-2xl min-h-30 md:min-h-0 md:h-full w-full">
                   <img
                     src="/lather-strore.jpeg"
                     alt="Music Store Interior"
                     className="w-full h-full object-cover rounded-xl md:rounded-2xl md:absolute md:inset-0"
                   />
                 </div>
-                <div className="relative overflow-hidden rounded-xl md:rounded-2xl min-h-[120px] md:min-h-0 md:h-full w-full">
+                <div className="relative overflow-hidden rounded-xl md:rounded-2xl min-h-30 md:min-h-0 md:h-full w-full">
                   <img
                     src="/lather-strore2.jpeg"
                     alt="Music Equipment Display"

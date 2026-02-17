@@ -27,11 +27,11 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[400px]">
+      <div className="flex flex-col md:flex-row gap-4 h-auto md:h-100">
         {/* Event Production */}
         <Link
           href="/#"
-          className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-4 flex-1 min-h-[300px] md:min-h-0 block"
+          className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-4 flex-1 min-h-75 md:min-h-0 block"
         >
           <img
             src="/production-hero.jpg"
@@ -62,7 +62,7 @@ export function Hero() {
         {/* Music Institute Oman */}
         <Link
           href="/##"
-          className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-[300px] md:min-h-0 block"
+          className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-75 md:min-h-0 block"
         >
           <img
             src="/DJ-hero.jpg"
@@ -91,7 +91,7 @@ export function Hero() {
         {/* Service & Repairs */}
         <Link
           href="/###"
-          className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-[300px] md:min-h-0 block"
+          className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-75 md:min-h-0 block"
         >
           <img
             src="/repair-hero.jpg"

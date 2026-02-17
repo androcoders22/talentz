@@ -53,9 +53,34 @@ declare global {
 const BgVideo: React.FC<BgVideoProps> = ({ style }) => {
   const playerRef = useRef<YTPlayer | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const playerMountRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    const applyIframeCoverStyles = () => {
+      const iframe = playerMountRef.current?.querySelector("iframe") as
+        | HTMLIFrameElement
+        | null;
+
+      if (!iframe) {
+        return;
+      }
+
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
+      iframe.style.position = "absolute";
+      iframe.style.top = "50%";
+      iframe.style.left = "50%";
+      iframe.style.transform = "translate(-50%, -50%)";
+      iframe.style.height = "130%";
+      iframe.style.width = isMobile ? "230%" : "140%";
+      iframe.style.maxWidth = "none";
+    };
+
+    const overlayFailSafe = setTimeout(() => {
+      setIsLoaded(true);
+    }, 5000);
+
     // Load YouTube IFrame API
     const tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
@@ -64,7 +89,11 @@ const BgVideo: React.FC<BgVideoProps> = ({ style }) => {
 
     // Initialize player when API is ready
     window.onYouTubeIframeAPIReady = () => {
-      playerRef.current = new window.YT.Player("yt-bg-player", {
+      if (!playerMountRef.current) {
+        return;
+      }
+
+      playerRef.current = new window.YT.Player(playerMountRef.current.id, {
         videoId: "f0zOqdGdBE4",
         playerVars: {
           autoplay: 1,
@@ -84,7 +113,12 @@ const BgVideo: React.FC<BgVideoProps> = ({ style }) => {
         events: {
           onReady: (event: YTPlayerEvent) => {
             event.target.setPlaybackRate(1.25);
+            // Force 144p if possible via internal API method (deprecated but often still works for hints)
+            try {
+              (event.target as any).setPlaybackQuality("tiny");
+            } catch (e) { }
             event.target.playVideo();
+            applyIframeCoverStyles();
             // Fade out white overlay after a short delay
             setTimeout(() => setIsLoaded(true), 500);
           },
@@ -97,7 +131,11 @@ const BgVideo: React.FC<BgVideoProps> = ({ style }) => {
       window.onYouTubeIframeAPIReady();
     }
 
+    window.addEventListener("resize", applyIframeCoverStyles);
+
     return () => {
+      clearTimeout(overlayFailSafe);
+      window.removeEventListener("resize", applyIframeCoverStyles);
       playerRef.current?.destroy();
     };
   }, []);
@@ -105,18 +143,19 @@ const BgVideo: React.FC<BgVideoProps> = ({ style }) => {
   return (
     <div
       ref={containerRef}
-      className="absolute w-full h-full overflow-hidden bg-white"
+      className="absolute w-full h-full overflow-hidden"
       style={style}
     >
-      {/* White overlay that fades out when video loads */}
+      {/* Overlay that fades out when video loads */}
       <div
-        className={`absolute inset-0 bg-white z-10 transition-opacity duration-500 ${
-          isLoaded ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
+        className={`absolute inset-0 bg-white z-20 transition-opacity duration-700 ${isLoaded ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
       />
+
       <div
         id="yt-bg-player"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-[6] md:scale-150 w-full h-full bg-white"
+        ref={playerMountRef}
+        className="absolute inset-0 overflow-hidden blur-[18px] md:blur-2xl"
       />
     </div>
   );
