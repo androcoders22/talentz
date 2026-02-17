@@ -13,7 +13,7 @@ export function Features() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Card 1 */}
         <SpotlightCard
-          className="bg-white border border-black/5 min-h-[220px] flex flex-col justify-between shadow-sm"
+          className="bg-white border border-black/5 min-h-55 flex flex-col justify-between shadow-sm"
           spotlightColor="rgba(0, 0, 0, 0.03)"
         >
           <div className="relative z-10">
@@ -34,7 +34,7 @@ export function Features() {
 
         {/* Card 2 */}
         <SpotlightCard
-          className="bg-white border border-black/5 min-h-[220px] flex flex-col justify-between shadow-sm"
+          className="bg-white border border-black/5 min-h-55 flex flex-col justify-between shadow-sm"
           spotlightColor="rgba(0, 0, 0, 0.03)"
         >
           <div className="relative z-10">
@@ -55,7 +55,7 @@ export function Features() {
 
         {/* Card 3 */}
         <SpotlightCard
-          className="bg-white border border-black/5 min-h-[220px] flex flex-col justify-between shadow-sm"
+          className="bg-white border border-black/5 min-h-55 flex flex-col justify-between shadow-sm"
           spotlightColor="rgba(0, 0, 0, 0.03)"
         >
           <div className="relative z-10">
@@ -76,7 +76,7 @@ export function Features() {
 
         {/* Card 4 */}
         <SpotlightCard
-          className="bg-white border border-black/5 min-h-[220px] flex flex-col justify-between shadow-sm"
+          className="bg-white border border-black/5 min-h-55 flex flex-col justify-between shadow-sm"
           spotlightColor="rgba(0, 0, 0, 0.03)"
         >
           <div className="relative z-10">

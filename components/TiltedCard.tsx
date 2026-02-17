@@ -109,7 +109,7 @@ export default function TiltedCard({
       )}
 
       <motion.div
-        className="relative transform-3d rounded-[15px] overflow-hidden bg-gray-100 shadow-lg"
+        className="relative transform-3d rounded-[15px] overflow-hidden bg-transparent shadow-lg"
         style={{
           width: imageWidth,
           height: imageHeight,
@@ -136,7 +136,7 @@ export default function TiltedCard({
 
       {showTooltip && (
         <motion.figcaption
-          className="pointer-events-none absolute left-0 top-0 rounded-[4px] bg-white px-[10px] py-[4px] text-[10px] text-[#2d2d2d] opacity-0 z-3 hidden sm:block"
+          className="pointer-events-none absolute left-0 top-0 rounded-lg bg-white px-2.5 py-1 text-[10px] text-[#2d2d2d] opacity-0 z-3 hidden sm:block"
           style={{
             x,
             y,
