@@ -11,10 +11,12 @@ import {
   IconArrowUpRight,
 } from "@tabler/icons-react";
 import { Footer } from "@/components/Footer";
+import { ShopCategoriesBar } from "@/components/ShopCategoriesBar";
 
 export default function ShopPage() {
   return (
     <div className="text-[#1E1E1E] font-sans selection:bg-[#3B82F6]/30">
+      <ShopCategoriesBar />
       <div className="container mx-auto px-4 space-y-4 pt-4">
         {/* Hero Section Bento Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 lg:grid-rows-2 gap-4 lg:h-[620px]">
