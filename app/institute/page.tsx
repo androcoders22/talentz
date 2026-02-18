@@ -92,13 +92,13 @@ export default function InstitutePage() {
   return (
     <div className="bg-background min-h-screen">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-16 md:pt-24 pb-12 text-center">
+      <section className="container mx-auto px-4 pt-8 md:pt-10 pb-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-5xl mx-auto mb-16"
+          className="max-w-4xl mx-auto mb-6"
         >
-          <h1 className="text-5xl sm:text-7xl md:text-9xl font-light tracking-tight leading-[1.05] mb-8">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.05] mb-4">
             Muscat's Center for
             <br />
             <span className="font-bold text-primary italic">
@@ -106,7 +106,7 @@ export default function InstitutePage() {
             </span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg text-muted-foreground mb-6 max-w-3xl mx-auto leading-relaxed">
             Talentz Music Institute (TMI) is an innovative learning center
             located in Muscat. Educating and building confidence in music lovers
             since 2002.
@@ -131,7 +131,7 @@ export default function InstitutePage() {
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden group mb-24"
+          className="relative h-[300px] md:h-[400px] rounded-[2.5rem] overflow-hidden group mb-12"
         >
           <img
             src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=192 0&h=1080&fit=crop"
@@ -139,11 +139,11 @@ export default function InstitutePage() {
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent opacity-60" />
-          <div className="absolute bottom-10 left-10 text-white text-left">
-            <span className="bg-primary px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4 inline-block">
+          <div className="absolute bottom-6 left-6 text-white text-left">
+            <span className="bg-primary px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest mb-2 inline-block">
               Est. 2002
             </span>
-            <h2 className="text-3xl md:text-5xl font-bold italic text-white leading-tight">
+            <h2 className="text-xl md:text-3xl font-bold italic text-white leading-tight">
               A Quest to Educate <br /> & Build Confidence
             </h2>
           </div>
@@ -187,11 +187,11 @@ export default function InstitutePage() {
         </div>
       </section>
       {/* Language of Music Section */}
-      <section className="bg-muted/30 py-24 border-y border-border">
+      <section className="bg-muted/30 py-8 border-y border-border">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <motion.div {...fadeIn}>
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 italic">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4 italic">
                 Learning the <br />
                 <span className="text-primary italic">Language of Music</span>
               </h2>
@@ -232,9 +232,9 @@ export default function InstitutePage() {
         </div>
       </section>
       {/* Class Schedule Table */}
-      <section className="container mx-auto px-4 py-24">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 uppercase italic">
+      <section className="container mx-auto px-4 py-8">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 uppercase italic">
             TMI <span className="text-primary">TIME SLOTS</span>
           </h2>
           <p className="text-muted-foreground uppercase tracking-widest text-xs">
@@ -245,20 +245,20 @@ export default function InstitutePage() {
         <div className="max-w-5xl mx-auto overflow-hidden rounded-[2rem] border border-border bg-card shadow-sm">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-muted text-muted-foreground uppercase text-xs tracking-widest">
-                <th className="px-8 py-6">Category</th>
-                <th className="px-8 py-6">Saturdays (Weekend)</th>
-                <th className="px-8 py-6">Sun to Thu (Weekdays)</th>
+              <tr className="bg-muted text-muted-foreground uppercase text-[9px] tracking-widest">
+                <th className="px-5 py-3">Category</th>
+                <th className="px-5 py-3">Saturdays (Weekend)</th>
+                <th className="px-5 py-3">Sun to Thu (Weekdays)</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {schedule.map((row, i) => (
                 <tr key={i} className="hover:bg-muted/50 transition-colors">
-                  <td className="px-8 py-6 text-sm font-bold text-primary">
+                  <td className="px-6 py-4 text-xs font-bold text-primary">
                     {row.cat}
                   </td>
-                  <td className="px-8 py-6 text-sm font-medium">{row.sat}</td>
-                  <td className="px-8 py-6 text-sm font-medium text-muted-foreground">
+                  <td className="px-6 py-4 text-xs font-medium">{row.sat}</td>
+                  <td className="px-6 py-4 text-xs font-medium text-muted-foreground">
                     {row.weekdays}
                   </td>
                 </tr>
@@ -268,10 +268,10 @@ export default function InstitutePage() {
         </div>
       </section>
       {/* Detailed Investment Table */}
-      <section className="bg-card py-24 border-y border-border">
+      <section className="bg-card py-8 border-y border-border">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 uppercase italic">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2 uppercase italic">
               MONTHLY <span className="text-primary">FEES</span>
             </h2>
             <div className="flex flex-wrap justify-center gap-4 text-xs font-bold uppercase tracking-widest text-muted-foreground">
@@ -353,7 +353,7 @@ export default function InstitutePage() {
       </section>
       <TopSelling />
       {/* TMI Benefits & Philosophy */}
-      <section className="container mx-auto px-4 py-24">
+      <section className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -433,10 +433,10 @@ export default function InstitutePage() {
         </div>
       </section>
       {/* CTA Section */}
-      <section className="bg-card/50 py-24 border-t border-border text-center">
+      <section className="bg-card/50 py-8 border-t border-border text-center">
         <div className="container mx-auto px-4">
-          <IconBrandInstagram className="h-12 w-12 text-primary mx-auto mb-6" />
-          <h2 className="text-3xl md:text-5xl font-bold mb-8 italic uppercase">
+          <IconBrandInstagram className="h-8 w-8 text-primary mx-auto mb-3" />
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 italic uppercase">
             Join the TMI Family
           </h2>
           <div className="flex flex-wrap justify-center gap-12 mb-12">

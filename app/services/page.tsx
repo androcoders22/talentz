@@ -29,13 +29,13 @@ export default function ServicesPage() {
   return (
     <div className="bg-background min-h-screen">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-16 md:pt-24 pb-12 text-center">
+      <section className="container mx-auto px-4 pt-8 md:pt-10 pb-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-5xl mx-auto mb-16"
+          className="max-w-4xl mx-auto mb-6"
         >
-          <h1 className="text-5xl sm:text-7xl md:text-9xl font-light tracking-tight leading-[1.05] mb-8">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.05] mb-4">
             Expert
             <br />
             <span className="font-bold text-primary italic">
@@ -45,20 +45,20 @@ export default function ServicesPage() {
             Division
           </h1>
 
-          <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg text-muted-foreground mb-6 max-w-3xl mx-auto leading-relaxed">
             Keeping your musical instruments and professional audio gear in peak
             condition. Oman's leading technical service partner for performers
             and venues.
           </p>
 
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Button size="lg" className="rounded-full px-10 h-14 text-lg">
+          <div className="flex flex-wrap gap-3 justify-center">
+            <Button size="lg" className="rounded-full px-8 h-12 text-base">
               Request Quote
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="rounded-full px-10 h-14 text-lg"
+              className="rounded-full px-8 h-12 text-base"
             >
               Our Specialists
             </Button>
@@ -70,7 +70,7 @@ export default function ServicesPage() {
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden group"
+          className="relative h-[300px] md:h-[450px] rounded-[2.5rem] overflow-hidden group"
         >
           <img
             src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&h=1080&fit=crop"
@@ -78,11 +78,11 @@ export default function ServicesPage() {
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent opacity-60" />
-          <div className="absolute bottom-10 left-10 text-white text-left">
-            <span className="bg-primary px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4 inline-block">
+          <div className="absolute bottom-6 left-6 text-white text-left">
+            <span className="bg-primary px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3 inline-block">
               Technical Excellence
             </span>
-            <h2 className="text-3xl md:text-5xl font-bold italic text-white leading-tight">
+            <h2 className="text-2xl md:text-4xl font-bold italic text-white leading-tight">
               Precision Care for <br /> Your Sound
             </h2>
           </div>
@@ -91,16 +91,16 @@ export default function ServicesPage() {
 
       {/* Trust Band */}
       <section className="border-y border-border bg-card/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-bold text-foreground mb-1">30+</div>
+              <div className="text-3xl font-bold text-foreground mb-1">30+</div>
               <div className="text-xs uppercase tracking-widest text-muted-foreground">
                 Years of Luthier Exp
               </div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-foreground mb-1">10+</div>
+              <div className="text-3xl font-bold text-foreground mb-1">10+</div>
               <div className="text-xs uppercase tracking-widest text-muted-foreground">
                 Years of Electronics Exp
               </div>
@@ -122,10 +122,10 @@ export default function ServicesPage() {
       </section>
 
       {/* Electronic Instruments Section */}
-      <section className="container mx-auto px-4 py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <section className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           <motion.div {...fadeIn}>
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-[1.1]">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 leading-[1.1]">
               Electronic <br />
               <span className="text-primary italic">Hardware Specialist</span>
             </h2>
@@ -181,9 +181,9 @@ export default function ServicesPage() {
       </section>
 
       {/* Luthier Section */}
-      <section className="bg-muted/30 py-24 border-y border-border">
+      <section className="bg-muted/30 py-8 border-y border-border">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -198,7 +198,7 @@ export default function ServicesPage() {
               />
             </motion.div>
             <motion.div {...fadeIn}>
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-[1.1]">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4 leading-[1.1]">
                 Master Luthier & <br />
                 <span className="text-primary italic">String Specialist</span>
               </h2>
@@ -248,10 +248,10 @@ export default function ServicesPage() {
       </section>
 
       {/* Quote Request Form */}
-      <section className="container mx-auto px-4 py-24" id="quote-form">
+      <section className="container mx-auto px-4 py-12" id="quote-form">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 uppercase italic">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 uppercase italic">
               REQUEST A <span className="text-primary">QUOTE</span>
             </h2>
             <p className="text-muted-foreground uppercase tracking-wider text-xs">
@@ -259,7 +259,7 @@ export default function ServicesPage() {
             </p>
           </div>
 
-          <div className="bg-card border border-border rounded-[3rem] p-8 md:p-16 shadow-xl relative overflow-hidden">
+          <div className="bg-card border border-border rounded-[3rem] p-8 md:p-12 shadow-xl relative overflow-hidden">
             <div className="absolute top-0 right-0 p-12 opacity-5">
               <IconTools className="h-64 w-64" />
             </div>
@@ -321,7 +321,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Footer Contact */}
-      <section className="bg-card/50 py-24 border-t border-border text-center">
+      <section className="bg-card/50 py-12 border-t border-border text-center">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-12 mb-12">
             <div className="text-left">

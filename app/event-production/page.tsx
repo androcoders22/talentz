@@ -30,13 +30,13 @@ export default function EventProductionPage() {
   return (
     <div className="bg-background min-h-screen">
       {/* New Hero Variation (Inspired by components/Hero.tsx) */}
-      <section className="container mx-auto px-4 pt-16 md:pt-24 pb-12 text-center">
+      <section className="container mx-auto px-4 pt-8 md:pt-10 pb-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-5xl mx-auto mb-16"
+          className="max-w-4xl mx-auto mb-6"
         >
-          <h1 className="text-5xl sm:text-7xl md:text-9xl font-light tracking-tight leading-[1.05] mb-8">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.05] mb-4">
             World-Class
             <br />
             <span className="font-bold text-primary italic">
@@ -46,7 +46,7 @@ export default function EventProductionPage() {
             Resources
           </h1>
 
-          <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
             Oman's leading partner for events and entertainment production
             solutions. Elevating experiences since 2002.
           </p>
@@ -128,10 +128,10 @@ export default function EventProductionPage() {
       </section>
 
       {/* About Section */}
-      <section className="container mx-auto px-4 py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <motion.div {...fadeIn}>
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-[1.1]">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 leading-[1.1]">
               A Vision to Accommodate <br />
               <span className="text-primary italic">All Event Needs</span>
             </h2>
@@ -186,9 +186,9 @@ export default function EventProductionPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="bg-muted/30 py-24 border-y border-border">
-        <div className="container mx-auto px-4 text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 uppercase italic">
+      <section className="bg-muted/30 py-8 border-y border-border">
+        <div className="container mx-auto px-4 text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 uppercase italic">
             COMPREHENSIVE <span className="text-primary">SERVICES</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto uppercase tracking-wider text-sm">
@@ -262,10 +262,10 @@ export default function EventProductionPage() {
       </section>
 
       {/* Notable Experience */}
-      <section className="container mx-auto px-4 py-24">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+      <section className="container mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
           <div className="max-w-2xl">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 uppercase italic">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2 uppercase italic">
               NOTABLE <span className="text-primary">EXPERIENCE</span>
             </h2>
             <p className="text-muted-foreground">
@@ -335,10 +335,10 @@ export default function EventProductionPage() {
       </section>
 
       {/* Instagram Section */}
-      <section className="bg-card/50 py-24 border-y border-border">
+      <section className="bg-card/50 py-8 border-y border-border">
         <div className="container mx-auto px-4 text-center">
-          <IconBrandInstagram className="h-12 w-12 text-primary mx-auto mb-6" />
-          <h2 className="text-3xl font-bold mb-4 uppercase">
+          <IconBrandInstagram className="h-8 w-8 text-primary mx-auto mb-3" />
+          <h2 className="text-xl font-bold mb-2 uppercase">
             Follow Our Journey
           </h2>
           <p className="text-muted-foreground mb-12 max-w-xl mx-auto uppercase tracking-widest text-xs">

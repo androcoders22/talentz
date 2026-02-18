@@ -19,26 +19,28 @@ export function Navbar() {
 
   const navLinks = [
     { href: "/#", label: "Events Productions" },
-    { href: "/##", label: "Music Store" },
+    { href: "/shop", label: "Music Store" },
     { href: "/###", label: "Distribution & Dealership" },
   ];
 
   return (
-    <header className="sticky top-6 z-9999 w-full px-2 md:px-0">
+    <header className="sticky top-0 z-9999 w-full pt-4 px-2 md:px-0 bg-transparent">
       <nav className="container mx-auto flex h-14 items-center justify-between rounded-full bg-black/70 px-2 md:px-3 py-1.5 backdrop-blur-md relative z-50 shadow-2xl border border-white/10">
         <div className="flex items-center gap-3">
           <Link href="/" className="shrink-0 flex items-center gap-3">
-            <div className="bg-white p-1.5 rounded-full flex items-center justify-center w-8 h-8 md:w-9 md:h-9">
+            <div className="ml-2 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 brightness-125">
               <Image
-                src="/logov2.png"
+                src="/logov3.png"
                 alt="Talentz"
-                width={32}
-                height={32}
+                width={48}
+                height={48}
                 className="h-full w-full object-contain"
                 priority
               />
             </div>
-            <h2 className="text-base md:text-lg font-bold tracking-[0.18em] text-white">TALENTZ</h2>
+            <h2 className="text-lg md:text-xl font-bold tracking-[0.18em] text-white">
+              TALENTZ
+            </h2>
           </Link>
         </div>
 
@@ -76,9 +78,7 @@ export function Navbar() {
           </div>
 
           <Link href="/login" className="hidden md:block">
-            <Button
-              className="bg-white text-black hover:bg-neutral-200 rounded-full px-5 py-2 h-10 font-bold text-sm transition-all"
-            >
+            <Button className="bg-white text-black hover:bg-neutral-200 rounded-full px-5 py-2 h-10 font-bold text-sm transition-all">
               Login
             </Button>
           </Link>
@@ -116,10 +116,11 @@ export function Navbar() {
                       key={link.href}
                       href={link.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`px-6 py-4 rounded-2xl text-lg font-medium transition-all ${isActive
-                        ? "bg-white/10 text-white"
-                        : "text-neutral-400 hover:bg-white/5 hover:text-white"
-                        }`}
+                      className={`px-6 py-4 rounded-2xl text-lg font-medium transition-all ${
+                        isActive
+                          ? "bg-white/10 text-white"
+                          : "text-neutral-400 hover:bg-white/5 hover:text-white"
+                      }`}
                     >
                       {link.label}
                     </Link>

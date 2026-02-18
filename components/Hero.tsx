@@ -13,7 +13,7 @@ export function Hero() {
             textShadow: "0 0 60px rgba(255,255,255,0.5)",
           }}
         >
-          <span className="font-bold text-primary">Redy for Every Stage.</span>
+          <span className="font-bold text-primary">Ready for Every Stage.</span>
           <br />
           AVL Rentals, Pro Audio, Music Gears.
           <IconArrowRight className="inline-block h-10 w-10 md:h-16 md:w-16 ml-1 md:ml-2 text-primary align-middle" />
@@ -61,7 +61,7 @@ export function Hero() {
 
         {/* Music Institute Oman */}
         <Link
-          href="/##"
+          href="/shop"
           className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-75 md:min-h-0 block"
         >
           <img
