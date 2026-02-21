@@ -61,7 +61,7 @@ export function Hero() {
 
         {/* Music Institute Oman */}
         <Link
-          href="/shop"
+          href="https://talentz-music-store.vercel.app"
           className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-75 md:min-h-0 block"
         >
           <img

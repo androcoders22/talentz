@@ -19,7 +19,10 @@ export function Navbar() {
 
   const navLinks = [
     { href: "/#", label: "Events Productions" },
-    { href: "/shop", label: "Music Store" },
+    {
+      href: "https://talentz-music-store.vercel.app",
+      label: "Music Store",
+    },
     { href: "/###", label: "Distribution & Dealership" },
   ];
 
