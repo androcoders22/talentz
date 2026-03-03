@@ -66,16 +66,13 @@ export function Navbar() {
                   <NavigationMenuContent className="bg-black/95 backdrop-blur-xl border border-white/10 text-white rounded-xl shadow-2xl p-2 w-[280px]">
                     <div className="flex flex-col gap-1 w-full">
                       {eventsLinks.map((link) => (
-                        <Link
-                          href={link.href}
-                          legacyBehavior
-                          passHref
+                        <NavigationMenuLink
                           key={link.label}
+                          render={<Link href={link.href} />}
+                          className="block px-4 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
                         >
-                          <NavigationMenuLink className="block px-4 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
-                            {link.label}
-                          </NavigationMenuLink>
-                        </Link>
+                          {link.label}
+                        </NavigationMenuLink>
                       ))}
                     </div>
                   </NavigationMenuContent>
@@ -88,35 +85,34 @@ export function Navbar() {
                   <NavigationMenuContent className="bg-black/95 backdrop-blur-xl border border-white/10 text-white rounded-xl shadow-2xl p-2 w-[220px]">
                     <div className="flex flex-col gap-1 w-full">
                       {musicLinks.map((link) => (
-                        <Link
-                          href={link.href}
-                          legacyBehavior
-                          passHref
+                        <NavigationMenuLink
                           key={link.label}
+                          render={<Link href={link.href} />}
+                          className="block px-4 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
                         >
-                          <NavigationMenuLink className="block px-4 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
-                            {link.label}
-                          </NavigationMenuLink>
-                        </Link>
+                          {link.label}
+                        </NavigationMenuLink>
                       ))}
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link href="/###" legacyBehavior passHref>
-                    <NavigationMenuLink className="bg-transparent text-white hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white h-9 px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center justify-center w-max">
-                      Distribution & Dealership
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink
+                    render={<Link href="/###" />}
+                    className="bg-transparent text-white hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white h-9 px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center justify-center w-max"
+                  >
+                    Distribution & Dealership
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link href="/contact" legacyBehavior passHref>
-                    <NavigationMenuLink className="bg-white text-black hover:bg-neutral-200 h-9 px-5 py-2 rounded-full text-sm font-bold transition-colors inline-flex items-center justify-center w-max">
-                      Contact Us
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink
+                    render={<Link href="/contact" />}
+                    className="bg-white text-black hover:bg-neutral-200 h-9 px-5 py-2 rounded-full text-sm font-bold transition-colors inline-flex items-center justify-center w-max"
+                  >
+                    Contact Us
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
