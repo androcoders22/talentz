@@ -9,15 +9,14 @@ export function Hero() {
       <div className="flex flex-col items-start mb-4 md:mb-8 gap-8">
         <h1
           className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.1]"
-          style={{
-            textShadow: "0 0 60px rgba(255,255,255,0.5)",
-          }}
+          // style={{
+          //   textShadow: "0 0 60px rgba(255,255,255,0.5)",
+          // }}
         >
-          <span className="font-extrabold tracking-widest text-zinc-900">
+          <span className="font-extrabold tracking-widest text-[4.5rem] text-zinc-900 block mb-3 lg:mb-5">
             TALENTZ
           </span>
-          <br />
-          <span className="font-semibold text-zinc-800">
+          <span className="font-semibold text-[3.5rem] text-zinc-800 ">
             Ready for Every Stage.
           </span>
           <br />
@@ -31,7 +30,7 @@ export function Hero() {
       <div className="flex flex-col md:flex-row gap-4 h-auto md:h-100">
         {/* Event Production */}
         <Link
-          href="/#"
+          href="/event-production"
           className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-4 flex-1 min-h-75 md:min-h-0 block"
         >
           <img
