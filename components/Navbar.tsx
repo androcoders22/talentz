@@ -37,7 +37,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-9999 w-full pt-4 bg-transparent">
       <div className="container mx-auto px-4">
-        <nav className="flex h-14 items-center justify-between rounded-full bg-black/70 px-2 md:px-3 py-1.5 backdrop-blur-md relative z-50 shadow-2xl border border-white/10">
+        <nav className="flex h-14 items-center justify-between rounded-full bg-black/40 px-2 md:px-3 py-1.5 backdrop-blur-sm relative z-50 shadow-2xl border border-white/10">
           <div className="flex items-center gap-3">
             <Link href="/" className="shrink-0 flex items-center gap-3">
               <div className="ml-2 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 brightness-125">
