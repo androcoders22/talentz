@@ -13,18 +13,19 @@ export function Hero() {
             textShadow: "0 0 60px rgba(255,255,255,0.5)",
           }}
         >
-          <span className="font-bold text-primary">Ready for Every Stage.</span>
+          <span className="font-extrabold tracking-widest text-zinc-900">
+            TALENTZ
+          </span>
           <br />
-          AVL Rentals, Pro Audio, Music Gears.
-          <IconArrowRight className="inline-block h-10 w-10 md:h-16 md:w-16 ml-1 md:ml-2 text-primary align-middle" />
+          <span className="font-semibold text-zinc-800">
+            Ready for Every Stage.
+          </span>
+          <br />
+          <span className="text-zinc-700">
+            AVL Rentals, Pro Audio, Music Gears.
+          </span>
+          <IconArrowRight className="inline-block h-10 w-10 md:h-16 md:w-16 ml-1 md:ml-2 text-zinc-600 align-middle" />
         </h1>
-
-        <div className="flex flex-wrap gap-3">
-          <RainbowButton size="lg">Explore Event Production</RainbowButton>
-          <RainbowButton variant="light" size="lg">
-            View Our Work
-          </RainbowButton>
-        </div>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 h-auto md:h-100">
@@ -38,7 +39,6 @@ export function Hero() {
             alt="Event Production"
             className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-105 opacity-60"
           />
-          <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent" />
           <div className="absolute top-4 right-4">
             <Button
               variant="secondary"

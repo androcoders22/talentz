@@ -3,13 +3,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import {
-  IconSearch,
-  IconShoppingCart,
-  IconMenu2,
-  IconX,
-} from "@tabler/icons-react";
+import { IconMenu2, IconX } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
@@ -17,13 +20,18 @@ export function Navbar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navLinks = [
-    { href: "/#", label: "Events Productions" },
-    {
-      href: "https://talentz-music-store.vercel.app",
-      label: "Music Store",
-    },
-    { href: "/###", label: "Distribution & Dealership" },
+  const eventsLinks = [
+    { label: "Technical & AV Rental", href: "/#" },
+    { label: "Truss Structures", href: "/#" },
+    { label: "Staging", href: "/#" },
+    { label: "Tents & Marquees", href: "/#" },
+    { label: "Grandstand Seating", href: "/#" },
+    { label: "Special Projects", href: "/#" },
+  ];
+
+  const musicLinks = [
+    { label: "Musical Instruments", href: "/#" },
+    { label: "Professional Audio", href: "/#" },
   ];
 
   return (
@@ -48,45 +56,73 @@ export function Navbar() {
             </Link>
           </div>
 
-          <div className="hidden lg:flex items-center gap-6">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`text-sm font-medium transition-all text-white`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
+          <div className="hidden lg:flex items-center ml-auto mr-2">
+            <NavigationMenu>
+              <NavigationMenuList className="gap-2">
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="bg-transparent text-white hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white data-[state=open]:bg-white/10! data-[state=open]:text-white! data-open:bg-white/10! data-open:text-white! data-popup-open:bg-white/10! data-popup-open:hover:bg-white/10! text-sm font-medium transition-all">
+                    Events Productions
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="bg-black/95 backdrop-blur-xl border border-white/10 text-white rounded-xl shadow-2xl p-2 w-[280px]">
+                    <div className="flex flex-col gap-1 w-full">
+                      {eventsLinks.map((link) => (
+                        <Link
+                          href={link.href}
+                          legacyBehavior
+                          passHref
+                          key={link.label}
+                        >
+                          <NavigationMenuLink className="block px-4 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+                            {link.label}
+                          </NavigationMenuLink>
+                        </Link>
+                      ))}
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="bg-transparent text-white hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white data-[state=open]:bg-white/10! data-[state=open]:text-white! data-open:bg-white/10! data-open:text-white! data-popup-open:bg-white/10! data-popup-open:hover:bg-white/10! text-sm font-medium transition-all">
+                    Music Store
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="bg-black/95 backdrop-blur-xl border border-white/10 text-white rounded-xl shadow-2xl p-2 w-[220px]">
+                    <div className="flex flex-col gap-1 w-full">
+                      {musicLinks.map((link) => (
+                        <Link
+                          href={link.href}
+                          legacyBehavior
+                          passHref
+                          key={link.label}
+                        >
+                          <NavigationMenuLink className="block px-4 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+                            {link.label}
+                          </NavigationMenuLink>
+                        </Link>
+                      ))}
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <Link href="/###" legacyBehavior passHref>
+                    <NavigationMenuLink className="bg-transparent text-white hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white h-9 px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center justify-center w-max">
+                      Distribution & Dealership
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <Link href="/contact" legacyBehavior passHref>
+                    <NavigationMenuLink className="bg-white text-black hover:bg-neutral-200 h-9 px-5 py-2 rounded-full text-sm font-bold transition-colors inline-flex items-center justify-center w-max">
+                      Contact Us
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
 
           <div className="flex items-center gap-2 md:gap-3">
-            <div className="hidden md:flex items-center gap-1">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-neutral-400 hover:text-white hover:bg-white/10 rounded-full h-10 w-10"
-              >
-                <IconSearch className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-neutral-400 hover:text-white hover:bg-white/10 rounded-full h-10 w-10"
-              >
-                <IconShoppingCart className="h-5 w-5" />
-              </Button>
-            </div>
-
-            <Link href="/login" className="hidden md:block">
-              <Button className="bg-white text-black hover:bg-neutral-200 rounded-full px-5 py-2 h-10 font-bold text-sm transition-all">
-                Login
-              </Button>
-            </Link>
-
             <Button
               variant="ghost"
               size="icon"
@@ -111,34 +147,55 @@ export function Navbar() {
               exit={{ opacity: 0, y: -10, scale: 0.98 }}
               className="absolute top-20 left-4 right-4 lg:hidden z-40"
             >
-              <div className="bg-black/95 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 shadow-2xl overflow-hidden">
+              <div className="bg-black/95 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 shadow-2xl overflow-y-auto max-h-[calc(100vh-6rem)] overscroll-contain">
                 <div className="flex flex-col gap-2">
-                  {navLinks.map((link) => {
-                    const isActive = pathname === link.href;
-                    return (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className={`px-6 py-4 rounded-2xl text-lg font-medium transition-all ${
-                          isActive
-                            ? "bg-white/10 text-white"
-                            : "text-neutral-400 hover:bg-white/5 hover:text-white"
-                        }`}
-                      >
-                        {link.label}
-                      </Link>
-                    );
-                  })}
+                  <div className="text-xs font-bold text-white/50 px-6 pt-4 pb-2 uppercase tracking-wider">
+                    Events Productions
+                  </div>
+                  {eventsLinks.map((link) => (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="px-6 py-2.5 rounded-2xl text-[15px] font-medium transition-all text-neutral-400 hover:bg-white/5 hover:text-white"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+
+                  <div className="text-xs font-bold text-white/50 px-6 pt-4 pb-2 uppercase tracking-wider">
+                    Music Store
+                  </div>
+                  {musicLinks.map((link) => (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="px-6 py-2.5 rounded-2xl text-[15px] font-medium transition-all text-neutral-400 hover:bg-white/5 hover:text-white"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+
+                  <div className="mt-2 h-px bg-white/10 mx-6 my-2" />
+
+                  <Link
+                    href="/###"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="px-6 py-3 rounded-2xl text-base font-medium transition-all text-white hover:bg-white/5"
+                  >
+                    Distribution & Dealership
+                  </Link>
+                  <Link
+                    href="/contact"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="px-6 py-3 rounded-2xl text-base font-medium transition-all text-white hover:bg-white/5"
+                  >
+                    Contact Us
+                  </Link>
                 </div>
                 <div className="mt-4 pt-6 border-t border-white/10 flex flex-col gap-4">
-                  <div className="flex gap-4 px-4">
-                    <IconSearch className="h-6 w-6 text-neutral-400" />
-                    <IconShoppingCart className="h-6 w-6 text-neutral-400" />
-                  </div>
-                  <Button className="w-full rounded-full h-14 bg-white text-black font-bold text-lg hover:bg-neutral-200">
-                    Login
-                  </Button>
+                  <div className="flex gap-4 px-4"></div>
                 </div>
               </div>
             </motion.div>
