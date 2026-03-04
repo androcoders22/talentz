@@ -1,13 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { Hero } from "@/components/Hero";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
 import { LatherBagCollection } from "@/components/LatherBagCollection";
 import Gallery from "@/components/Gallery";
 import { Footer } from "@/components/Footer";
 import Grainient from "@/components/Grainient";
+import { ThemePicker } from "@/components/ThemePicker";
 
 export default function Home() {
+  const [color1, setColor1] = useState("#002aff");
+  const [color2, setColor2] = useState("#00ccff");
+  const [color3, setColor3] = useState("#ffffff");
   return (
     <>
       {/* Grainient Background - Fixed parallax layer */}
@@ -15,9 +20,9 @@ export default function Home() {
         <div className="absolute inset-0 bg-linear-to-b from-white/40 to-white z-10" />
         <div className="w-full h-full select-none">
           <Grainient
-            color1="#002aff"
-            color2="#00ccff"
-            color3="#ffffff"
+            color1={color1}
+            color2={color2}
+            color3={color3}
             timeSpeed={2.05}
             colorBalance={0}
             warpStrength={1}
@@ -52,6 +57,15 @@ export default function Home() {
         <LatherBagCollection />
         <Footer />
       </div>
+
+      <ThemePicker
+        color1={color1}
+        color2={color2}
+        color3={color3}
+        setColor1={setColor1}
+        setColor2={setColor2}
+        setColor3={setColor3}
+      />
     </>
   );
 }

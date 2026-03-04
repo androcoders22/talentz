@@ -37,10 +37,10 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-9999 w-full pt-4 bg-transparent">
       <div className="container mx-auto px-4">
-        <nav className="flex h-14 items-center justify-between rounded-full bg-black/40 px-2 md:px-3 py-1.5 backdrop-blur-sm relative z-50 shadow-2xl border border-white/10">
+        <nav className="flex h-14 items-center justify-between rounded-full bg-black/20 px-2 md:px-3 py-1.5 backdrop-blur-sm relative z-50 shadow-2xl border border-white/10">
           <div className="flex items-center gap-3">
             <Link href="/" className="shrink-0 flex items-center gap-3">
-              <div className="ml-2 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 brightness-125">
+              <div className="ml-2 flex items-center justify-center w-10 h-10 md:w-11 md:h-11 brightness-125">
                 <Image
                   src="/logov3.png"
                   alt="Talentz"
@@ -61,7 +61,7 @@ export function Navbar() {
               <NavigationMenuList className="gap-2">
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="bg-transparent text-white hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white data-[state=open]:bg-white/10! data-[state=open]:text-white! data-open:bg-white/10! data-open:text-white! data-popup-open:bg-white/10! data-popup-open:hover:bg-white/10! text-sm font-medium transition-all">
-                    Events Productions
+                    Event Production
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="bg-black/95 backdrop-blur-xl border border-white/10 text-white rounded-xl shadow-2xl p-2 w-[280px]">
                     <div className="flex flex-col gap-1 w-full">
