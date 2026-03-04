@@ -141,63 +141,7 @@ export function Footer() {
               </div>
             </div>
           </div>
-          {/* Links Grid Section
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 py-10 border-y border-black/5 mb-12">
-            <div>
-              <h4 className="font-bold mb-8 uppercase text-[10px] tracking-[0.2em] text-black border-l-2 border-black/20 pl-4">
-                Product Category
-              </h4>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-4 text-[13px] text-black/40">
-                {[
-                  "Guitars",
-                  "Studio & Recording",
-                  "Keyboards & Pianos",
-                  "Ukuleles",
-                  "Drums & Percussion",
-                  "Guitar Amplifiers",
-                  "Headphones",
-                  "Microphones",
-                  "Effects",
-                  "Strings",
-                  "Special Offers, Sale & More",
-                  "Preloved & Used",
-                ].map((cat) => (
-                  <Link
-                    key={cat}
-                    href="#"
-                    className="hover:text-black transition-colors"
-                  >
-                    {cat}
-                  </Link>
-                ))}
-              </div>
-            </div>
 
-            <div>
-              <h4 className="font-bold mb-8 uppercase text-[10px] tracking-[0.2em] text-black border-l-2 border-black/20 pl-4">
-                Quick Links
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-[13px] text-black/40">
-                {[
-                  "User Agreement & Terms of Use",
-                  "Terms & Conditions for Online Shopping",
-                  "Shipping & Delivery",
-                  "Frequently Asked Questions [FAQs]",
-                  "Privacy Policy",
-                  "Promotions, News Releases, Shopping Guides and more!",
-                  "About Us",
-                ].map((link) => (
-                  <Link
-                    key={link}
-                    href="#"
-                    className="hover:text-primary transition-colors"
-                  >
-                    {link}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div> */}
           {/* Bottom Bar Section */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-black/30">
             <p>© 2025 Talentz Enterprises L.L.C. All rights reserved.</p>
