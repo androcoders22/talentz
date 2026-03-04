@@ -1,29 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { IconArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
-import { RainbowButton } from "./ui/rainbow-button";
 
 export function Hero() {
   return (
     <section className="container mx-auto px-4 pt-8 md:pt-12 pb-10">
       <div className="flex flex-col items-start mb-4 md:mb-8 gap-8">
-        <h1
-          className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.1]"
-          // style={{
-          //   textShadow: "0 0 60px rgba(255,255,255,0.5)",
-          // }}
-        >
-          <span className="font-extrabold tracking-widest text-[4.5rem] text-zinc-900 block mb-3 lg:mb-5">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.1]">
+          <span className="font-extrabold tracking-widest text-[4.8rem] text-zinc-950 block mb-2 lg:mb-4">
             TALENTZ
           </span>
-          <span className="font-semibold text-[3.5rem] text-zinc-800 ">
+          <span className="font-semibold text-[3.5rem] text-zinc-900 ">
             Ready for Every Stage.
           </span>
           <br />
-          <span className="text-zinc-700">
+          <span className="text-zinc-800">
             AVL Rentals, Pro Audio, Music Gears.
           </span>
-          <IconArrowRight className="inline-block h-10 w-10 md:h-16 md:w-16 ml-1 md:ml-2 text-zinc-600 align-middle" />
         </h1>
       </div>
 
