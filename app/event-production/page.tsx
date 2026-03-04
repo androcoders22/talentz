@@ -88,13 +88,10 @@ export default function EventProductionPage() {
   }, [initPlayer]);
 
   return (
-    <main className="bg-zinc-950 text-white min-h-screen pb-20">
-      <section className="relative overflow-hidden -mt-20 pt-20 h-screen">
-        {/* Video Background - Parallax Wrapper */}
-        <div
-          className="absolute -top-[25%] left-0 w-full h-[150%] z-0 pointer-events-none"
-          style={{ transform: `translateY(${scrollY * 0.4}px)` }}
-        >
+    <main className="bg-transparent text-white min-h-screen pb-20 relative">
+      <section className="relative h-screen flex flex-col items-center justify-center">
+        {/* Video Background - Fixed Wrapper so it stays behind the whole page */}
+        <div className="fixed top-0 left-0 w-full h-screen z-[-1] pointer-events-none">
           {/* Fallback Image while video is loading */}
           <div
             className={`absolute inset-0 transition-opacity duration-1000 ${
@@ -126,28 +123,81 @@ export default function EventProductionPage() {
 
         {/* Hero Content Overlay - Parallax and Fade */}
         <div
-          className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4 pointer-events-none"
+          className="absolute inset-0 z-10 flex flex-col justify-center px-6 md:px-14 lg:px-24 pointer-events-none"
           style={{
             transform: `translateY(${scrollY * 0.15}px)`,
             opacity: Math.max(0, 1 - scrollY / 600),
           }}
         >
-          <div className="pointer-events-auto">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter text-white mb-6 drop-shadow-2xl">
-              Event <br />
-              <span className="text-white underline decoration-white/30 underline-offset-8">
-                Production
+          <div className="pointer-events-auto max-w-2xl mt-10">
+            <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium text-white mb-6 leading-[1.1] tracking-tight flex flex-col gap-2">
+              <span className="flex items-center gap-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-12 h-12 md:w-16 md:h-16 shrink-0 opacity-90"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect
+                    x="2"
+                    y="4"
+                    width="20"
+                    height="16"
+                    rx="1.5"
+                    ry="1.5"
+                  ></rect>
+                  <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                </svg>
+                Event
               </span>
+              Production
             </h1>
-            <p className="text-lg md:text-xl text-white/80 max-w-2xl font-light tracking-wide uppercase">
-              World Class Resources in Oman & GCC
+            <p className="text-lg text-white/80 font-normal tracking-wide mb-10 leading-relaxed max-w-md">
+              Unlock a world of possibilities with Talentz, the ultimate
+              destination for world-class high-quality events in Oman & GCC.
             </p>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
+              <button className="bg-white text-black px-6 py-3.5 rounded-xl font-medium flex items-center gap-2 hover:bg-white/90 transition-colors text-sm">
+                Contact Us{" "}
+                <span className="text-xl mb-0.5 leading-none">»</span>
+              </button>
+              <button
+                onClick={() => {
+                  if (playerRef.current && playerRef.current.unMute) {
+                    playerRef.current.unMute();
+                    playerRef.current.setVolume(100);
+                  }
+                }}
+                className="text-white flex items-center gap-3 hover:text-white/80 transition-colors font-medium text-sm group"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="group-hover:scale-110 transition-transform"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                </svg>
+                Watch the Video
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Section 1: Introduction */}
-      <section className="py-32 px-6 md:px-14 container mx-auto">
+      <section className="py-32 px-6 md:px-14 container mx-auto bg-zinc-950 relative z-10 w-full max-w-none border-t border-white/5">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <h2 className="text-sm font-bold tracking-[0.3em] uppercase text-zinc-500 mb-4 border-l-2 border-white/20 pl-4 inline-block">
             Leading Partner in Oman
@@ -169,7 +219,7 @@ export default function EventProductionPage() {
       </section>
 
       {/* Section 2: Equipment / Capabilities */}
-      <section className="py-32 bg-zinc-900 relative overflow-hidden border-y border-white/5">
+      <section className="py-32 bg-zinc-950 relative overflow-hidden border-y border-white/5 z-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0,transparent_100%)] pointer-events-none" />
         <div className="container mx-auto px-6 md:px-14 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -213,14 +263,24 @@ export default function EventProductionPage() {
                 fill
                 className="object-cover opacity-60 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-zinc-900 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-zinc-950 via-transparent to-transparent" />
             </div>
           </div>
         </div>
       </section>
 
+      {/* Section X: The "Window" Exposing the BG Video */}
+      <section className="py-48 relative flex items-center justify-center">
+        {/* Transparent section allowing the fixed video background to show through. */}
+        <div className="text-center px-4 relative z-10 mix-blend-difference pointer-events-none">
+          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-widest text-white border-4 border-white inline-block p-10">
+            Unforgettable <br /> Experiences.
+          </h2>
+        </div>
+      </section>
+
       {/* Section 3: Testimonials */}
-      <section className="py-32 px-6 md:px-14 container mx-auto">
+      <section className="py-32 px-6 md:px-14 container mx-auto bg-zinc-950 relative z-10 w-full max-w-none">
         <div className="text-center mb-20">
           <h2 className="text-sm font-bold tracking-[0.3em] uppercase text-zinc-500 mb-4 border-l-2 border-white/20 pl-4 inline-block">
             Hear from our Clients
