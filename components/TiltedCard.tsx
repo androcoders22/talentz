@@ -1,9 +1,10 @@
 import type { SpringOptions } from "motion/react";
 import { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
+import Image, { StaticImageData } from "next/image";
 
 interface TiltedCardProps {
-  imageSrc: React.ComponentProps<"img">["src"];
+  imageSrc: string | StaticImageData;
   altText?: string;
   captionText?: string;
   containerHeight?: React.CSSProperties["height"];
@@ -17,6 +18,7 @@ interface TiltedCardProps {
   overlayContent?: React.ReactNode;
   displayOverlayContent?: boolean;
   imageObjectFit?: React.CSSProperties["objectFit"];
+  isPriority?: boolean;
 }
 
 const springValues: SpringOptions = {
@@ -40,6 +42,7 @@ export default function TiltedCard({
   overlayContent = null,
   displayOverlayContent = false,
   imageObjectFit = "cover",
+  isPriority = false,
 }: TiltedCardProps) {
   const ref = useRef<HTMLElement>(null);
   const x = useMotionValue(0);
@@ -118,12 +121,16 @@ export default function TiltedCard({
           scale,
         }}
       >
-        <motion.img
+        <Image
           src={imageSrc}
           alt={altText}
-          className="absolute top-0 left-0 w-full h-full will-change-transform transform-[translateZ(0)]"
+          fill
+          priority={isPriority}
+          quality={77}
+          unoptimized={false}
+          className="will-change-transform transform-[translateZ(0)]"
           style={{
-            objectFit: imageObjectFit,
+            objectFit: imageObjectFit as any,
           }}
         />
 

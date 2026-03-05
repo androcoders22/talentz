@@ -7,24 +7,67 @@ import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 const projects = [
   {
-    title: "Audio Engineering",
-    src: "/gallery-1.jpg",
+    src: "/new/6L8A9208.jpg",
   },
   {
-    title: "Studio Services",
+    src: "/new/6L8A0127.jpg",
+  },
+  {
     src: "/gallery-3.jpg",
   },
   {
-    title: "Curated Gear",
-    src: "/gallery-5.jpg",
+    src: "/new/6L8A2615.jpg",
   },
   {
-    title: "Talent Management",
-    src: "/gallery-4.jpg",
+    src: "/new/DSC00782.jpg",
   },
   {
-    title: "Global Distribution",
-    src: "/gallery-6.jpg",
+    src: "/new/DSC05565.jpg",
+  },
+  {
+    src: "/new/6L8A2595.jpg",
+  },
+  {
+    src: "/new/6L8A3952.jpg",
+  },
+  {
+    src: "/new/6L8A4309.jpg",
+  },
+  {
+    src: "/new/6L8A4415.jpg",
+  },
+  {
+    src: "/new/6L8A9483.jpg",
+  },
+  {
+    src: "/new/DAS_0439.jpg",
+  },
+  {
+    src: "/new/DSC01552.jpg",
+  },
+  {
+    src: "/new/DSC02598.jpg",
+  },
+  {
+    src: "/new/DSC04010.jpg",
+  },
+  {
+    src: "/new/DSC04045.jpg",
+  },
+  {
+    src: "/new/DSC07073.jpg",
+  },
+  {
+    src: "/new/DSC07075.jpg",
+  },
+  {
+    src: "/new/DSC07093.jpg",
+  },
+  {
+    src: "/new/TALENTZ-03.jpg",
+  },
+  {
+    src: "/new/TALENTZOCEC-005.jpg",
   },
 ];
 
@@ -57,11 +100,7 @@ const GalleryItem = ({
   const scale = useTransform(
     cardProgress,
     [-1, 0, 1],
-    [
-      isMobile ? 0.72 : 0.8,
-      isMobile ? 0.98 : 1.04,
-      isMobile ? 0.72 : 0.8,
-    ],
+    [isMobile ? 0.72 : 0.8, isMobile ? 0.98 : 1.04, isMobile ? 0.72 : 0.8],
   );
   const opacity = useTransform(cardProgress, (p: number) => {
     if (isMobile) {
@@ -96,8 +135,8 @@ const GalleryItem = ({
       <div className="pointer-events-none sm:pointer-events-auto">
         <TiltedCard
           imageSrc={project.src}
-          altText={project.title}
-          captionText={project.title}
+          altText=""
+          captionText=""
           containerHeight={isMobile ? "245px" : "min(400px, 54vw)"}
           containerWidth={isMobile ? "90vw" : "min(820px, 72vw)"}
           imageHeight={isMobile ? "245px" : "min(400px, 54vw)"}
@@ -172,7 +211,6 @@ const Gallery = () => {
         </div>
 
         <div className="relative h-95 md:h-125 w-full flex items-center justify-center">
-
           {/* Carousel Drag Surface */}
           <motion.div
             className="relative w-full h-full flex items-center justify-center touch-none cursor-grab active:cursor-grabbing overflow-hidden"
@@ -228,12 +266,15 @@ const Gallery = () => {
                 const isActive = index === normalizedPosition;
                 return (
                   <button
-                    key={project.title}
+                    key={index}
                     onClick={() => handleGoTo(index)}
-                    aria-label={`Go to ${project.title}`}
+                    aria-label={`Go to ${index}`}
                     aria-current={isActive ? "true" : undefined}
-                    className={`h-2.5 rounded-full transition-all ${isActive ? "w-6 bg-black" : "w-2.5 bg-black/30 hover:bg-black/50"
-                      }`}
+                    className={`h-2.5 rounded-full transition-all ${
+                      isActive
+                        ? "w-6 bg-black"
+                        : "w-2.5 bg-black/30 hover:bg-black/50"
+                    }`}
                   />
                 );
               })}
