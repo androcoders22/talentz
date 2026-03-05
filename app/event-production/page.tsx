@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { RainbowButton } from "@/components/ui/rainbow-button";
+import FlowingMenu from "@/components/FlowingMenu";
 
 declare global {
   interface Window {
@@ -163,7 +165,7 @@ export default function EventProductionPage() {
               destination for world-class high-quality events in Oman & GCC.
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
-              <button className="bg-white text-black px-6 py-3.5 rounded-xl font-medium flex items-center gap-2 hover:bg-white/90 transition-colors text-sm">
+              <button className="px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-black/20 border border-white/20 hover:bg-white/10 transition-colors text-sm flex items-center gap-2">
                 Contact Us{" "}
                 <span className="text-xl mb-0.5 leading-none">»</span>
               </button>
@@ -199,82 +201,59 @@ export default function EventProductionPage() {
       </section>
 
       {/* Section 1: Introduction */}
-      <section className="py-24 px-6 md:px-14 bg-zinc-950 relative z-10 w-full border-t border-white/5">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-start">
-            {/* Left: Sticky Title */}
-            <div className="sticky top-32 mb-12 md:mb-0">
-              <h2 className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-500 mb-4 border-l-2 border-white/20 pl-4 inline-block">
-                Leading Partner in Oman
-              </h2>
-              <p className="text-3xl md:text-5xl font-medium leading-tight text-white/90">
-                Talentz Event Production division is the leading partner for
-                events and entertainment production solutions.
-              </p>
-            </div>
-
-            {/* Right: Scrolling Content */}
-            <div className="space-y-24 md:space-y-40 pb-10 mt-10 md:mt-0">
-              {/* Block 1 */}
-              <div className="space-y-4 relative group">
-                <div className="text-5xl text-white/10 font-serif italic absolute -top-8 -left-4 pointer-events-none group-hover:text-white/20 transition-colors duration-500">
-                  01
-                </div>
-                <h4 className="text-2xl font-medium text-white/90 relative z-10">
-                  Resounding Success
-                </h4>
-                <p className="text-lg text-white/60 leading-relaxed font-light relative z-10">
-                  We have helped many events become resounding successes across
-                  a wide range of market segments.
-                </p>
-              </div>
-
-              {/* Block 2 */}
-              <div className="space-y-4 relative group">
-                <div className="text-5xl text-white/10 font-serif italic absolute -top-8 -left-4 pointer-events-none group-hover:text-white/20 transition-colors duration-500">
-                  02
-                </div>
-                <h4 className="text-2xl font-medium text-white/90 relative z-10">
-                  Diverse Gatherings
-                </h4>
-                <p className="text-lg text-white/60 leading-relaxed font-light relative z-10">
-                  From unique destination wedding setups to innovative car
-                  launches, beautiful architectural lighting to glitzy fashion
-                  shows.
-                </p>
-              </div>
-
-              {/* Block 3 */}
-              <div className="space-y-4 relative group">
-                <div className="text-5xl text-white/10 font-serif italic absolute -top-8 -left-4 pointer-events-none group-hover:text-white/20 transition-colors duration-500">
-                  03
-                </div>
-                <h4 className="text-2xl font-medium text-white/90 relative z-10">
-                  World-Class Execution
-                </h4>
-                <p className="text-lg text-white/60 leading-relaxed font-light relative z-10">
-                  From concerts of Grammy Award-winning artists to local
-                  performances; our team delivers quality service, often going
-                  above and beyond.
-                </p>
-              </div>
-            </div>
-          </div>
+      <section className="bg-zinc-950 relative z-10 w-full border-t border-white/5">
+        <div className="h-[350px] relative w-full border-b border-t border-white/5">
+          <FlowingMenu
+            items={[
+              {
+                link: "#",
+                text: "Resounding Success",
+                image: "/new/6L8A0127.jpg",
+              },
+              {
+                link: "#",
+                text: "Diverse Gatherings",
+                image: "/new/6L8A4309.jpg",
+              },
+              {
+                link: "#",
+                text: "World-Class Execution",
+                image: "/new/TALENTZOCEC-005.jpg",
+              },
+              {
+                link: "#",
+                text: "Unforgettable Experiences",
+                image: "/new/TALENTZOCEC-010.jpg",
+              },
+              {
+                link: "#",
+                text: "Cutting-Edge Tech",
+                image: "/new/6L8A4415.jpg",
+              },
+            ]}
+            speed={15}
+            textColor="#ffffff"
+            bgColor="#000000"
+            marqueeBgColor="#ffffff"
+            marqueeTextColor="#000000"
+            borderColor="rgba(255,255,255,0.1)"
+          />
         </div>
       </section>
 
       {/* Section 2: Equipment / Capabilities */}
       <section className="py-16 bg-zinc-950 relative overflow-hidden border-y border-white/5 z-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0,transparent_100%)] pointer-events-none" />
-        <div className="container mx-auto px-4 md:px-7 relative z-10">
+        <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:auto-rows-[280px]">
             {/* Card 1: Left tall */}
-            <div className="md:col-span-1 md:row-span-2 bg-zinc-900 border border-white/10 p-6 flex flex-col justify-between relative group transition-colors duration-500 hover:bg-white text-white hover:text-black">
+            <div className="md:col-span-1 md:row-span-2 bg-zinc-950 border border-white/10 p-6 flex flex-col justify-between relative group transition-colors duration-500 hover:bg-white text-white hover:text-black">
               <div className="w-full h-1/2 relative mt-4">
-                <img
-                  src="https://placehold.co/400x600/18181b/fff?text=AV+Inventory"
+                <Image
+                  src="/new/6L8A2615.jpg"
                   alt="Inventory"
-                  className="w-full h-full object-contain mix-blend-luminosity opacity-80 group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-700 pointer-events-none"
+                  fill
+                  className="object-contain grayscale group-hover:grayscale-0 transition-all duration-700 pointer-events-none"
                 />
               </div>
               <div className="space-y-3 mb-2 text-center md:text-left transition-colors duration-500">
@@ -289,58 +268,61 @@ export default function EventProductionPage() {
             </div>
 
             {/* Card 2: Top Right wide */}
-            <div className="md:col-span-2 md:row-span-1 bg-white text-black border border-white/10 p-6 flex flex-col md:flex-row items-center justify-between relative group hover:bg-zinc-200 transition-colors duration-500 overflow-hidden">
+            <div className="md:col-span-2 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-6 flex flex-col md:flex-row items-center justify-between relative group hover:bg-white hover:text-black transition-colors duration-500 overflow-hidden">
               <div className="space-y-3 max-w-xs z-10 relative">
                 <h3 className="text-2xl md:text-4xl font-medium leading-[1.1] transition-colors duration-500">
                   Immersive <br /> Events
                 </h3>
-                <p className="text-zinc-600 font-light text-sm transition-colors duration-500">
+                <p className="text-zinc-500 group-hover:text-zinc-600 font-light text-sm transition-colors duration-500">
                   From architectural lighting to glitzy fashion shows, advanced
                   visual setups redefine audience engagement.
                 </p>
               </div>
               <div className="w-full md:w-1/2 h-40 md:h-full relative mt-6 md:mt-0 right-0">
-                <img
-                  src="https://placehold.co/600x400/fff/18181b?text=Visual+Lighting"
+                <Image
+                  src="/new/RED_5641.jpg"
                   alt="Lighting"
-                  className="w-full h-full object-cover md:object-contain object-right mix-blend-luminosity opacity-80 group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-700 scale-110 pointer-events-none"
+                  fill
+                  className="object-cover md:object-contain object-right grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 pointer-events-none"
                 />
               </div>
             </div>
 
             {/* Card 3: Bottom Left small */}
-            <div className="md:col-span-1 md:row-span-1 bg-white text-black border border-white/10 p-6 flex flex-row items-center justify-between relative group hover:bg-zinc-200 transition-colors duration-500">
+            <div className="md:col-span-1 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-6 flex flex-row items-center justify-between relative group hover:bg-white hover:text-black transition-colors duration-500">
               <div className="space-y-2 max-w-[60%] z-10">
                 <h3 className="text-xl md:text-3xl font-medium leading-[1.1] transition-colors duration-500">
                   Precise <br /> Audio
                 </h3>
-                <p className="text-zinc-600 text-xs font-light mt-1 transition-colors duration-500">
+                <p className="text-zinc-500 group-hover:text-zinc-600 text-xs font-light mt-1 transition-colors duration-500">
                   Line arrays & pro sound.
                 </p>
               </div>
               <div className="w-[40%] h-full relative z-0">
-                <img
-                  src="https://placehold.co/200x400/fff/18181b?text=Mic"
+                <Image
+                  src="/new/DSC01552.jpg"
                   alt="Microphone"
-                  className="w-full h-full object-contain object-center scale-[1.3] mix-blend-luminosity opacity-80 group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-700 pointer-events-none"
+                  fill
+                  className="object-cover object-center scale-[1.3] grayscale group-hover:grayscale-0 transition-all duration-700 pointer-events-none"
                 />
               </div>
             </div>
 
             {/* Card 4: Bottom Right small */}
-            <div className="md:col-span-1 md:row-span-1 bg-zinc-900 border border-white/10 p-6 flex flex-col justify-end relative group hover:bg-zinc-800 transition-colors duration-500 overflow-hidden text-white">
+            <div className="md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-6 flex flex-col justify-end relative group hover:bg-white hover:text-black transition-colors duration-500 overflow-hidden text-white">
               <div className="absolute inset-0 top-0 h-[60%] w-full">
-                <img
-                  src="https://placehold.co/400x200/18181b/fff?text=Staging+Truss"
+                <Image
+                  src="/new/TALENTZOCEC-040.jpg"
                   alt="Trussing"
-                  className="w-full h-full object-cover object-bottom mix-blend-luminosity opacity-40 group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-700 pointer-events-none"
+                  fill
+                  className="object-cover object-bottom grayscale group-hover:grayscale-0 transition-all duration-700 pointer-events-none"
                 />
               </div>
               <div className="space-y-2 relative z-10 mt-auto text-left">
                 <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500">
                   Seamless Structures
                 </h3>
-                <p className="text-zinc-500 text-xs font-light transition-colors duration-500">
+                <p className="text-zinc-500 group-hover:text-zinc-600 text-xs font-light transition-colors duration-500">
                   Trusses, staging & barriers
                 </p>
               </div>
@@ -350,77 +332,455 @@ export default function EventProductionPage() {
       </section>
 
       {/* Section X: The "Window" Exposing the BG Video */}
-      <section className="py-48 relative flex items-center justify-center">
-        {/* Transparent section allowing the fixed video background to show through. */}
-        <div className="text-center px-4 relative z-10 mix-blend-difference pointer-events-none">
-          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-widest text-white border-4 border-white inline-block p-10">
-            Unforgettable <br /> Experiences.
+      <section className="py-20 bg-black/40 backdrop-blur-sm relative flex items-center justify-center z-10 w-full border-t border-b border-white/5">
+        <div className="container mx-auto px-4 text-center relative pointer-events-none">
+          <h2 className="text-6xl md:text-8xl lg:text-[8rem] font-black uppercase tracking-widest text-white/30 inline-block">
+            EVENT PRODUCTION
           </h2>
         </div>
       </section>
 
-      {/* Section 3: Testimonials */}
-      <section className="py-32 px-6 md:px-14 container mx-auto bg-zinc-950 relative z-10 w-full max-w-none">
-        <div className="text-center mb-20">
-          <h2 className="text-sm font-bold tracking-[0.3em] uppercase text-zinc-500 mb-4 border-l-2 border-white/20 pl-4 inline-block">
-            Hear from our Clients
-          </h2>
-          <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-            Trusted by the Best
-          </h3>
-        </div>
+      {/* Section 4: Recent Projects Gallery */}
+      <section className="py-24 bg-zinc-950 relative z-10 w-full border-t border-white/5 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="mb-16">
+            <h2 className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-500 mb-4 border-l-2 border-white/20 pl-4 inline-block">
+              Our Portfolio
+            </h2>
+            <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+              Recent Projects
+            </h3>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {/* Testimonial 1 */}
-          <div className="bg-zinc-900/50 p-10 border border-white/10 relative group hover:bg-white transition-colors">
-            <div className="text-6xl text-white/10 absolute top-6 left-6 font-serif group-hover:text-black/10 transition-colors">
-              "
-            </div>
-            <div className="relative z-10">
-              <p className="text-lg text-white/80 group-hover:text-black/80 leading-relaxed font-light mb-8 italic transition-colors">
-                Truly world class service. Talentz provides Light & Sound with
-                giant LED screens that is really an eye/ear candy. Simply the
-                best in the business!
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white/10 border border-white/20 flex items-center justify-center text-white font-bold text-lg group-hover:bg-black group-hover:text-white transition-colors">
-                  C
-                </div>
-                <div>
-                  <h4 className="font-bold text-white group-hover:text-black tracking-wide transition-colors">
-                    Cloud 9 Band Oman
+          <div className="w-full">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[300px] md:auto-rows-[400px]">
+              {/* Project 1 - Tall */}
+              <div className="col-span-2 lg:col-span-1 row-span-2 relative group overflow-hidden bg-zinc-900 border border-white/5">
+                <Image
+                  src="/new/6L8A0127.jpg"
+                  alt="Live Concert"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+                  <h4 className="text-white text-2xl font-medium translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    Live Concert
                   </h4>
-                  <p className="text-sm text-white/40 group-hover:text-black/50 uppercase tracking-widest mt-1 transition-colors">
-                    Client
+                  <p className="text-zinc-400 text-sm mt-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 uppercase tracking-wider">
+                    Full AV Production
+                  </p>
+                </div>
+              </div>
+
+              {/* Project 2 - Wide */}
+              <div className="col-span-2 lg:col-span-2 row-span-1 relative group overflow-hidden bg-zinc-900 border border-white/5">
+                <Image
+                  src="/new/6L8A4309.jpg"
+                  alt="Corporate Event"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+                  <h4 className="text-white text-2xl font-medium translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    Corporate Event
+                  </h4>
+                  <p className="text-zinc-400 text-sm mt-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 uppercase tracking-wider">
+                    Lighting & Stage
+                  </p>
+                </div>
+              </div>
+
+              {/* Project 3 - Regular */}
+              <div className="col-span-1 row-span-1 relative group overflow-hidden bg-zinc-900 border border-white/5">
+                <Image
+                  src="/new/TALENTZOCEC-005.jpg"
+                  alt="Exhibition Setup"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+                  <h4 className="text-white text-2xl font-medium translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    Exhibition Setup
+                  </h4>
+                  <p className="text-zinc-400 text-sm mt-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 uppercase tracking-wider">
+                    LED Screens
+                  </p>
+                </div>
+              </div>
+
+              {/* Project 4 - Regular */}
+              <div className="col-span-1 row-span-1 relative group overflow-hidden bg-zinc-900 border border-white/5">
+                <Image
+                  src="/new/DSC00782.jpg"
+                  alt="Music Festival"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+                  <h4 className="text-white text-2xl font-medium translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    Music Festival
+                  </h4>
+                  <p className="text-zinc-400 text-sm mt-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 uppercase tracking-wider">
+                    Stage & Lighting
+                  </p>
+                </div>
+              </div>
+
+              {/* Project 5 - Wide */}
+              <div className="col-span-2 lg:col-span-2 row-span-1 relative group overflow-hidden bg-zinc-900 border border-white/5">
+                <Image
+                  src="/new/DAS_0439.jpg"
+                  alt="Outdoor Stage"
+                  fill
+                  className="object-cover object-bottom group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+                  <h4 className="text-white text-2xl font-medium translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    Outdoor Stage
+                  </h4>
+                  <p className="text-zinc-400 text-sm mt-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 uppercase tracking-wider">
+                    Trussing & Sound
                   </p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Testimonial 2 */}
-          <div className="bg-zinc-900/50 p-10 border border-white/10 relative group hover:bg-white transition-colors">
-            <div className="text-6xl text-white/10 absolute top-6 left-6 font-serif group-hover:text-black/10 transition-colors">
-              "
-            </div>
-            <div className="relative z-10">
-              <p className="text-lg text-white/80 group-hover:text-black/80 leading-relaxed font-light mb-8 italic transition-colors">
-                We really appreciate that you were able to provide us with such
-                outstanding AV equipment and services. Your staff were
-                professional, courteous, flexible to accommodate our need and
-                efficient!
+      {/* Section X: Statistics / Impact */}
+      <section className="py-16 bg-black/40 backdrop-blur-sm relative z-10 w-full border-t border-white/5">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+            {/* Left side content */}
+            <div className="lg:w-1/2 space-y-6 text-left">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.05]">
+                They Say Numbers <br />
+                Don&apos;t Lie, and Neither <br />
+              </h2>
+              <p className="text-zinc-400 text-base md:text-lg font-light max-w-md leading-relaxed">
+                Our results speak louder than words, delivering measurable
+                success and undeniable growth.
               </p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white/10 border border-white/20 flex items-center justify-center text-white font-bold text-lg group-hover:bg-black group-hover:text-white transition-colors">
-                  A
+
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <button className="px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-black/20 border border-white/20 hover:bg-white/10 transition-colors text-sm flex items-center gap-2">
+                  Let&apos;s Collaborate
+                </button>
+                <button className="px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-black/20 border border-white/20 hover:bg-white/10 transition-colors text-sm flex items-center gap-2">
+                  Book a Call
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M7 17l9.2-9.2M17 17V7H7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Right side stats */}
+            <div className="lg:w-1/2 w-full flex justify-center lg:justify-end">
+              <div className="w-full max-w-[650px] relative flex flex-col justify-center">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-y-10 gap-x-6 relative z-10">
+                  {/* Stat 1 */}
+                  <div className="text-center space-y-1">
+                    <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight">
+                      15+
+                    </h4>
+                    <p className="text-zinc-400 text-xs font-light">
+                      years experience.
+                    </p>
+                  </div>
+
+                  {/* Stat 2 */}
+                  <div className="text-center space-y-1">
+                    <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight">
+                      5k+
+                    </h4>
+                    <p className="text-zinc-400 text-xs font-light">
+                      events executed.
+                    </p>
+                  </div>
+
+                  {/* Stat 3 */}
+                  <div className="text-center space-y-1">
+                    <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight">
+                      400+
+                    </h4>
+                    <p className="text-zinc-400 text-xs font-light">
+                      partner brands.
+                    </p>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="col-span-2 md:col-span-3 w-full h-px bg-white/10 my-1"></div>
+
+                  {/* Stat 4 */}
+                  <div className="text-center space-y-1">
+                    <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight">
+                      100%
+                    </h4>
+                    <p className="text-zinc-400 text-xs font-light">
+                      commitment.
+                    </p>
+                  </div>
+
+                  {/* Stat 5 */}
+                  <div className="text-center space-y-1">
+                    <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight">
+                      50+
+                    </h4>
+                    <p className="text-zinc-400 text-xs font-light">
+                      team members.
+                    </p>
+                  </div>
+
+                  {/* Stat 6 */}
+                  <div className="text-center space-y-1">
+                    <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight">
+                      24/7
+                    </h4>
+                    <p className="text-zinc-400 text-xs font-light">
+                      support & logistics.
+                    </p>
+                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 3: Reviews */}
+      <section className="py-16 md:py-20 bg-zinc-950 border-t border-white/5 relative z-10 w-full overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="mb-12 md:mb-16">
+            <h2 className="text-white text-7xl md:text-9xl lg:text-[11rem] font-medium tracking-tighter leading-none mb-4 md:mb-6">
+              Reviews
+            </h2>
+            <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
+              <span className="text-3xl md:text-4xl font-bold tracking-tighter text-white">
+                ©2026
+              </span>
+              <p className="text-zinc-400 text-sm max-w-[280px] leading-relaxed">
+                100+ top brands trusted us to elevate their events and
+                production quality.
+              </p>
+            </div>
+          </div>
+
+          {/* Compact Masonry Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Column 1 */}
+            <div className="flex flex-col gap-4">
+              {/* Black Card */}
+              <div className="bg-black border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between h-[260px]">
                 <div>
-                  <h4 className="font-bold text-white group-hover:text-black tracking-wide transition-colors">
-                    Antonia Vegh
-                  </h4>
-                  <p className="text-sm text-white/40 group-hover:text-black/50 uppercase tracking-widest mt-1 transition-colors">
-                    Environment Society of Oman
+                  <div className="flex gap-1 mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg
+                        key={star}
+                        className="w-3.5 h-3.5 text-[#E75033] fill-current"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-sm font-light leading-relaxed text-zinc-300">
+                    "Truly world class service. Talentz provides Light & Sound
+                    with giant LED screens that is really an eye/ear candy.
+                    Simply the best in the business!"
                   </p>
+                </div>
+                <div className="flex items-center gap-3 mt-6">
+                  <div className="w-10 h-10 bg-white/10 flex items-center justify-center text-sm font-bold">
+                    C
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm">Cloud 9 Band Oman</h4>
+                    <p className="text-xs text-zinc-500 mt-0.5">Client</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Zinc Card (Formerly White) */}
+              <div className="bg-zinc-900 border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between h-[220px] shadow-sm">
+                <div>
+                  <div className="flex gap-1 mb-4">
+                    {[1, 2, 3, 4].map((star) => (
+                      <svg
+                        key={star}
+                        className="w-3.5 h-3.5 text-[#E75033] fill-current"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                    <svg
+                      className="w-3.5 h-3.5 text-zinc-700 fill-current"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                  </div>
+                  <p className="text-sm font-light leading-relaxed text-zinc-300">
+                    "Working with Talentz was truly exceptional. Their team was
+                    profoundly insightful and highly dedicated."
+                  </p>
+                </div>
+                <div className="flex items-center gap-3 mt-6">
+                  <div className="w-10 h-10 bg-white/10 flex items-center justify-center text-sm font-bold">
+                    S
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm">Sarah Jenkins</h4>
+                    <p className="text-xs text-zinc-500 mt-0.5">
+                      Event Coordinator
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 2 */}
+            <div className="flex flex-col gap-4">
+              {/* Tall Image Card */}
+              <div className="relative bg-black border border-white/10 text-white p-5 md:p-7 flex flex-col justify-end h-[496px] overflow-hidden group">
+                <Image
+                  src="/new/TALENTZOCEC-005.jpg"
+                  alt="Review Background"
+                  fill
+                  className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/50 to-transparent z-10 pointer-events-none"></div>
+
+                <div className="relative z-20">
+                  <div className="flex gap-1 mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg
+                        key={star}
+                        className="w-3.5 h-3.5 text-[#E75033] fill-current"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-sm font-light leading-relaxed text-zinc-200 mb-6 relative z-20">
+                    "We really appreciate that you were able to provide us with
+                    such outstanding AV equipment and services. Your staff were
+                    professional, courteous, flexible to accommodate our need
+                    and efficient!"
+                  </p>
+
+                  <div className="flex gap-8 border-b border-white/20 pb-4 mb-4">
+                    <div>
+                      <h5 className="text-2xl font-medium mb-0.5">100%</h5>
+                      <p className="text-[11px] text-zinc-400 uppercase tracking-wider">
+                        satisfaction
+                      </p>
+                    </div>
+                    <div>
+                      <h5 className="text-2xl font-medium mb-0.5">24/7</h5>
+                      <p className="text-[11px] text-zinc-400 uppercase tracking-wider">
+                        support
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-white/10 flex items-center justify-center text-sm font-bold relative z-20">
+                      A
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-sm">Antonia Vegh</h4>
+                      <p className="text-xs text-zinc-400 mt-0.5">
+                        Environment Society of Oman
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 3 */}
+            <div className="flex flex-col gap-4">
+              {/* Zinc Card (Formerly White) */}
+              <div className="bg-zinc-900 border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between h-[240px] shadow-sm">
+                <div>
+                  <div className="flex gap-1 mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg
+                        key={star}
+                        className="w-3.5 h-3.5 text-[#E75033] fill-current"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-sm font-light leading-relaxed text-zinc-300">
+                    "The lighting setup provided by your team transformed our
+                    entire venue. Flawless execution from start to finish."
+                  </p>
+                </div>
+                <div className="flex items-center gap-3 mt-6">
+                  <div className="w-10 h-10 bg-white/10 flex items-center justify-center text-sm font-bold">
+                    M
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm">Marcus Trevis</h4>
+                    <p className="text-xs text-zinc-500 mt-0.5">
+                      Festival Director
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Black Card */}
+              <div className="bg-black border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between h-[240px]">
+                <div>
+                  <div className="flex gap-1 mb-4">
+                    {[1, 2, 3, 4].map((star) => (
+                      <svg
+                        key={star}
+                        className="w-3.5 h-3.5 text-[#E75033] fill-current"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                    <svg
+                      className="w-3.5 h-3.5 text-zinc-700 fill-current"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                  </div>
+                  <p className="text-sm font-light leading-relaxed text-zinc-300">
+                    "Exceptional sound quality and unparalleled professionalism.
+                    Talentz sets the standard for event production."
+                  </p>
+                </div>
+                <div className="flex items-center gap-3 mt-6">
+                  <div className="w-10 h-10 bg-white/10 flex items-center justify-center text-sm font-bold">
+                    D
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm">David Chen</h4>
+                    <p className="text-xs text-zinc-400 mt-0.5">
+                      Corporate Manager
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -429,8 +789,8 @@ export default function EventProductionPage() {
       </section>
 
       {/* Footer Section */}
-      <section className="bg-black text-white px-6 md:px-14 pt-20">
-        <div className="container mx-auto max-w-7xl">
+      <section className="bg-black text-white pt-20">
+        <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 py-10 border-t border-white/5">
             <div>
               <h4 className="font-bold mb-8 uppercase text-[10px] tracking-[0.2em] text-white border-l-2 border-white/20 pl-4">
