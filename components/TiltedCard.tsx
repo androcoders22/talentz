@@ -125,8 +125,9 @@ export default function TiltedCard({
           src={imageSrc}
           alt={altText}
           fill
+          sizes="(max-width: 768px) 100vw, 100vw"
           priority={isPriority}
-          quality={77}
+          quality={100}
           unoptimized={false}
           className="will-change-transform transform-[translateZ(0)]"
           style={{

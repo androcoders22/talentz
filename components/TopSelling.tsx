@@ -87,6 +87,7 @@ export function TopSelling() {
                   src={product.image}
                   alt={product.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, 100vw"
                   className="object-contain transition-transform duration-700 group-hover:scale-105"
                 />
               </div>

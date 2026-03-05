@@ -7,9 +7,6 @@ import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 const projects = [
   {
-    src: "/new/6L8A9208.jpg",
-  },
-  {
     src: "/new/6L8A0127.jpg",
   },
   {
@@ -261,8 +258,14 @@ const Gallery = () => {
               <IconChevronLeft size={18} />
             </button>
 
-            <div className="flex items-center gap-2">
-              {projects.map((project, index) => {
+            {/* Mobile: compact counter */}
+            <span className="md:hidden text-xs font-medium text-black/60 tabular-nums min-w-12 text-center">
+              {normalizedPosition + 1} / {total}
+            </span>
+
+            {/* Desktop: dot indicators */}
+            <div className="hidden md:flex items-center gap-2">
+              {projects.map((_, index) => {
                 const isActive = index === normalizedPosition;
                 return (
                   <button

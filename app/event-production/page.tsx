@@ -5,6 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { RainbowButton } from "@/components/ui/rainbow-button";
 import FlowingMenu from "@/components/FlowingMenu";
+import {
+  IconBrandYoutube,
+  IconBrandInstagram,
+  IconBrandWhatsapp,
+  IconPhone,
+  IconMail,
+  IconMapPin,
+  IconClock,
+  IconBrandFacebook,
+  IconBrandX,
+  IconBrandLinkedin,
+} from "@tabler/icons-react";
 
 declare global {
   interface Window {
@@ -105,6 +117,7 @@ export default function EventProductionPage() {
               src="/events-hero.png"
               alt="Event Production"
               fill
+              sizes="100vw"
               className="object-cover"
               priority
             />
@@ -253,6 +266,7 @@ export default function EventProductionPage() {
                   src="/new/6L8A2615.jpg"
                   alt="Inventory"
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-contain grayscale group-hover:grayscale-0 transition-all duration-700 pointer-events-none"
                 />
               </div>
@@ -283,6 +297,7 @@ export default function EventProductionPage() {
                   src="/new/RED_5641.jpg"
                   alt="Lighting"
                   fill
+                  sizes="(max-width: 768px) 100vw, 66vw"
                   className="object-cover md:object-contain object-right grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 pointer-events-none"
                 />
               </div>
@@ -303,6 +318,7 @@ export default function EventProductionPage() {
                   src="/new/DSC01552.jpg"
                   alt="Microphone"
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover object-center scale-[1.3] grayscale group-hover:grayscale-0 transition-all duration-700 pointer-events-none"
                 />
               </div>
@@ -315,6 +331,7 @@ export default function EventProductionPage() {
                   src="/new/TALENTZOCEC-040.jpg"
                   alt="Trussing"
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover object-bottom grayscale group-hover:grayscale-0 transition-all duration-700 pointer-events-none"
                 />
               </div>
@@ -360,6 +377,7 @@ export default function EventProductionPage() {
                   src="/new/6L8A0127.jpg"
                   alt="Live Concert"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
@@ -378,6 +396,7 @@ export default function EventProductionPage() {
                   src="/new/6L8A4309.jpg"
                   alt="Corporate Event"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
@@ -396,6 +415,7 @@ export default function EventProductionPage() {
                   src="/new/TALENTZOCEC-005.jpg"
                   alt="Exhibition Setup"
                   fill
+                  sizes="(max-width: 768px) 100vw, 25vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
@@ -414,6 +434,7 @@ export default function EventProductionPage() {
                   src="/new/DSC00782.jpg"
                   alt="Music Festival"
                   fill
+                  sizes="(max-width: 768px) 100vw, 25vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
@@ -432,6 +453,7 @@ export default function EventProductionPage() {
                   src="/new/DAS_0439.jpg"
                   alt="Outdoor Stage"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover object-bottom group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
@@ -659,6 +681,7 @@ export default function EventProductionPage() {
                   src="/new/TALENTZOCEC-005.jpg"
                   alt="Review Background"
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/50 to-transparent z-10 pointer-events-none"></div>
@@ -789,14 +812,55 @@ export default function EventProductionPage() {
       </section>
 
       {/* Footer Section */}
-      <section className="bg-black text-white pt-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 py-10 border-t border-white/5">
-            <div>
-              <h4 className="font-bold mb-8 uppercase text-[10px] tracking-[0.2em] text-white border-l-2 border-white/20 pl-4">
-                Product Category
-              </h4>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-4 text-[13px] text-white/40">
+      <section className="bg-black text-white pt-20 pb-12 overflow-hidden border-t border-white/5">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="flex flex-col gap-10">
+            {/* Top Part: Logo and Description from Footer.tsx */}
+            <div className="space-y-5 max-w-2xl">
+              <Link href="/" className="inline-block mb-1">
+                <img
+                  src="/logo-old.png"
+                  alt="Talentz"
+                  className="h-10 w-auto object-contain object-left invert brightness-0 opacity-90"
+                />
+              </Link>
+              <p className="text-zinc-400 text-sm md:text-[15px] leading-relaxed max-w-xl font-medium">
+                Oman&apos;s leading provider for Event Productions, Musical
+                Instruments, and Professional Light & Sound solutions since
+                2002.
+              </p>
+            </div>
+
+            {/* Additional Info from Footer.tsx */}
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-xs md:text-sm text-zinc-500 font-medium tracking-wide">
+              <div className="flex items-center gap-2 hover:text-zinc-300 transition-colors">
+                <IconMapPin className="h-4 w-4 opacity-70" />
+                <span>Ruwi, Muscat & Wadi Kabir</span>
+              </div>
+              <div className="flex items-center gap-2 hover:text-zinc-300 transition-colors">
+                <IconPhone className="h-4 w-4 opacity-70" />
+                <span>+968-2478-3443</span>
+              </div>
+              <div className="flex items-center gap-2 hover:text-zinc-300 transition-colors">
+                <IconBrandWhatsapp className="h-4 w-4 opacity-70" />
+                <span>+968-9225-2685</span>
+              </div>
+              <div className="flex items-center gap-2 hover:text-zinc-300 transition-colors">
+                <IconMail className="h-4 w-4 opacity-70" />
+                <span>customerservice@talentz.net</span>
+              </div>
+              <div className="flex items-center gap-2 hover:text-zinc-300 transition-colors">
+                <IconClock className="h-4 w-4 opacity-70" />
+                <span>Sat-Thu: 9am-1pm, 4pm-8pm</span>
+              </div>
+            </div>
+
+            {/* Existing Footer Links, rendered horizontally to match the image's vibe */}
+            <div className="pt-4 flex flex-col gap-6">
+              <div className="flex flex-wrap md:items-center gap-x-8 gap-y-3 text-[13px] md:text-sm font-semibold text-white">
+                <span className="text-zinc-600 mr-2 uppercase tracking-[0.2em] text-[10px] hidden md:inline-block">
+                  Products
+                </span>
                 {[
                   "Guitars",
                   "Studio & Recording",
@@ -808,42 +872,85 @@ export default function EventProductionPage() {
                   "Microphones",
                   "Effects",
                   "Strings",
-                  "Special Offers, Sale & More",
-                  "Preloved & Used",
+                  "Special Offers",
+                  "Preloved",
                 ].map((cat) => (
                   <Link
                     key={cat}
                     href="#"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-zinc-400 text-zinc-200 transition-colors"
                   >
                     {cat}
                   </Link>
                 ))}
               </div>
-            </div>
 
-            <div>
-              <h4 className="font-bold mb-8 uppercase text-[10px] tracking-[0.2em] text-white border-l-2 border-white/20 pl-4">
-                Quick Links
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-[13px] text-white/40">
+              <div className="flex flex-wrap md:items-center gap-x-8 gap-y-3 text-[13px] md:text-sm font-semibold text-white">
+                <span className="text-zinc-600 mr-2 uppercase tracking-[0.2em] text-[10px] hidden md:inline-block">
+                  Company
+                </span>
                 {[
-                  "User Agreement & Terms of Use",
-                  "Terms & Conditions for Online Shopping",
-                  "Shipping & Delivery",
-                  "Frequently Asked Questions [FAQs]",
-                  "Privacy Policy",
-                  "Promotions, News Releases, Shopping Guides and more!",
                   "About Us",
+                  "FAQs",
+                  "Shipping & Delivery",
+                  "Promotions & News",
+                  "Terms & Conditions",
+                  "Privacy Policy",
+                  "User Agreement",
                 ].map((link) => (
                   <Link
                     key={link}
                     href="#"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-zinc-400 text-zinc-200 transition-colors"
                   >
                     {link}
                   </Link>
                 ))}
+              </div>
+            </div>
+
+            {/* Divider from image */}
+            <div className="w-full h-px bg-white/10 mt-10 mb-2"></div>
+
+            {/* Bottom Section: Copyright & Socials */}
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+              <p className="text-zinc-500 text-xs font-medium tracking-wide">
+                Copyright 2026© Talentz Enterprises L.L.C. All Rights Reserved.
+              </p>
+
+              <div className="flex items-center gap-6 text-zinc-400">
+                <Link
+                  href="#"
+                  className="hover:text-white hover:scale-110 transition-all"
+                >
+                  <IconBrandFacebook className="h-5 w-5" />
+                </Link>
+                <Link
+                  href="#"
+                  className="hover:text-white hover:scale-110 transition-all"
+                >
+                  <IconBrandX className="h-5 w-5" />
+                </Link>
+                <Link
+                  href="https://www.instagram.com/talentzeventsproduction/"
+                  className="hover:text-white hover:scale-110 transition-all"
+                  target="_blank"
+                >
+                  <IconBrandInstagram className="h-5 w-5" />
+                </Link>
+                <Link
+                  href="https://www.youtube.com/@talentzeventsproduction"
+                  className="hover:text-white hover:scale-110 transition-all"
+                  target="_blank"
+                >
+                  <IconBrandYoutube className="h-5 w-5" />
+                </Link>
+                <Link
+                  href="#"
+                  className="hover:text-white hover:scale-110 transition-all"
+                >
+                  <IconBrandLinkedin className="h-5 w-5" />
+                </Link>
               </div>
             </div>
           </div>
