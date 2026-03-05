@@ -39,20 +39,17 @@ export function Navbar() {
       <div className="container mx-auto px-4">
         <nav className="flex h-14 items-center justify-between rounded-full bg-black/20 px-2 md:px-3 py-1.5 backdrop-blur-sm relative z-50 shadow-2xl border border-white/10">
           <div className="flex items-center gap-3">
-            <Link href="/" className="shrink-0 flex items-center gap-3">
-              <div className="ml-2 flex items-center justify-center w-10 h-10 md:w-11 md:h-11 brightness-125">
+            <Link href="/" className="shrink-0 flex items-center">
+              <div className="ml-2 flex items-center justify-center h-[34px] md:h-[37px] brightness-125">
                 <Image
-                  src="/logov3.png"
+                  src="/logo-old-v2.png"
                   alt="Talentz"
-                  width={48}
-                  height={48}
-                  className="h-full w-full object-contain"
+                  width={200}
+                  height={60}
+                  className="h-full w-auto object-contain"
                   priority
                 />
               </div>
-              <h2 className="text-lg md:text-xl font-bold tracking-[0.18em] text-white">
-                TALENTZ
-              </h2>
             </Link>
           </div>
 
