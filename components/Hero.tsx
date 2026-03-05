@@ -6,15 +6,14 @@ export function Hero() {
   return (
     <section className="container mx-auto px-4 pt-8 md:pt-12 pb-10">
       <div className="flex flex-col items-start mb-4 md:mb-8 gap-8">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.1]">
-          <span className="font-extrabold tracking-widest text-[4.8rem] text-zinc-950 block mb-2 lg:mb-4">
+        <h1 className="text-2xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1]">
+          <span className="font-extrabold tracking-widest text-[3rem] sm:text-[4rem] md:text-[4.8rem] text-zinc-950 block mb-1 md:mb-2 lg:mb-4">
             TALENTZ
           </span>
-          <span className="font-semibold text-[3.5rem] text-zinc-900 ">
+          <span className="font-semibold text-[2rem] sm:text-[2.8rem] md:text-[3.5rem] text-zinc-900 block mb-1 md:mb-0">
             Ready for Every Stage.
           </span>
-          <br />
-          <span className="text-zinc-800">
+          <span className="text-zinc-800 text-xl sm:text-2xl md:text-4xl">
             AVL Rentals, Pro Audio, Music Gears.
           </span>
         </h1>

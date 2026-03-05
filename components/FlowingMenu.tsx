@@ -1,5 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { gsap } from 'gsap';
+import React, { useRef, useEffect, useState, useCallback } from "react";
+import { gsap } from "gsap";
+import Image from "next/image";
 
 interface MenuItemData {
   link: string;
@@ -29,14 +30,17 @@ interface MenuItemProps extends MenuItemData {
 const FlowingMenu: React.FC<FlowingMenuProps> = ({
   items = [],
   speed = 15,
-  textColor = '#fff',
-  bgColor = '#060010',
-  marqueeBgColor = '#fff',
-  marqueeTextColor = '#060010',
-  borderColor = '#fff'
+  textColor = "#fff",
+  bgColor = "#060010",
+  marqueeBgColor = "#fff",
+  marqueeTextColor = "#060010",
+  borderColor = "#fff",
 }) => {
   return (
-    <div className="w-full h-full overflow-hidden" style={{ backgroundColor: bgColor }}>
+    <div
+      className="w-full h-full overflow-hidden"
+      style={{ backgroundColor: bgColor }}
+    >
       <nav className="flex flex-col h-full m-0 p-0">
         {items.map((item, idx) => (
           <MenuItem
@@ -64,26 +68,50 @@ const MenuItem: React.FC<MenuItemProps> = ({
   marqueeBgColor,
   marqueeTextColor,
   borderColor,
-  isFirst
+  isFirst,
 }) => {
   const itemRef = useRef<HTMLDivElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const marqueeInnerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<gsap.core.Tween | null>(null);
   const [repetitions, setRepetitions] = useState(4);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const isActiveRef = useRef(false);
 
-  const animationDefaults = { duration: 0.6, ease: 'expo' };
+  const animationDefaults = { duration: 0.6, ease: "expo" };
 
-  const findClosestEdge = (mouseX: number, mouseY: number, width: number, height: number): 'top' | 'bottom' => {
+  const findClosestEdge = (
+    mouseX: number,
+    mouseY: number,
+    width: number,
+    height: number,
+  ): "top" | "bottom" => {
     const topEdgeDist = Math.pow(mouseX - width / 2, 2) + Math.pow(mouseY, 2);
-    const bottomEdgeDist = Math.pow(mouseX - width / 2, 2) + Math.pow(mouseY - height, 2);
-    return topEdgeDist < bottomEdgeDist ? 'top' : 'bottom';
+    const bottomEdgeDist =
+      Math.pow(mouseX - width / 2, 2) + Math.pow(mouseY - height, 2);
+    return topEdgeDist < bottomEdgeDist ? "top" : "bottom";
   };
+
+  // Detect touch device
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouchDevice(
+        "ontouchstart" in window ||
+          navigator.maxTouchPoints > 0 ||
+          window.innerWidth < 768,
+      );
+    };
+    checkTouch();
+    window.addEventListener("resize", checkTouch);
+    return () => window.removeEventListener("resize", checkTouch);
+  }, []);
 
   useEffect(() => {
     const calculateRepetitions = () => {
       if (!marqueeInnerRef.current) return;
-      const marqueeContent = marqueeInnerRef.current.querySelector('.marquee-part') as HTMLElement;
+      const marqueeContent = marqueeInnerRef.current.querySelector(
+        ".marquee-part",
+      ) as HTMLElement;
       if (!marqueeContent) return;
       const contentWidth = marqueeContent.offsetWidth;
       const viewportWidth = window.innerWidth;
@@ -92,14 +120,16 @@ const MenuItem: React.FC<MenuItemProps> = ({
     };
 
     calculateRepetitions();
-    window.addEventListener('resize', calculateRepetitions);
-    return () => window.removeEventListener('resize', calculateRepetitions);
+    window.addEventListener("resize", calculateRepetitions);
+    return () => window.removeEventListener("resize", calculateRepetitions);
   }, [text, image]);
 
   useEffect(() => {
     const setupMarquee = () => {
       if (!marqueeInnerRef.current) return;
-      const marqueeContent = marqueeInnerRef.current.querySelector('.marquee-part') as HTMLElement;
+      const marqueeContent = marqueeInnerRef.current.querySelector(
+        ".marquee-part",
+      ) as HTMLElement;
       if (!marqueeContent) return;
       const contentWidth = marqueeContent.offsetWidth;
       if (contentWidth === 0) return;
@@ -111,8 +141,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
       animationRef.current = gsap.to(marqueeInnerRef.current, {
         x: -contentWidth,
         duration: speed,
-        ease: 'none',
-        repeat: -1
+        ease: "none",
+        repeat: -1,
       });
     };
 
@@ -125,38 +155,106 @@ const MenuItem: React.FC<MenuItemProps> = ({
     };
   }, [text, image, repetitions, speed]);
 
-  const handleMouseEnter = (ev: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
-    const rect = itemRef.current.getBoundingClientRect();
-    const edge = findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
+  // Show marquee (used by both hover and touch/scroll)
+  const showMarquee = useCallback((fromEdge: "top" | "bottom" = "top") => {
+    if (!marqueeRef.current || !marqueeInnerRef.current || isActiveRef.current)
+      return;
+    isActiveRef.current = true;
 
     gsap
       .timeline({ defaults: animationDefaults })
-      .set(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
-      .set(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0)
-      .to([marqueeRef.current, marqueeInnerRef.current], { y: '0%' }, 0);
+      .set(marqueeRef.current, { y: fromEdge === "top" ? "-101%" : "101%" }, 0)
+      .set(
+        marqueeInnerRef.current,
+        { y: fromEdge === "top" ? "101%" : "-101%" },
+        0,
+      )
+      .to([marqueeRef.current, marqueeInnerRef.current], { y: "0%" }, 0);
+  }, []);
+
+  // Hide marquee
+  const hideMarquee = useCallback((fromEdge: "top" | "bottom" = "bottom") => {
+    if (!marqueeRef.current || !marqueeInnerRef.current || !isActiveRef.current)
+      return;
+    isActiveRef.current = false;
+
+    gsap
+      .timeline({ defaults: animationDefaults })
+      .to(marqueeRef.current, { y: fromEdge === "top" ? "-101%" : "101%" }, 0)
+      .to(
+        marqueeInnerRef.current,
+        { y: fromEdge === "top" ? "101%" : "-101%" },
+        0,
+      );
+  }, []);
+
+  // IntersectionObserver for touch/mobile: activate when item is near center of viewport
+  useEffect(() => {
+    if (!isTouchDevice || !itemRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.7) {
+            showMarquee("top");
+          } else {
+            hideMarquee("bottom");
+          }
+        });
+      },
+      {
+        // rootMargin shrinks the observation zone to ~center of screen
+        rootMargin: "-30% 0px -30% 0px",
+        threshold: [0, 0.7, 1],
+      },
+    );
+
+    observer.observe(itemRef.current);
+    return () => observer.disconnect();
+  }, [isTouchDevice, showMarquee, hideMarquee]);
+
+  const handleMouseEnter = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isTouchDevice) return;
+    if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current)
+      return;
+    const rect = itemRef.current.getBoundingClientRect();
+    const edge = findClosestEdge(
+      ev.clientX - rect.left,
+      ev.clientY - rect.top,
+      rect.width,
+      rect.height,
+    );
+    showMarquee(edge);
   };
 
   const handleMouseLeave = (ev: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
+    if (isTouchDevice) return;
+    if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current)
+      return;
     const rect = itemRef.current.getBoundingClientRect();
-    const edge = findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
-
-    gsap
-      .timeline({ defaults: animationDefaults })
-      .to(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
-      .to(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0);
+    const edge = findClosestEdge(
+      ev.clientX - rect.left,
+      ev.clientY - rect.top,
+      rect.width,
+      rect.height,
+    );
+    hideMarquee(edge);
   };
 
   return (
     <div
       className="flex-1 relative overflow-hidden text-center"
       ref={itemRef}
-      style={{ borderTop: isFirst ? 'none' : `1px solid ${borderColor}` }}
+      style={{ borderTop: isFirst ? "none" : `1px solid ${borderColor}` }}
     >
       <a
-        className="flex items-center justify-center h-full relative cursor-pointer uppercase no-underline font-semibold text-[4vh]"
+        className="flex items-center justify-center h-full relative cursor-pointer uppercase no-underline font-semibold text-[2.8vh] md:text-[4vh]"
         href={link}
+        onClick={(ev) => {
+          if (isTouchDevice) {
+            ev.preventDefault();
+          }
+        }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         style={{ color: textColor }}
@@ -170,12 +268,24 @@ const MenuItem: React.FC<MenuItemProps> = ({
       >
         <div className="h-full w-fit flex" ref={marqueeInnerRef}>
           {[...Array(repetitions)].map((_, idx) => (
-            <div className="marquee-part flex items-center flex-shrink-0" key={idx} style={{ color: marqueeTextColor }}>
-              <span className="whitespace-nowrap uppercase font-normal text-[4vh] leading-[1] px-[1vw]">{text}</span>
-              <div
-                className="w-[200px] h-[7vh] my-[2em] mx-[2vw] py-[1em] rounded-[50px] bg-cover bg-center"
-                style={{ backgroundImage: `url(${image})` }}
-              />
+            <div
+              className="marquee-part flex items-center shrink-0"
+              key={idx}
+              style={{ color: marqueeTextColor }}
+            >
+              <span className="whitespace-nowrap uppercase font-normal text-[2.8vh] md:text-[4vh] leading-none px-[1vw]">
+                {text}
+              </span>
+              <div className="w-[120px] md:w-[200px] h-[4vh] md:h-[7vh] my-[1em] md:my-[2em] mx-[2vw] py-[0.5em] md:py-[1em] rounded-[50px] relative overflow-hidden">
+                <Image
+                  src={image}
+                  alt={text}
+                  fill
+                  sizes="(max-width: 768px) 120px, 200px"
+                  className="object-cover"
+                  priority
+                />
+              </div>
             </div>
           ))}
         </div>

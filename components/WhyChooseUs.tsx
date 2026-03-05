@@ -77,16 +77,16 @@ export function WhyChooseUs() {
         </div>
 
         {/* Brand Logos Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 md:gap-8 items-center justify-items-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8 items-center justify-items-center">
           {brands.map((brand) => (
             <div
               key={brand.name}
-              className="group flex items-center justify-center p-4 rounded-xl hover:bg-black/3 transition-all duration-300"
+              className="group flex items-center justify-center p-4 rounded-xl hover:bg-black/3 transition-all duration-300 w-full"
             >
               <img
                 src={brand.logo}
                 alt={brand.name}
-                className={`h-8 md:h-10 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 ${brand.invert ? "invert" : ""}`}
+                className={`h-12 md:h-14 lg:h-16 w-auto max-w-full object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 ${brand.invert ? "invert" : ""}`}
                 title={brand.name}
               />
             </div>

@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { RainbowButton } from "@/components/ui/rainbow-button";
 import FlowingMenu from "@/components/FlowingMenu";
 import {
   IconBrandYoutube,
@@ -102,11 +101,54 @@ export default function EventProductionPage() {
     };
   }, [initPlayer]);
 
+  // Mobile: activate cards when they scroll to center of screen
+  useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-active");
+          } else {
+            entry.target.classList.remove("is-active");
+          }
+        });
+      },
+      {
+        rootMargin: "-30% 0px -30% 0px",
+        threshold: 0,
+      },
+    );
+
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      const cards = document.querySelectorAll(".feature-card");
+      cards.forEach((card) => observer.observe(card));
+    }, 100);
+
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        document.querySelectorAll(".feature-card").forEach((card) => {
+          card.classList.remove("is-active");
+        });
+      }
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <main className="bg-transparent text-white min-h-screen relative">
       <section className="relative h-screen flex flex-col items-center justify-center">
         {/* Video Background - Fixed Wrapper so it stays behind the whole page */}
-        <div className="fixed top-0 left-0 w-full h-screen z-[-1] pointer-events-none">
+        <div className="fixed top-0 left-0 w-full h-dvh z-[-1] pointer-events-none overflow-hidden bg-black">
           {/* Fallback Image while video is loading */}
           <div
             className={`absolute inset-0 transition-opacity duration-1000 ${
@@ -126,15 +168,18 @@ export default function EventProductionPage() {
           {/* YouTube Player Container */}
           <div
             ref={containerRef}
-            className={`absolute top-1/2 left-1/2 w-screen h-[56.25vw] min-h-full min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-1000 ${
+            className={`absolute top-1/2 left-1/2 w-[max(100vw,177.77vh)] h-[max(56.25vw,100vh)] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-1000 flex items-center justify-center ${
               isVideoLoaded ? "opacity-100" : "opacity-0"
             }`}
           >
-            <div id="yt-player" className="w-full h-full"></div>
+            <div
+              id="yt-player"
+              className="w-full h-full pointer-events-none scale-[1.05] md:scale-100"
+            />
           </div>
 
           {/* Subtle overlay and vignette for readability and focus */}
-          <div className="absolute inset-0 bg-black/20"></div>
+          <div className="absolute inset-0 bg-black/30"></div>
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.85)_80%,rgba(0,0,0,1)_100%)]"></div>
         </div>
 
@@ -177,8 +222,8 @@ export default function EventProductionPage() {
               Unlock a world of possibilities with Talentz, the ultimate
               destination for world-class high-quality events in Oman & GCC.
             </p>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
-              <button className="px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-black/20 border border-white/20 hover:bg-white/10 transition-colors text-sm flex items-center gap-2">
+            <div className="flex flex-row items-center gap-6 sm:gap-8 mt-2 md:mt-0">
+              <button className="px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-black/30 border border-white/20 hover:bg-white/10 transition-colors text-sm flex items-center gap-2 backdrop-blur-sm">
                 Contact Us{" "}
                 <span className="text-xl mb-0.5 leading-none">»</span>
               </button>
@@ -193,8 +238,8 @@ export default function EventProductionPage() {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+                  width="22"
+                  height="22"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -204,7 +249,10 @@ export default function EventProductionPage() {
                   className="group-hover:scale-110 transition-transform"
                 >
                   <circle cx="12" cy="12" r="10"></circle>
-                  <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                  <polygon
+                    points="10 8 16 12 10 16 10 8"
+                    className="translate-x-px"
+                  ></polygon>
                 </svg>
                 Watch the Video
               </button>
@@ -215,7 +263,7 @@ export default function EventProductionPage() {
 
       {/* Section 1: Introduction */}
       <section className="bg-zinc-950 relative z-10 w-full border-t border-white/5">
-        <div className="h-[350px] relative w-full border-b border-t border-white/5">
+        <div className="h-[300px] md:h-[350px] relative w-full border-b border-t border-white/5">
           <FlowingMenu
             items={[
               {
@@ -258,23 +306,24 @@ export default function EventProductionPage() {
       <section className="py-16 bg-zinc-950 relative overflow-hidden border-y border-white/5 z-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0,transparent_100%)] pointer-events-none" />
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:auto-rows-[280px]">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 auto-rows-[160px] md:auto-rows-[280px]">
             {/* Card 1: Left tall */}
-            <div className="md:col-span-1 md:row-span-2 bg-zinc-950 border border-white/10 p-6 flex flex-col justify-between relative group transition-colors duration-500 hover:bg-white text-white hover:text-black">
-              <div className="w-full h-1/2 relative mt-4">
+            <div className="feature-card col-span-2 md:col-span-1 md:row-span-2 bg-zinc-950 border border-white/10 p-5 md:p-6 flex flex-row md:flex-col justify-between relative group transition-colors duration-500 hover:bg-white [&.is-active]:bg-white text-white hover:text-black [&.is-active]:text-black overflow-hidden">
+              <div className="absolute inset-y-0 left-0 w-[65%] bg-linear-to-r from-zinc-950 via-zinc-950/95 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/95 group-[.is-active]:via-white/95 transition-colors duration-500 z-1 md:hidden" />
+              <div className="w-1/2 md:w-full h-[120%] md:h-1/2 absolute right-0 top-1/2 -translate-y-1/2 md:translate-y-0 md:relative md:top-auto md:mt-4 z-0">
                 <Image
                   src="/new/6L8A2615.jpg"
                   alt="Inventory"
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-contain grayscale group-hover:grayscale-0 transition-all duration-700 pointer-events-none"
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-contain object-right py-4 md:py-0 md:object-center grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none drop-shadow-2xl"
                 />
               </div>
-              <div className="space-y-3 mb-2 text-center md:text-left transition-colors duration-500">
+              <div className="space-y-1 md:space-y-3 mb-0 md:mb-2 text-left w-[50%] pr-2 md:pr-0 md:w-full z-10 relative">
                 <h3 className="text-2xl md:text-4xl font-medium leading-[1.1] transition-colors duration-500">
-                  Total <br /> Inventory
+                  Total <br className="hidden md:block" /> Inventory
                 </h3>
-                <p className="text-zinc-500 group-hover:text-zinc-600 font-light text-sm transition-colors duration-500">
+                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 font-light text-[11px] leading-tight md:text-sm transition-colors duration-500">
                   Continuous investment in the largest and most cutting-edge AV
                   equipment in Oman.
                 </p>
@@ -282,65 +331,72 @@ export default function EventProductionPage() {
             </div>
 
             {/* Card 2: Top Right wide */}
-            <div className="md:col-span-2 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-6 flex flex-col md:flex-row items-center justify-between relative group hover:bg-white hover:text-black transition-colors duration-500 overflow-hidden">
-              <div className="space-y-3 max-w-xs z-10 relative">
+            <div className="feature-card col-span-2 md:col-span-2 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-5 md:p-6 flex flex-col justify-center relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden">
+              <div className="absolute inset-y-0 left-0 w-[70%] bg-linear-to-r from-zinc-950 via-zinc-950/95 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/95 group-[.is-active]:via-white/95 transition-colors duration-500 z-1 md:hidden" />
+              <div className="space-y-1 md:space-y-3 w-[55%] md:w-auto md:max-w-xs z-10 relative">
                 <h3 className="text-2xl md:text-4xl font-medium leading-[1.1] transition-colors duration-500">
-                  Immersive <br /> Events
+                  Immersive <br className="hidden md:block" /> Events
                 </h3>
-                <p className="text-zinc-500 group-hover:text-zinc-600 font-light text-sm transition-colors duration-500">
+                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 font-light text-xs md:text-sm transition-colors duration-500 hidden md:block">
                   From architectural lighting to glitzy fashion shows, advanced
                   visual setups redefine audience engagement.
                 </p>
+                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 font-light text-[11px] md:hidden transition-colors duration-500">
+                  Advanced visual setups redefine audience engagement.
+                </p>
               </div>
-              <div className="w-full md:w-1/2 h-40 md:h-full relative mt-6 md:mt-0 right-0">
+              <div className="w-[60%] md:w-1/2 h-full absolute right-[-5%] top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
                 <Image
                   src="/new/RED_5641.jpg"
                   alt="Lighting"
                   fill
-                  sizes="(max-width: 768px) 100vw, 66vw"
-                  className="object-cover md:object-contain object-right grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 pointer-events-none"
+                  sizes="(max-width: 768px) 50vw, 66vw"
+                  className="object-cover md:object-contain object-left md:object-right grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 md:scale-110 pointer-events-none"
                 />
               </div>
             </div>
 
             {/* Card 3: Bottom Left small */}
-            <div className="md:col-span-1 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-6 flex flex-row items-center justify-between relative group hover:bg-white hover:text-black transition-colors duration-500">
-              <div className="space-y-2 max-w-[60%] z-10">
-                <h3 className="text-xl md:text-3xl font-medium leading-[1.1] transition-colors duration-500">
-                  Precise <br /> Audio
-                </h3>
-                <p className="text-zinc-500 group-hover:text-zinc-600 text-xs font-light mt-1 transition-colors duration-500">
-                  Line arrays & pro sound.
-                </p>
-              </div>
-              <div className="w-[40%] h-full relative z-0">
+            <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-4 md:p-6 flex flex-col items-start justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden">
+              <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
+              <div className="w-[120%] h-[120%] md:w-[60%] md:h-[60%] absolute right-[-10%] top-[-10%] md:bottom-2 md:top-auto z-0 opacity-60 md:opacity-100 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
                 <Image
                   src="/new/DSC01552.jpg"
                   alt="Microphone"
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover object-center scale-[1.3] grayscale group-hover:grayscale-0 transition-all duration-700 pointer-events-none"
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover md:object-contain object-top md:object-center scale-[1.3] grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
                 />
+              </div>
+              <div className="space-y-1 z-10 mt-auto md:mt-0 md:space-y-2 w-full relative">
+                <h3 className="text-xl md:text-3xl font-medium leading-[1.1] transition-colors duration-500">
+                  Precise <br className="hidden md:block" /> Audio
+                </h3>
+                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light mt-1 transition-colors duration-500 hidden sm:block">
+                  Line arrays & pro sound.
+                </p>
               </div>
             </div>
 
             {/* Card 4: Bottom Right small */}
-            <div className="md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-6 flex flex-col justify-end relative group hover:bg-white hover:text-black transition-colors duration-500 overflow-hidden text-white">
-              <div className="absolute inset-0 top-0 h-[60%] w-full">
+            <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
+              <div className="absolute inset-0 top-0 h-full w-full opacity-60 md:opacity-100 md:h-[60%] group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity z-0">
                 <Image
                   src="/new/TALENTZOCEC-040.jpg"
                   alt="Trussing"
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover object-bottom grayscale group-hover:grayscale-0 transition-all duration-700 pointer-events-none"
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover object-bottom grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
                 />
               </div>
-              <div className="space-y-2 relative z-10 mt-auto text-left">
+              <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
+              <div className="space-y-1 md:space-y-2 relative z-10 mt-auto text-left">
                 <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500">
-                  Seamless Structures
+                  Seamless <br className="md:hidden" /> Structures
                 </h3>
-                <p className="text-zinc-500 group-hover:text-zinc-600 text-xs font-light transition-colors duration-500">
-                  Trusses, staging & barriers
+                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light transition-colors duration-500">
+                  Trusses, staging{" "}
+                  <span className="hidden sm:inline">& barriers</span>
                 </p>
               </div>
             </div>
@@ -349,9 +405,9 @@ export default function EventProductionPage() {
       </section>
 
       {/* Section X: The "Window" Exposing the BG Video */}
-      <section className="py-20 bg-black/40 backdrop-blur-sm relative flex items-center justify-center z-10 w-full border-t border-b border-white/5">
+      <section className="py-10 md:py-16 bg-black/40 backdrop-blur-sm relative flex items-center justify-center z-10 w-full border-t border-b border-white/5 min-h-[25vh] md:min-h-[35vh]">
         <div className="container mx-auto px-4 text-center relative pointer-events-none">
-          <h2 className="text-6xl md:text-8xl lg:text-[8rem] font-black uppercase tracking-widest text-white/30 inline-block">
+          <h2 className="text-4xl sm:text-6xl md:text-8xl lg:text-[8rem] font-black uppercase tracking-widest text-white/30 inline-block">
             EVENT PRODUCTION
           </h2>
         </div>
@@ -370,9 +426,9 @@ export default function EventProductionPage() {
           </div>
 
           <div className="w-full">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[300px] md:auto-rows-[400px]">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 auto-rows-[200px] md:auto-rows-[400px]">
               {/* Project 1 - Tall */}
-              <div className="col-span-2 lg:col-span-1 row-span-2 relative group overflow-hidden bg-zinc-900 border border-white/5">
+              <div className="col-span-2 md:col-span-1 row-span-2 relative group overflow-hidden bg-zinc-900 border border-white/5">
                 <Image
                   src="/new/6L8A0127.jpg"
                   alt="Live Concert"
@@ -475,21 +531,22 @@ export default function EventProductionPage() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
             {/* Left side content */}
-            <div className="lg:w-1/2 space-y-6 text-left">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.05]">
-                They Say Numbers <br />
-                Don&apos;t Lie, and Neither <br />
+            <div className="lg:w-1/2 space-y-6 text-center lg:text-left">
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.05]">
+                They Say Numbers <br className="hidden lg:block" />
+                Don&apos;t Lie, and Neither <br className="hidden lg:block" />
+                Do Ours.
               </h2>
               <p className="text-zinc-400 text-base md:text-lg font-light max-w-md leading-relaxed">
                 Our results speak louder than words, delivering measurable
                 success and undeniable growth.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <button className="px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-black/20 border border-white/20 hover:bg-white/10 transition-colors text-sm flex items-center gap-2">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-4">
+                <button className="px-5 md:px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-xs md:text-sm flex items-center gap-2">
                   Let&apos;s Collaborate
                 </button>
-                <button className="px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-black/20 border border-white/20 hover:bg-white/10 transition-colors text-sm flex items-center gap-2">
+                <button className="px-5 md:px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-xs md:text-sm flex items-center gap-2">
                   Book a Call
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -509,69 +566,69 @@ export default function EventProductionPage() {
             </div>
 
             {/* Right side stats */}
-            <div className="lg:w-1/2 w-full flex justify-center lg:justify-end">
+            <div className="lg:w-1/2 w-full flex justify-center lg:justify-end mt-8 lg:mt-0">
               <div className="w-full max-w-[650px] relative flex flex-col justify-center">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-y-10 gap-x-6 relative z-10">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-y-8 md:gap-y-10 gap-x-4 md:gap-x-6 relative z-10">
                   {/* Stat 1 */}
-                  <div className="text-center space-y-1">
-                    <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight">
+                  <div className="text-center space-y-1 border-r border-white/10 md:border-transparent">
+                    <h4 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight">
                       15+
                     </h4>
-                    <p className="text-zinc-400 text-xs font-light">
-                      years experience.
+                    <p className="text-zinc-400 text-[10px] md:text-xs font-light uppercase tracking-wider">
+                      Years Exp.
                     </p>
                   </div>
 
                   {/* Stat 2 */}
                   <div className="text-center space-y-1">
-                    <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight">
+                    <h4 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight">
                       5k+
                     </h4>
-                    <p className="text-zinc-400 text-xs font-light">
-                      events executed.
+                    <p className="text-zinc-400 text-[10px] md:text-xs font-light uppercase tracking-wider">
+                      Events Done
                     </p>
                   </div>
 
                   {/* Stat 3 */}
-                  <div className="text-center space-y-1">
-                    <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight">
+                  <div className="text-center space-y-1 border-r border-white/10 md:border-transparent">
+                    <h4 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight">
                       400+
                     </h4>
-                    <p className="text-zinc-400 text-xs font-light">
-                      partner brands.
+                    <p className="text-zinc-400 text-[10px] md:text-xs font-light uppercase tracking-wider">
+                      Partner Brands
                     </p>
                   </div>
 
                   {/* Divider */}
-                  <div className="col-span-2 md:col-span-3 w-full h-px bg-white/10 my-1"></div>
+                  <div className="hidden md:block md:col-span-3 w-full h-px bg-white/10 my-2"></div>
 
                   {/* Stat 4 */}
                   <div className="text-center space-y-1">
-                    <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight">
+                    <h4 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight">
                       100%
                     </h4>
-                    <p className="text-zinc-400 text-xs font-light">
-                      commitment.
+                    <p className="text-zinc-400 text-[10px] md:text-xs font-light uppercase tracking-wider">
+                      Commitment
                     </p>
                   </div>
 
                   {/* Stat 5 */}
-                  <div className="text-center space-y-1">
-                    <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight">
+                  <div className="text-center space-y-1 border-r border-white/10 md:border-transparent">
+                    <h4 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight">
                       50+
                     </h4>
-                    <p className="text-zinc-400 text-xs font-light">
-                      team members.
+                    <p className="text-zinc-400 text-[10px] md:text-xs font-light uppercase tracking-wider">
+                      Team Members
                     </p>
                   </div>
 
                   {/* Stat 6 */}
                   <div className="text-center space-y-1">
-                    <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight">
+                    <h4 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight">
                       24/7
                     </h4>
-                    <p className="text-zinc-400 text-xs font-light">
-                      support & logistics.
+                    <p className="text-zinc-400 text-[10px] md:text-xs font-light uppercase tracking-wider">
+                      Logistics
                     </p>
                   </div>
                 </div>
@@ -599,10 +656,10 @@ export default function EventProductionPage() {
             </div>
           </div>
 
-          {/* Compact Masonry Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Stacked Vertical Layout on Mobile, Masonry Grid on Desktop */}
+          <div className="flex flex-col md:grid md:grid-cols-3 gap-4 md:space-x-0 pt-2 pb-8">
             {/* Column 1 */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-0 snap-center shrink-0">
               {/* Black Card */}
               <div className="bg-black border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between h-[260px]">
                 <div>
@@ -674,7 +731,7 @@ export default function EventProductionPage() {
             </div>
 
             {/* Column 2 */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-0 snap-center shrink-0">
               {/* Tall Image Card */}
               <div className="relative bg-black border border-white/10 text-white p-5 md:p-7 flex flex-col justify-end h-[496px] overflow-hidden group">
                 <Image
@@ -736,7 +793,7 @@ export default function EventProductionPage() {
             </div>
 
             {/* Column 3 */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-0 snap-center shrink-0">
               {/* Zinc Card (Formerly White) */}
               <div className="bg-zinc-900 border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between h-[240px] shadow-sm">
                 <div>
@@ -832,32 +889,35 @@ export default function EventProductionPage() {
             </div>
 
             {/* Additional Info from Footer.tsx */}
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-xs md:text-sm text-zinc-500 font-medium tracking-wide">
+            <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-x-8 gap-y-4 text-xs md:text-sm text-zinc-500 font-medium tracking-wide">
               <div className="flex items-center gap-2 hover:text-zinc-300 transition-colors">
-                <IconMapPin className="h-4 w-4 opacity-70" />
+                <IconMapPin className="h-4 w-4 opacity-70 shrink-0" />
                 <span>Ruwi, Muscat & Wadi Kabir</span>
               </div>
               <div className="flex items-center gap-2 hover:text-zinc-300 transition-colors">
-                <IconPhone className="h-4 w-4 opacity-70" />
+                <IconPhone className="h-4 w-4 opacity-70 shrink-0" />
                 <span>+968-2478-3443</span>
               </div>
               <div className="flex items-center gap-2 hover:text-zinc-300 transition-colors">
-                <IconBrandWhatsapp className="h-4 w-4 opacity-70" />
+                <IconBrandWhatsapp className="h-4 w-4 opacity-70 shrink-0" />
                 <span>+968-9225-2685</span>
               </div>
               <div className="flex items-center gap-2 hover:text-zinc-300 transition-colors">
-                <IconMail className="h-4 w-4 opacity-70" />
+                <IconMail className="h-4 w-4 opacity-70 shrink-0" />
                 <span>customerservice@talentz.net</span>
               </div>
               <div className="flex items-center gap-2 hover:text-zinc-300 transition-colors">
-                <IconClock className="h-4 w-4 opacity-70" />
+                <IconClock className="h-4 w-4 opacity-70 shrink-0" />
                 <span>Sat-Thu: 9am-1pm, 4pm-8pm</span>
               </div>
             </div>
 
             {/* Existing Footer Links, rendered horizontally to match the image's vibe */}
-            <div className="pt-4 flex flex-col gap-6">
-              <div className="flex flex-wrap md:items-center gap-x-8 gap-y-3 text-[13px] md:text-sm font-semibold text-white">
+            <div className="pt-4 grid grid-cols-2 gap-x-6 gap-y-10 md:flex md:flex-col md:gap-6">
+              <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-x-8 gap-y-3 md:gap-y-4 text-[13px] md:text-sm font-semibold text-white">
+                <span className="text-zinc-500 mb-1 md:mb-0 md:mr-2 uppercase tracking-[0.2em] text-[10px] md:hidden">
+                  Products
+                </span>
                 <span className="text-zinc-600 mr-2 uppercase tracking-[0.2em] text-[10px] hidden md:inline-block">
                   Products
                 </span>
@@ -885,7 +945,10 @@ export default function EventProductionPage() {
                 ))}
               </div>
 
-              <div className="flex flex-wrap md:items-center gap-x-8 gap-y-3 text-[13px] md:text-sm font-semibold text-white">
+              <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-x-8 gap-y-3 md:gap-y-4 text-[13px] md:text-sm font-semibold text-white">
+                <span className="text-zinc-500 mb-1 md:mb-0 md:mr-2 uppercase tracking-[0.2em] text-[10px] md:hidden">
+                  Company
+                </span>
                 <span className="text-zinc-600 mr-2 uppercase tracking-[0.2em] text-[10px] hidden md:inline-block">
                   Company
                 </span>
@@ -910,10 +973,10 @@ export default function EventProductionPage() {
             </div>
 
             {/* Divider from image */}
-            <div className="w-full h-px bg-white/10 mt-10 mb-2"></div>
+            <div className="w-full h-px bg-white/10 mt-6 md:mt-10 mb-2"></div>
 
             {/* Bottom Section: Copyright & Socials */}
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex flex-col-reverse md:flex-row justify-between items-start md:items-center gap-6">
               <p className="text-zinc-500 text-xs font-medium tracking-wide">
                 Copyright 2026© Talentz Enterprises L.L.C. All Rights Reserved.
               </p>

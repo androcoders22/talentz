@@ -13,15 +13,15 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="container mx-auto px-4 py-4 mb-4">
-      <div className="bg-white text-black rounded-[2rem] border border-black/5 shadow-sm overflow-hidden relative pt-24 pb-12">
+    <footer className="container mx-auto px-4 py-4 md:mb-4">
+      <div className="bg-white text-black rounded-[1.5rem] md:rounded-[2rem] border border-black/5 shadow-sm overflow-hidden relative pt-12 md:pt-24 pb-8 md:pb-12">
         {/* Subtle Line */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-linear-to-r from-transparent via-black/10 to-transparent" />
 
-        <div className="px-6 md:px-14 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-10">
+        <div className="px-5 md:px-14 relative z-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 lg:gap-16 mb-8 md:mb-10">
             {/* Brand and Description */}
-            <div className="space-y-8">
+            <div className="col-span-2 lg:col-span-1 space-y-6 md:space-y-8 tracking-tight">
               <Link href="/" className="inline-block">
                 <img
                   src="/logo-old.png"
@@ -53,99 +53,100 @@ export function Footer() {
             </div>
 
             {/* Our Locations */}
-            <div>
-              <h4 className="font-bold mb-8 uppercase text-xs tracking-[0.3em] text-black/40">
+            <div className="col-span-2 lg:col-span-1">
+              <h4 className="hidden lg:block font-bold mb-5 md:mb-8 uppercase text-xs tracking-[0.3em] text-black/40">
                 Our Locations
               </h4>
-              <div className="space-y-6 text-sm">
-                <div className="flex items-start gap-4 group">
-                  <IconMapPin className="h-5 w-5 text-black/50 shrink-0 mt-0.5" />
+              <div className="grid grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-6 text-sm">
+                <div className="flex items-start gap-3 group">
+                  <IconMapPin className="h-5 w-5 text-black/50 shrink-0 mt-0.5 hidden lg:block" />
                   <Link
                     href="https://www.google.com/maps/place/Talentz+Enterprises+LLC+%D8%A7%D9%84%D9%85%D9%88%D8%A7%D9%87%D8%A8+%D9%84%D9%84%D9%85%D8%B4%D8%A7%D8%B1%D9%8A%D8%B9+-+%D8%A8%D9%8A%D8%B9%E2%80%AD/@23.5990009,58.5372331,1057m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3e91f9ce8eae6501:0xd260c3cd08ccced1!8m2!3d23.598996!4d58.539808!16s%2Fg%2F1v44nx41?hl=en-IN&entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D"
                     target="_blank"
-                    className="text-black/50 leading-relaxed group-hover:text-black hover:underline transition-colors"
+                    className="text-black/50 leading-relaxed group-hover:text-black transition-colors"
                   >
-                    <span className="text-black/70 font-medium">
+                    <span className="text-black/70 font-bold block mb-1 uppercase text-[10px] tracking-[0.2em] lg:normal-case lg:text-sm lg:tracking-normal lg:font-medium lg:inline lg:mb-0">
                       Music Store
                     </span>
-                    <br />
-                    Shop 94, Al An Noor Street, <br /> Ruwi, Muscat, Sultanate
-                    of Oman
+                    <br className="hidden lg:block" />
+                    <span className="text-xs lg:text-sm inline-block">
+                      Shop 94, Al An Noor Street, <br /> Ruwi, Muscat, Sultanate
+                      of Oman
+                    </span>
                   </Link>
                 </div>
-                <div className="flex items-start gap-4 group">
-                  <IconMapPin className="h-5 w-5 text-black/50 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 group">
+                  <IconMapPin className="h-5 w-5 text-black/50 shrink-0 mt-0.5 hidden lg:block" />
                   <Link
                     href="https://www.google.com/maps/place/Talentz+Wadi+Kabir+Warehouse/@23.572361,58.5790389,471m/data=!3m1!1e3!4m14!1m7!3m6!1s0x3e91f7007ce2aadf:0x7918b01ebd38f9da!2sTalentz+Wadi+Kabir+Warehouse!8m2!3d23.5731323!4d58.580665!16s%2Fg%2F11xt70b31n!3m5!1s0x3e91f7007ce2aadf:0x7918b01ebd38f9da!8m2!3d23.5731323!4d58.580665!16s%2Fg%2F11xt70b31n!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D"
                     target="_blank"
-                    className="text-black/50 leading-relaxed group-hover:text-black hover:underline transition-colors"
+                    className="text-black/50 leading-relaxed group-hover:text-black transition-colors"
                   >
-                    <span className="text-black/70 font-medium">
+                    <span className="text-black/70 font-bold block mb-1 uppercase text-[10px] tracking-[0.2em] lg:normal-case lg:text-sm lg:tracking-normal lg:font-medium lg:inline lg:mb-0">
                       AV Rental Office
                     </span>
-                    <br />
-                    Wadi Kabir, Muscat, Oman
+                    <br className="hidden lg:block" />
+                    <span className="text-xs lg:text-sm inline-block">
+                      Wadi Kabir, Muscat, Oman
+                    </span>
                   </Link>
                 </div>
               </div>
             </div>
 
             {/* Contact */}
-            <div>
-              <h4 className="font-bold mb-8 uppercase text-xs tracking-[0.3em] text-black/40">
+            <div className="col-span-1">
+              <h4 className="font-bold mb-5 md:mb-8 uppercase text-[10px] lg:text-xs tracking-[0.2em] lg:tracking-[0.3em] text-black/40">
                 Contact
               </h4>
-              <div className="space-y-6 text-sm">
-                <div className="flex items-center gap-4 group">
-                  <IconPhone className="h-5 w-5 text-black/50 shrink-0" />
+              <div className="space-y-3 lg:space-y-6 text-xs lg:text-sm">
+                <div className="flex items-center gap-3 group">
+                  <IconPhone className="h-5 w-5 text-black/50 shrink-0 hidden lg:block" />
                   <span className="text-black/50 group-hover:text-black transition-colors">
                     +968-2478-3443
                   </span>
                 </div>
-                <div className="flex items-center gap-4 group">
-                  <IconBrandWhatsapp className="h-5 w-5 text-black/50 shrink-0" />
+                <div className="flex items-center gap-3 group">
+                  <IconBrandWhatsapp className="h-5 w-5 text-black/50 shrink-0 hidden lg:block" />
                   <span className="text-black/50 group-hover:text-black transition-colors">
                     +968-9225-2685
                   </span>
                 </div>
-                <div className="flex items-center gap-4 group">
-                  <IconMail className="h-5 w-5 text-black/50 shrink-0" />
+                <div className="flex items-center gap-3 group break-all pr-2">
+                  <IconMail className="h-5 w-5 text-black/50 shrink-0 hidden lg:block" />
                   <span className="text-black/50 group-hover:text-black transition-colors font-medium">
-                    customerservice@talentz.net
+                    customerservice
+                    <wbr />
+                    @talentz.net
                   </span>
                 </div>
               </div>
             </div>
 
             {/* Showroom Hours */}
-            <div>
-              <h4 className="font-bold mb-8 uppercase text-xs tracking-[0.3em] text-black/50">
+            <div className="col-span-1">
+              <h4 className="font-bold mb-5 md:mb-8 uppercase text-[10px] lg:text-xs tracking-[0.2em] lg:tracking-[0.3em] text-black/50">
                 Showroom Hours
               </h4>
-              <div className="space-y-6 text-sm">
-                <div className="flex items-start gap-4">
-                  <IconClock className="h-5 w-5 text-black/50 shrink-0 mt-0.5" />
-                  <div className="text-black/50 space-y-1">
-                    <p className="text-black font-medium">
+              <div className="space-y-3 lg:space-y-6 text-xs lg:text-sm">
+                <div className="flex items-start gap-3">
+                  <IconClock className="h-5 w-5 text-black/50 shrink-0 mt-0.5 hidden lg:block" />
+                  <div className="text-black/50 space-y-2 lg:space-y-1">
+                    <p className="text-black font-medium text-[11px] lg:text-sm">
                       Saturday to Thursday
                     </p>
                     <p>9 am to 1 pm</p>
                     <p>4 pm to 8 pm</p>
                   </div>
                 </div>
-                <div className="pt-2">
-                  <span className="inline-block px-4 py-2 rounded-full border border-black/10 bg-black/3 text-xs text-black/40 font-medium italic">
-                    Closed on Fridays
-                  </span>
-                </div>
               </div>
             </div>
           </div>
 
           {/* Bottom Bar Section */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-black/30">
+          <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-6 md:gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-black/30 text-center md:text-left">
             <p>© 2025 Talentz Enterprises L.L.C. All rights reserved.</p>
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 md:gap-6">
               <div className="flex items-center gap-2">
                 <span>Muscat</span>
                 <div className="h-1 w-1 bg-black/15 rounded-full" />
