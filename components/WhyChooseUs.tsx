@@ -45,7 +45,7 @@ const brands = [
   },
   {
     name: "D'Addario",
-    logo: "https://cdn.cookielaw.org/logos/e7c993a5-a748-4f49-9722-251e47ce622d/28da6178-33a9-42ba-a80a-15ae2627e31b/8f6dcc1c-4f99-4513-9ea4-65aeb935aa3e/logo_daddario_1color_on_white.png",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Daddario_logo.png",
   },
   {
     name: "Adamson",
@@ -86,6 +86,7 @@ export function WhyChooseUs() {
               <img
                 src={brand.logo}
                 alt={brand.name}
+                suppressHydrationWarning
                 className={`h-12 md:h-14 lg:h-16 w-auto max-w-full object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 ${brand.invert ? "invert" : ""}`}
                 title={brand.name}
               />

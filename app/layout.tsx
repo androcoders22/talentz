@@ -30,6 +30,7 @@ export default function RootLayout({
         <script src="https://tweakcn.com/live-preview.min.js"></script>
       </head>
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen flex-col`}
       >
         <Navbar />

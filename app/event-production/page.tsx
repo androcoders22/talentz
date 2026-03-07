@@ -929,11 +929,11 @@ export default function EventProductionPage() {
                   "Drums & Percussion",
                   "Guitar Amplifiers",
                   "Headphones",
-                  "Microphones",
-                  "Effects",
-                  "Strings",
-                  "Special Offers",
-                  "Preloved",
+                  // "Microphones",
+                  // "Effects",
+                  // "Strings",
+                  // "Special Offers",
+                  // "Preloved",
                 ].map((cat) => (
                   <Link
                     key={cat}
