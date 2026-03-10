@@ -5,15 +5,17 @@ import Link from "next/link";
 export function Hero() {
   return (
     <section className="container mx-auto px-4 pt-8 md:pt-12 pb-10">
-      <div className="flex flex-col items-start mb-4 md:mb-8 gap-8">
-        <h1 className="text-2xl sm:text-4xl md:text-6xl font-light tracking-tight leading-[1.1]">
-          <span className="font-extrabold tracking-widest text-[3rem] sm:text-[4rem] md:text-[4.8rem] text-zinc-950 block mb-1 md:mb-2 lg:mb-4">
+      <div className="flex flex-col items-start mb-4 md:mb-8">
+        <h1 className="tracking-tight leading-[1.05]">
+          <span className="font-extrabold tracking-widest text-[3rem] sm:text-[4rem] md:text-[4.8rem] text-gray-900 block mb-1">
             TALENTZ
           </span>
-          <span className="font-semibold text-[2rem] sm:text-[2.8rem] md:text-[3.5rem] text-zinc-900 block mb-1 md:mb-0">
+
+          <span className="font-medium text-[1.5rem] sm:text-[1.9rem] md:text-[2.2rem] text-gray-700 block mb-2 md:mb-3">
             Ready for Every Stage.
           </span>
-          <span className="text-zinc-800 text-xl sm:text-2xl md:text-4xl">
+
+          <span className="text-zinc-700 text-xl sm:text-2xl md:text-4xl">
             AVL Rentals, Pro Audio, Music Gears.
           </span>
         </h1>

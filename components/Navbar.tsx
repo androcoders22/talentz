@@ -21,12 +21,13 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const eventsLinks = [
-    { label: "Technical & AV Rental", href: "/#" },
-    { label: "Truss Structures", href: "/#" },
-    { label: "Staging", href: "/#" },
-    { label: "Tents & Marquees", href: "/#" },
-    { label: "Grandstand Seating", href: "/#" },
-    { label: "Special Projects", href: "/#" },
+    { label: "Overview", href: "/event-production" },
+    { label: "Equipment & Capabilities", href: "/event-production#equipment" },
+    { label: "Recent Projects", href: "/event-production#portfolio" },
+    { label: "Impact & Numbers", href: "/event-production#impact" },
+    { label: "Social Feed", href: "/event-production#social" },
+    { label: "Testimonials", href: "/event-production#testimonials" },
+    { label: "Contact Us", href: "/event-production#contact-us" },
   ];
 
   const musicLinks = [

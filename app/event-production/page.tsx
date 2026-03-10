@@ -27,8 +27,70 @@ declare global {
 export default function EventProductionPage() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [budget, setBudget] = useState(500);
   const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Instagram Carousel Drag State
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  // Physics momentum tracking
+  const [velX, setVelX] = useState(0);
+  const momentumID = useRef<number | null>(null);
+
+  const startDragging = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    if (!carouselRef.current) return;
+    setStartX(e.pageX - carouselRef.current.offsetLeft);
+    setScrollLeft(carouselRef.current.scrollLeft);
+
+    // Stop any existing momentum
+    if (momentumID.current) cancelAnimationFrame(momentumID.current);
+  };
+
+  const stopDragging = () => {
+    setIsDragging(false);
+    beginMomentumLoop();
+  };
+
+  const onDrag = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !carouselRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - carouselRef.current.offsetLeft;
+
+    // Calculate difference to set new velocity and scroll position
+    const walk = (x - startX) * 2;
+    const prevScrollLeft = carouselRef.current.scrollLeft;
+    carouselRef.current.scrollLeft = scrollLeft - walk;
+
+    setVelX(carouselRef.current.scrollLeft - prevScrollLeft);
+  };
+
+  const beginMomentumLoop = () => {
+    let velocity = velX;
+
+    const momentumLoop = () => {
+      if (!carouselRef.current) return;
+
+      carouselRef.current.scrollLeft += velocity;
+      velocity *= 0.95; // friction factor
+
+      if (Math.abs(velocity) > 0.5) {
+        momentumID.current = requestAnimationFrame(momentumLoop);
+      }
+    };
+
+    momentumID.current = requestAnimationFrame(momentumLoop);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (momentumID.current) cancelAnimationFrame(momentumID.current);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -192,31 +254,8 @@ export default function EventProductionPage() {
           }}
         >
           <div className="pointer-events-auto max-w-2xl mt-10 md:ml-3">
-            <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-medium text-white mb-6 leading-[1.1] tracking-tight flex flex-col gap-2">
-              <span className="flex items-center gap-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-12 h-12 md:w-16 md:h-16 shrink-0 opacity-90"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect
-                    x="2"
-                    y="4"
-                    width="20"
-                    height="16"
-                    rx="1.5"
-                    ry="1.5"
-                  ></rect>
-                  <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                </svg>
-                Event
-              </span>
-              Production
+            <h1 className="text-4xl md:text-6xl lg:text-[4rem] font-medium text-white mb-6 leading-[1.1] tracking-tight flex flex-col gap-2">
+              <span className="flex items-center gap-4">Event Production </span>
             </h1>
             <p className="text-lg text-white/80 font-normal tracking-wide mb-10 leading-relaxed max-w-md">
               Unlock a world of possibilities with Talentz, the ultimate
@@ -261,7 +300,7 @@ export default function EventProductionPage() {
         </div>
       </section>
 
-      {/* Section 1: Introduction */}
+      {/* Section 1: Introduction
       <section className="bg-zinc-950 relative z-10 w-full border-t border-white/5">
         <div className="h-[300px] md:h-[350px] relative w-full border-b border-t border-white/5">
           <FlowingMenu
@@ -300,10 +339,13 @@ export default function EventProductionPage() {
             borderColor="rgba(255,255,255,0.1)"
           />
         </div>
-      </section>
+      </section> */}
 
       {/* Section 2: Equipment / Capabilities */}
-      <section className="py-16 bg-zinc-950 relative overflow-hidden border-y border-white/5 z-10">
+      <section
+        id="equipment"
+        className="py-16 bg-zinc-950 relative overflow-hidden border-y border-white/5 z-10"
+      >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0,transparent_100%)] pointer-events-none" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 auto-rows-[160px] md:auto-rows-[280px]">
@@ -320,8 +362,8 @@ export default function EventProductionPage() {
                 />
               </div>
               <div className="space-y-1 md:space-y-3 mb-0 md:mb-2 text-left w-[50%] pr-2 md:pr-0 md:w-full z-10 relative">
-                <h3 className="text-2xl md:text-4xl font-medium leading-[1.1] transition-colors duration-500">
-                  Total <br className="hidden md:block" /> Inventory
+                <h3 className="text-2xl md:text-3xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
+                  Technology
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 font-light text-[11px] leading-tight md:text-sm transition-colors duration-500">
                   Continuous investment in the largest and most cutting-edge AV
@@ -334,8 +376,8 @@ export default function EventProductionPage() {
             <div className="feature-card col-span-2 md:col-span-2 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-5 md:p-6 flex flex-col justify-center relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden">
               <div className="absolute inset-y-0 left-0 w-[70%] bg-linear-to-r from-zinc-950 via-zinc-950/95 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/95 group-[.is-active]:via-white/95 transition-colors duration-500 z-1 md:hidden" />
               <div className="space-y-1 md:space-y-3 w-[55%] md:w-auto md:max-w-xs z-10 relative">
-                <h3 className="text-2xl md:text-4xl font-medium leading-[1.1] transition-colors duration-500">
-                  Immersive <br className="hidden md:block" /> Events
+                <h3 className="text-2xl md:text-3xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
+                  Exhibition <br className="hidden md:block" /> Stands
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 font-light text-xs md:text-sm transition-colors duration-500 hidden md:block">
                   From architectural lighting to glitzy fashion shows, advanced
@@ -369,8 +411,8 @@ export default function EventProductionPage() {
                 />
               </div>
               <div className="space-y-1 z-10 mt-auto md:mt-0 md:space-y-2 w-full relative">
-                <h3 className="text-xl md:text-3xl font-medium leading-[1.1] transition-colors duration-500">
-                  Precise <br className="hidden md:block" /> Audio
+                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
+                  Corporate <br className="hidden md:block" /> Events
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light mt-1 transition-colors duration-500 hidden sm:block">
                   Line arrays & pro sound.
@@ -391,8 +433,8 @@ export default function EventProductionPage() {
               </div>
               <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
               <div className="space-y-1 md:space-y-2 relative z-10 mt-auto text-left">
-                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500">
-                  Seamless <br className="md:hidden" /> Structures
+                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide text-balance">
+                  Tents, Barriers, etc
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light transition-colors duration-500">
                   Trusses, staging{" "}
@@ -414,7 +456,10 @@ export default function EventProductionPage() {
       </section>
 
       {/* Section 4: Recent Projects Gallery */}
-      <section className="py-24 bg-zinc-950 relative z-10 w-full border-t border-white/5 overflow-hidden">
+      <section
+        id="portfolio"
+        className="py-24 bg-zinc-950 relative z-10 w-full border-t border-white/5 overflow-hidden"
+      >
         <div className="container mx-auto px-4">
           <div className="mb-16">
             <h2 className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-500 mb-4 border-l-2 border-white/20 pl-4 inline-block">
@@ -527,7 +572,10 @@ export default function EventProductionPage() {
       </section>
 
       {/* Section X: Statistics / Impact */}
-      <section className="py-16 bg-black/40 backdrop-blur-sm relative z-10 w-full border-t border-white/5">
+      <section
+        id="impact"
+        className="py-16 bg-black/40 backdrop-blur-sm relative z-10 w-full border-t border-white/5"
+      >
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
             {/* Left side content */}
@@ -638,12 +686,235 @@ export default function EventProductionPage() {
         </div>
       </section>
 
-      {/* Section 3: Reviews */}
-      <section className="py-16 md:py-20 bg-zinc-950 border-t border-white/5 relative z-10 w-full overflow-hidden">
+      {/* Section X: Instagram Posts */}
+      <section
+        id="social"
+        className="py-20 md:py-24 bg-zinc-950 border-t border-white/5 relative z-10 w-full overflow-hidden"
+      >
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 gap-6">
+            <div>
+              <h2 className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-500 mb-4 border-l-2 border-white pl-4 inline-block">
+                Social Feed
+              </h2>
+              <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                Our Recent Instagram Posts
+              </h3>
+            </div>
+            <Link
+              href="https://www.instagram.com/talentzeventsproduction/"
+              target="_blank"
+              className="group flex items-center gap-3 text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+            >
+              <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-white/40 transition-colors">
+                <IconBrandInstagram className="h-5 w-5" />
+              </div>
+              <span>@talentzeventsproduction</span>
+            </Link>
+          </div>
+
+          {/* Horizontal Scroll Layout */}
+          <div className="relative w-full overflow-hidden group/carousel">
+            {/* Scroll Container */}
+            <div
+              ref={carouselRef}
+              onMouseDown={startDragging}
+              onMouseLeave={stopDragging}
+              onMouseUp={stopDragging}
+              onMouseMove={onDrag}
+              className={`flex overflow-x-auto gap-4 md:gap-6 pt-4 md:pt-16 pb-8 md:pb-20 px-4 md:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-center cursor-grab active:cursor-grabbing select-none ${!isDragging ? "scroll-smooth snap-x snap-mandatory" : ""}`}
+            >
+              {/* Post 1 */}
+              <Link
+                href="https://www.instagram.com/talentzeventsproduction/"
+                target="_blank"
+                onClick={(e) => {
+                  if (isDragging) e.preventDefault();
+                }}
+                className="flex-none w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-4/5 snap-center md:snap-start relative group overflow-hidden bg-zinc-950 rounded-lg shrink-0 border border-white/5 hover:border-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl md:-translate-y-6 md:hover:-translate-y-8"
+              >
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src="/new/DSC01552.jpg"
+                    alt="Instagram Post 1"
+                    fill
+                    sizes="(max-width: 768px) 75vw, 25vw"
+                    className="object-cover scale-[1.02] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                  />
+                </div>
+                {/* Vintage overlay effect */}
+                <div className="absolute inset-0 bg-neutral-900/10 group-hover:bg-black/40 transition-colors duration-500 z-10 mixt-blend-overlay"></div>
+                {/* Gradient vignette */}
+                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+
+                {/* Content Overlay */}
+                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                  <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+                    <IconBrandInstagram className="text-white w-6 h-6" />
+                  </div>
+                  <p className="mt-4 text-sm font-medium text-white translate-y-8 group-hover:translate-y-0 transition-transform duration-500 delay-75 ease-out">
+                    View on Instagram
+                  </p>
+                </div>
+              </Link>
+
+              {/* Post 2 */}
+              <Link
+                href="https://www.instagram.com/talentzeventsproduction/"
+                target="_blank"
+                onClick={(e) => {
+                  if (isDragging) e.preventDefault();
+                }}
+                className="flex-none w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-4/5 snap-center md:snap-start relative group overflow-hidden bg-zinc-950 rounded-lg shrink-0 border border-white/5 hover:border-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl md:translate-y-6 md:hover:translate-y-4"
+              >
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src="/new/6L8A4415.jpg"
+                    alt="Instagram Post 2"
+                    fill
+                    sizes="(max-width: 768px) 75vw, 25vw"
+                    className="object-cover scale-[1.02] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-neutral-900/10 group-hover:bg-black/40 transition-colors duration-500 z-10 mixt-blend-overlay"></div>
+                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+
+                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                  <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+                    <IconBrandInstagram className="text-white w-6 h-6" />
+                  </div>
+                  <p className="mt-4 text-sm font-medium text-white translate-y-8 group-hover:translate-y-0 transition-transform duration-500 delay-75 ease-out">
+                    View on Instagram
+                  </p>
+                </div>
+              </Link>
+
+              {/* Post 3 */}
+              <Link
+                href="https://www.instagram.com/talentzeventsproduction/"
+                target="_blank"
+                onClick={(e) => {
+                  if (isDragging) e.preventDefault();
+                }}
+                className="flex-none w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-4/5 snap-center md:snap-start relative group overflow-hidden bg-zinc-950 rounded-lg shrink-0 border border-white/5 hover:border-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl md:-translate-y-6 md:hover:-translate-y-8"
+              >
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src="/new/6L8A4309.jpg"
+                    alt="Instagram Post 3"
+                    fill
+                    sizes="(max-width: 768px) 75vw, 25vw"
+                    className="object-cover scale-[1.02] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-neutral-900/10 group-hover:bg-black/40 transition-colors duration-500 z-10 mixt-blend-overlay"></div>
+                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+
+                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                  <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+                    <IconBrandInstagram className="text-white w-6 h-6" />
+                  </div>
+                  <p className="mt-4 text-sm font-medium text-white translate-y-8 group-hover:translate-y-0 transition-transform duration-500 delay-75 ease-out">
+                    View on Instagram
+                  </p>
+                </div>
+              </Link>
+
+              {/* Post 4 */}
+              <Link
+                href="https://www.instagram.com/talentzeventsproduction/"
+                target="_blank"
+                onClick={(e) => {
+                  if (isDragging) e.preventDefault();
+                }}
+                className="flex-none w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-4/5 snap-center md:snap-start relative group overflow-hidden bg-zinc-950 rounded-lg shrink-0 border border-white/5 hover:border-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl md:translate-y-6 md:hover:translate-y-4"
+              >
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src="/new/TALENTZOCEC-010.jpg"
+                    alt="Instagram Post 4"
+                    fill
+                    sizes="(max-width: 768px) 75vw, 25vw"
+                    className="object-cover scale-[1.02] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-neutral-900/10 group-hover:bg-black/40 transition-colors duration-500 z-10 mixt-blend-overlay"></div>
+                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+
+                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                  <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+                    <IconBrandInstagram className="text-white w-6 h-6" />
+                  </div>
+                  <p className="mt-4 text-sm font-medium text-white translate-y-8 group-hover:translate-y-0 transition-transform duration-500 delay-75 ease-out">
+                    View on Instagram
+                  </p>
+                </div>
+              </Link>
+
+              {/* Post 5 */}
+              <Link
+                href="https://www.instagram.com/talentzeventsproduction/"
+                target="_blank"
+                onClick={(e) => {
+                  if (isDragging) e.preventDefault();
+                }}
+                className="flex-none w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-4/5 snap-center md:snap-start relative group overflow-hidden bg-zinc-950 rounded-lg shrink-0 border border-white/5 hover:border-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl md:-translate-y-6 md:hover:-translate-y-8"
+              >
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src="/new/RED_5641.jpg"
+                    alt="Instagram Post 5"
+                    fill
+                    sizes="(max-width: 768px) 75vw, 25vw"
+                    className="object-cover scale-[1.02] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-neutral-900/10 group-hover:bg-black/40 transition-colors duration-500 z-10 mixt-blend-overlay"></div>
+                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+
+                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                  <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+                    <IconBrandInstagram className="text-white w-6 h-6" />
+                  </div>
+                  <p className="mt-4 text-sm font-medium text-white translate-y-8 group-hover:translate-y-0 transition-transform duration-500 delay-75 ease-out">
+                    View on Instagram
+                  </p>
+                </div>
+              </Link>
+
+              {/* "See More" Card */}
+              <Link
+                href="https://www.instagram.com/talentzeventsproduction/"
+                target="_blank"
+                onClick={(e) => {
+                  if (isDragging) e.preventDefault();
+                }}
+                className={`flex-none w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-4/5 snap-center md:snap-start relative group overflow-hidden bg-zinc-900 rounded-lg shrink-0 border border-white/5 hover:bg-zinc-800 transition-all duration-300 flex flex-col items-center justify-center gap-4 md:translate-y-6 md:hover:translate-y-4 ${isDragging ? "pointer-events-none" : ""}`}
+              >
+                <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                  <IconBrandInstagram className="text-white w-7 h-7" />
+                </div>
+                <span className="text-sm font-medium text-white uppercase tracking-widest bg-gradient-to-r from-zinc-100 to-zinc-500 bg-clip-text text-transparent">
+                  View Gallery
+                </span>
+              </Link>
+            </div>
+
+            {/* Edge fade gradients for scroll indication (Desktop) */}
+            <div className="hidden md:block absolute top-0 right-0 bottom-8 w-32 bg-gradient-to-l from-zinc-950 to-transparent pointer-events-none z-30"></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 3: Testimonials */}
+      <section
+        id="testimonials"
+        className="py-16 md:py-20 bg-zinc-950 border-t border-white/5 relative z-10 w-full overflow-hidden"
+      >
         <div className="container mx-auto px-4">
           <div className="mb-12 md:mb-16">
-            <h2 className="text-white text-7xl md:text-9xl lg:text-[11rem] font-medium tracking-tighter leading-none mb-4 md:mb-6">
-              Reviews
+            <h2 className="text-white text-6xl md:text-7xl lg:text-[9rem] font-medium tracking-tighter leading-none mb-4 md:mb-6">
+              Testimonials
             </h2>
             <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
               <span className="text-3xl md:text-4xl font-bold tracking-tighter text-white">
@@ -667,7 +938,7 @@ export default function EventProductionPage() {
                     {[1, 2, 3, 4, 5].map((star) => (
                       <svg
                         key={star}
-                        className="w-3.5 h-3.5 text-[#E75033] fill-current"
+                        className="w-3.5 h-3.5 text-[#ffffff] fill-current"
                         viewBox="0 0 24 24"
                       >
                         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
@@ -698,7 +969,7 @@ export default function EventProductionPage() {
                     {[1, 2, 3, 4].map((star) => (
                       <svg
                         key={star}
-                        className="w-3.5 h-3.5 text-[#E75033] fill-current"
+                        className="w-3.5 h-3.5 text-[#ffffff] fill-current"
                         viewBox="0 0 24 24"
                       >
                         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
@@ -748,7 +1019,7 @@ export default function EventProductionPage() {
                     {[1, 2, 3, 4, 5].map((star) => (
                       <svg
                         key={star}
-                        className="w-3.5 h-3.5 text-[#E75033] fill-current"
+                        className="w-3.5 h-3.5 text-[#ffffff] fill-current"
                         viewBox="0 0 24 24"
                       >
                         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
@@ -801,7 +1072,7 @@ export default function EventProductionPage() {
                     {[1, 2, 3, 4, 5].map((star) => (
                       <svg
                         key={star}
-                        className="w-3.5 h-3.5 text-[#E75033] fill-current"
+                        className="w-3.5 h-3.5 text-[#ffffff] fill-current"
                         viewBox="0 0 24 24"
                       >
                         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
@@ -833,7 +1104,7 @@ export default function EventProductionPage() {
                     {[1, 2, 3, 4].map((star) => (
                       <svg
                         key={star}
-                        className="w-3.5 h-3.5 text-[#E75033] fill-current"
+                        className="w-3.5 h-3.5 text-[#ffffff] fill-current"
                         viewBox="0 0 24 24"
                       >
                         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
@@ -867,11 +1138,218 @@ export default function EventProductionPage() {
           </div>
         </div>
       </section>
+      {/* Section X: Contact Us */}
+      <section
+        id="contact-us"
+        className="pt-16 pb-10 md:pt-20 md:pb-14 bg-zinc-950 relative z-10 w-full border-t border-white/5 overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(255,255,255,0.03)_0,transparent_50%)] pointer-events-none" />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-col lg:flex-row ">
+            {/* Left section */}
+            <div className="lg:w-[35%] flex flex-col justify-start">
+              <h2 className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-500 mb-4 border-l-2 border-[#ffffff] pl-4 inline-block">
+                Start Your Journey
+              </h2>
+              <h3 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white tracking-tight leading-[1.1] mb-6">
+                Let&apos;s Innovate <br /> Together
+              </h3>
+              <p className="text-zinc-400 text-sm md:text-base leading-relaxed font-light mb-8 max-w-md">
+                We&apos;re ready to transform your ideas with our cutting-edge
+                solutions in AR, VR, Holograms, Interactive Screens, and more.
+                Have a question or want to collaborate? Fill out the form.
+              </p>
+            </div>
+
+            {/* Right section (Form) */}
+            <div className="lg:w-[65%] w-full">
+              <form className="space-y-8 md:space-y-10 bg-zinc-900/40 border border-white/5 p-6 md:p-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+                  {/* Full Name */}
+                  <div className="relative group">
+                    <input
+                      type="text"
+                      id="fullName"
+                      className="w-full bg-transparent border-b border-white/20 py-3 text-white text-sm focus:outline-none focus:border-[#ffffff] transition-colors peer placeholder-transparent"
+                      placeholder="Full Name*"
+                    />
+                    <label
+                      htmlFor="fullName"
+                      className="absolute left-0 top-3 text-zinc-500 text-sm transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500 cursor-text"
+                    >
+                      Full Name*
+                    </label>
+                  </div>
+                  {/* Email */}
+                  <div className="relative group">
+                    <input
+                      type="email"
+                      id="email"
+                      className="w-full bg-transparent border-b border-white/20 py-3 text-white text-sm focus:outline-none focus:border-[#ffffff] transition-colors peer placeholder-transparent"
+                      placeholder="Email*"
+                    />
+                    <label
+                      htmlFor="email"
+                      className="absolute left-0 top-3 text-zinc-500 text-sm transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500 cursor-text"
+                    >
+                      Email*
+                    </label>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+                  {/* Phone */}
+                  <div className="flex items-end gap-4 relative">
+                    <div className="flex items-center gap-2 border-b border-white/20 py-3 text-white cursor-pointer hover:border-white/40 transition-colors shrink-0">
+                      <span className="text-lg leading-none">🇴🇲</span>
+                      <span className="text-sm">+968</span>
+                      <svg
+                        width="10"
+                        height="6"
+                        viewBox="0 0 10 6"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="opacity-50 ml-1"
+                      >
+                        <path
+                          d="M1 1L5 5L9 1"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <div className="relative group flex-grow">
+                      <input
+                        type="tel"
+                        id="phone"
+                        className="w-full bg-transparent border-b border-white/20 py-3 text-white text-sm focus:outline-none focus:border-[#ffffff] transition-colors peer placeholder-transparent"
+                        placeholder="Phone*"
+                      />
+                      <label
+                        htmlFor="phone"
+                        className="absolute left-0 top-3 text-zinc-500 text-sm transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500 cursor-text"
+                      >
+                        Phone*
+                      </label>
+                    </div>
+                  </div>
+                  {/* Company Name */}
+                  <div className="relative group">
+                    <input
+                      type="text"
+                      id="company"
+                      className="w-full bg-transparent border-b border-white/20 py-3 text-white text-sm focus:outline-none focus:border-[#ffffff] transition-colors peer placeholder-transparent"
+                      placeholder="Company Name"
+                    />
+                    <label
+                      htmlFor="company"
+                      className="absolute left-0 top-3 text-zinc-500 text-sm transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500 cursor-text"
+                    >
+                      Company Name
+                    </label>
+                  </div>
+                </div>
+
+                {/* Categories */}
+                <div className="pt-2 text-left">
+                  <div className="flex flex-wrap gap-x-6 gap-y-4">
+                    {[
+                      "End Client",
+                      "Agency",
+                      "Event Company",
+                      "Fabricator",
+                      "AV Company",
+                      "Other",
+                    ].map((cat) => (
+                      <label
+                        key={cat}
+                        className="flex items-center gap-2.5 cursor-pointer group"
+                      >
+                        <input
+                          type="radio"
+                          name="business_type"
+                          className="peer sr-only"
+                          defaultChecked={cat === "End Client"}
+                        />
+                        <div className="w-4 h-4 rounded-full border border-white/30 peer-checked:border-[#ffffff] group-hover:border-white/60 flex items-center justify-center transition-colors">
+                          <div className="w-2 h-2 rounded-full bg-[#ffffff] opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+                        </div>
+                        <span className="text-sm text-zinc-400 peer-checked:text-white group-hover:text-zinc-200 transition-colors font-light">
+                          {cat}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Budget Slider */}
+                <div className="pt-4 text-left">
+                  <div className="flex justify-between items-center mb-3">
+                    <label className="text-xs uppercase tracking-[0.1em] text-zinc-500 font-medium">
+                      Budget
+                    </label>
+                    <span className="text-white text-sm font-medium">
+                      AED {budget >= 1000 ? "1M+" : `${budget}K`}
+                    </span>
+                  </div>
+                  <div className="relative pt-1 group">
+                    <input
+                      type="range"
+                      min="0"
+                      max="1000"
+                      value={budget}
+                      onChange={(e) => setBudget(Number(e.target.value))}
+                      className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#ffffff] group-hover:bg-white/20 transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Agreement */}
+                <div className="pt-4 text-left mt-2 lg:mt-4">
+                  <label className="flex items-start gap-3 cursor-pointer group">
+                    <input type="checkbox" className="peer sr-only" />
+                    <div className="w-4 h-4 md:w-5 md:h-5 rounded border border-white/30 peer-checked:bg-[#ffffff] peer-checked:border-[#ffffff] group-hover:border-white/60 flex items-center justify-center transition-colors shrink-0 mt-0.5 md:mt-0">
+                      <svg
+                        width="12"
+                        height="10"
+                        viewBox="0 0 12 10"
+                        fill="none"
+                        className="opacity-0 peer-checked:opacity-100 transition-opacity text-white scale-75 md:scale-100"
+                      >
+                        <path
+                          d="M1 5L4.5 8.5L11 1.5"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-zinc-400 group-hover:text-zinc-300 leading-relaxed font-light transition-colors">
+                      I have read the Terms and Condition & Privacy Notice
+                      agreement
+                    </span>
+                  </label>
+                </div>
+
+                <button
+                  type="button"
+                  className="w-full md:w-auto px-8 md:px-12 py-3.5 md:py-4 bg-white text-black font-semibold text-xs md:text-sm uppercase tracking-[0.15em] hover:bg-zinc-200 hover:scale-[1.02] transition-all duration-300 rounded-sm"
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Footer Section */}
       <section className="bg-black text-white pt-20 pb-12 overflow-hidden border-t border-white/5">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-6">
             {/* Top Part: Logo and Description from Footer.tsx */}
             <div className="space-y-5 max-w-2xl">
               <Link href="/" className="inline-block mb-1">
@@ -908,68 +1386,37 @@ export default function EventProductionPage() {
               </div>
               <div className="flex items-center gap-2 hover:text-zinc-300 transition-colors">
                 <IconClock className="h-4 w-4 opacity-70 shrink-0" />
-                <span>Sat-Thu: 9am-1pm, 4pm-8pm</span>
+                <span>
+                  Sat-Thu: [ 9:00 AM - 1:00 PM ] & [ 2:30 PM - 6:00 PM ]
+                </span>
               </div>
             </div>
 
             {/* Existing Footer Links, rendered horizontally to match the image's vibe */}
-            <div className="pt-4 grid grid-cols-2 gap-x-6 gap-y-10 md:flex md:flex-col md:gap-6">
-              <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-x-8 gap-y-3 md:gap-y-4 text-[13px] md:text-sm font-semibold text-white">
-                <span className="text-zinc-500 mb-1 md:mb-0 md:mr-2 uppercase tracking-[0.2em] text-[10px] md:hidden">
-                  Products
-                </span>
-                <span className="text-zinc-600 mr-2 uppercase tracking-[0.2em] text-[10px] hidden md:inline-block">
-                  Products
-                </span>
-                {[
-                  "Guitars",
-                  "Studio & Recording",
-                  "Keyboards & Pianos",
-                  "Ukuleles",
-                  "Drums & Percussion",
-                  "Guitar Amplifiers",
-                  "Headphones",
-                  // "Microphones",
-                  // "Effects",
-                  // "Strings",
-                  // "Special Offers",
-                  // "Preloved",
-                ].map((cat) => (
-                  <Link
-                    key={cat}
-                    href="#"
-                    className="hover:text-zinc-400 text-zinc-200 transition-colors"
-                  >
-                    {cat}
-                  </Link>
-                ))}
-              </div>
-
-              <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-x-8 gap-y-3 md:gap-y-4 text-[13px] md:text-sm font-semibold text-white">
-                <span className="text-zinc-500 mb-1 md:mb-0 md:mr-2 uppercase tracking-[0.2em] text-[10px] md:hidden">
-                  Company
-                </span>
-                <span className="text-zinc-600 mr-2 uppercase tracking-[0.2em] text-[10px] hidden md:inline-block">
-                  Company
-                </span>
-                {[
-                  "About Us",
-                  "FAQs",
-                  "Shipping & Delivery",
-                  "Promotions & News",
-                  "Terms & Conditions",
-                  "Privacy Policy",
-                  "User Agreement",
-                ].map((link) => (
-                  <Link
-                    key={link}
-                    href="#"
-                    className="hover:text-zinc-400 text-zinc-200 transition-colors"
-                  >
-                    {link}
-                  </Link>
-                ))}
-              </div>
+            <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-x-8 gap-y-3 md:gap-y-4 text-[13px] md:text-sm font-semibold text-white">
+              <span className="text-zinc-500 mb-1 md:mb-0 md:mr-2 uppercase tracking-[0.2em] text-[10px] md:hidden">
+                Company
+              </span>
+              <span className="text-zinc-600 mr-2 uppercase tracking-[0.2em] text-[10px] hidden md:inline-block">
+                Company
+              </span>
+              {[
+                "About Us",
+                "FAQs",
+                "Shipping & Delivery",
+                "Promotions & News",
+                "Terms & Conditions",
+                "Privacy Policy",
+                "User Agreement",
+              ].map((link) => (
+                <Link
+                  key={link}
+                  href="#"
+                  className="hover:text-zinc-400 text-zinc-200 transition-colors"
+                >
+                  {link}
+                </Link>
+              ))}
             </div>
 
             {/* Divider from image */}
@@ -987,12 +1434,6 @@ export default function EventProductionPage() {
                   className="hover:text-white hover:scale-110 transition-all"
                 >
                   <IconBrandFacebook className="h-5 w-5" />
-                </Link>
-                <Link
-                  href="#"
-                  className="hover:text-white hover:scale-110 transition-all"
-                >
-                  <IconBrandX className="h-5 w-5" />
                 </Link>
                 <Link
                   href="https://www.instagram.com/talentzeventsproduction/"
@@ -1019,6 +1460,37 @@ export default function EventProductionPage() {
           </div>
         </div>
       </section>
+
+      {/* Floating Action Buttons */}
+      <div className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex items-center bg-zinc-950/80 backdrop-blur-xl border border-white/10 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)] pointer-events-auto  transition-all duration-300 hover:bg-zinc-900 hover:border-white/20 hover:shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+        {/* WhatsApp Floating Button */}
+        <Link
+          href="https://wa.me/96892252685"
+          target="_blank"
+          className="group flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-transparent hover:bg-[#25D366]/10 transition-colors duration-300"
+          title="WhatsApp Us"
+        >
+          <IconBrandWhatsapp
+            className="w-6 h-6 md:w-7 md:h-7 text-[#25D366] group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300"
+            stroke={1.5}
+          />
+        </Link>
+
+        {/* Divider */}
+        <div className="w-px h-6 bg-white/10 mx-1"></div>
+
+        {/* Contact Us Floating Button */}
+        <Link
+          href="#contact-us"
+          className="group flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-transparent hover:bg-white transition-colors duration-300"
+          title="Contact Us"
+        >
+          <IconMail
+            className="w-5 h-5 md:w-6 md:h-6 text-white group-hover:text-black group-hover:scale-110 transition-all duration-300"
+            stroke={1.5}
+          />
+        </Link>
+      </div>
     </main>
   );
 }
