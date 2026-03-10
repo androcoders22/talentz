@@ -14,11 +14,62 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function Navbar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentHash, setCurrentHash] = useState("");
+
+  useEffect(() => {
+    // Set initial hash
+    setCurrentHash(window.location.hash);
+
+    const handleHashChange = () => {
+      setCurrentHash(window.location.hash);
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    window.addEventListener("popstate", handleHashChange);
+
+    // Check frequently as a fallback for internal link clicks that might not fire events
+    const interval = setInterval(handleHashChange, 100);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+      window.removeEventListener("popstate", handleHashChange);
+      clearInterval(interval);
+    };
+  }, []);
+
+  const isLinkActive = (href: string) => {
+    if (typeof window === "undefined") return false;
+
+    // Handle root/home link
+    if (href === "/")
+      return pathname === "/" && (!currentHash || currentHash === "#");
+    if (href === "/#")
+      return pathname === "/" && (currentHash === "" || currentHash === "#");
+
+    try {
+      const url = new URL(href, window.location.origin);
+      const linkPath = url.pathname;
+      const linkHash = url.hash;
+
+      // Path must match exactly
+      if (pathname !== linkPath) return false;
+
+      // If link has a hash, current hash must match exactly
+      if (linkHash) {
+        return currentHash === linkHash;
+      }
+
+      // If link has no hash, it's only active if current hash is empty
+      return !currentHash || currentHash === "#" || currentHash === "";
+    } catch (e) {
+      return pathname === href;
+    }
+  };
 
   const eventsLinks = [
     { label: "Overview", href: "/event-production" },
@@ -67,7 +118,11 @@ export function Navbar() {
                         <NavigationMenuLink
                           key={link.label}
                           render={<Link href={link.href} />}
-                          className="block px-4 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                          className={`block px-4 py-2.5 text-sm rounded-lg transition-colors outline-none ${
+                            isLinkActive(link.href)
+                              ? "bg-white! text-black! font-bold"
+                              : "text-neutral-300 hover:text-black hover:bg-white focus:text-neutral-300 focus:bg-transparent data-active:bg-transparent data-active:text-neutral-300"
+                          }`}
                         >
                           {link.label}
                         </NavigationMenuLink>
@@ -86,7 +141,11 @@ export function Navbar() {
                         <NavigationMenuLink
                           key={link.label}
                           render={<Link href={link.href} />}
-                          className="block px-4 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                          className={`block px-4 py-2.5 text-sm rounded-lg transition-colors outline-none ${
+                            isLinkActive(link.href)
+                              ? "bg-white! text-black! font-bold"
+                              : "text-neutral-300 hover:text-black hover:bg-white focus:text-neutral-300 focus:bg-transparent data-active:bg-transparent data-active:text-neutral-300"
+                          }`}
                         >
                           {link.label}
                         </NavigationMenuLink>
@@ -151,7 +210,11 @@ export function Navbar() {
                       key={link.label}
                       href={link.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="px-6 py-2.5 rounded-2xl text-[15px] font-medium transition-all text-neutral-400 hover:bg-white/5 hover:text-white"
+                      className={`px-6 py-2.5 rounded-2xl text-[15px] font-medium transition-all ${
+                        isLinkActive(link.href)
+                          ? "bg-white text-black font-bold"
+                          : "text-neutral-400 hover:bg-white hover:text-black"
+                      }`}
                     >
                       {link.label}
                     </Link>
@@ -165,7 +228,11 @@ export function Navbar() {
                       key={link.label}
                       href={link.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="px-6 py-2.5 rounded-2xl text-[15px] font-medium transition-all text-neutral-400 hover:bg-white/5 hover:text-white"
+                      className={`px-6 py-2.5 rounded-2xl text-[15px] font-medium transition-all ${
+                        isLinkActive(link.href)
+                          ? "bg-white text-black font-bold"
+                          : "text-neutral-400 hover:bg-white hover:text-black"
+                      }`}
                     >
                       {link.label}
                     </Link>
