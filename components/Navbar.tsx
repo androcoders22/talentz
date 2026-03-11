@@ -23,52 +23,28 @@ export function Navbar() {
 
   useEffect(() => {
     // Set initial hash
-    setCurrentHash(window.location.hash);
+    const handleHashChange = () => setCurrentHash(window.location.hash);
 
-    const handleHashChange = () => {
-      setCurrentHash(window.location.hash);
-    };
-
+    handleHashChange();
     window.addEventListener("hashchange", handleHashChange);
     window.addEventListener("popstate", handleHashChange);
-
-    // Check frequently as a fallback for internal link clicks that might not fire events
-    const interval = setInterval(handleHashChange, 100);
 
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
       window.removeEventListener("popstate", handleHashChange);
-      clearInterval(interval);
     };
   }, []);
 
   const isLinkActive = (href: string) => {
     if (typeof window === "undefined") return false;
+    const [linkPath, linkHash] = href.split("#");
+    const normalizedHash = linkHash ? "#" + linkHash : "";
 
-    // Handle root/home link
-    if (href === "/")
-      return pathname === "/" && (!currentHash || currentHash === "#");
-    if (href === "/#")
-      return pathname === "/" && (currentHash === "" || currentHash === "#");
-
-    try {
-      const url = new URL(href, window.location.origin);
-      const linkPath = url.pathname;
-      const linkHash = url.hash;
-
-      // Path must match exactly
-      if (pathname !== linkPath) return false;
-
-      // If link has a hash, current hash must match exactly
-      if (linkHash) {
-        return currentHash === linkHash;
-      }
-
-      // If link has no hash, it's only active if current hash is empty
-      return !currentHash || currentHash === "#" || currentHash === "";
-    } catch (e) {
-      return pathname === href;
-    }
+    return (
+      pathname === linkPath &&
+      (currentHash === normalizedHash ||
+        (!normalizedHash && (!currentHash || currentHash === "#")))
+    );
   };
 
   const eventsLinks = [
@@ -94,7 +70,7 @@ export function Navbar() {
             <Link href="/" className="shrink-0 flex items-center">
               <div className="ml-2 flex items-center justify-center h-[34px] md:h-[37px] brightness-125">
                 <Image
-                  src="/logo-old-v2.png"
+                  src="/WhiteLogo.png"
                   alt="Talentz"
                   width={200}
                   height={60}
@@ -117,12 +93,20 @@ export function Navbar() {
                       {eventsLinks.map((link) => (
                         <NavigationMenuLink
                           key={link.label}
-                          render={<Link href={link.href} />}
-                          className={`block px-4 py-2.5 text-sm rounded-lg transition-colors outline-none ${
-                            isLinkActive(link.href)
-                              ? "bg-white! text-black! font-bold"
-                              : "text-neutral-300 hover:text-black hover:bg-white focus:text-neutral-300 focus:bg-transparent data-active:bg-transparent data-active:text-neutral-300"
-                          }`}
+                          active={isLinkActive(link.href)}
+                          render={
+                            <Link
+                              href={link.href}
+                              onClick={() => {
+                                if (link.href.includes("#")) {
+                                  setCurrentHash("#" + link.href.split("#")[1]);
+                                } else {
+                                  setCurrentHash("");
+                                }
+                              }}
+                            />
+                          }
+                          className="block px-4 py-2.5 text-sm rounded-lg transition-colors text-neutral-300 hover:text-black hover:bg-white focus:text-neutral-300 focus:bg-transparent data-active:bg-white! data-active:text-black! data-active:font-bold"
                         >
                           {link.label}
                         </NavigationMenuLink>
@@ -140,12 +124,20 @@ export function Navbar() {
                       {musicLinks.map((link) => (
                         <NavigationMenuLink
                           key={link.label}
-                          render={<Link href={link.href} />}
-                          className={`block px-4 py-2.5 text-sm rounded-lg transition-colors outline-none ${
-                            isLinkActive(link.href)
-                              ? "bg-white! text-black! font-bold"
-                              : "text-neutral-300 hover:text-black hover:bg-white focus:text-neutral-300 focus:bg-transparent data-active:bg-transparent data-active:text-neutral-300"
-                          }`}
+                          active={isLinkActive(link.href)}
+                          render={
+                            <Link
+                              href={link.href}
+                              onClick={() => {
+                                if (link.href.includes("#")) {
+                                  setCurrentHash("#" + link.href.split("#")[1]);
+                                } else {
+                                  setCurrentHash("");
+                                }
+                              }}
+                            />
+                          }
+                          className="block px-4 py-2.5 text-sm rounded-lg transition-colors text-neutral-300 hover:text-black hover:bg-white focus:text-neutral-300 focus:bg-transparent data-active:bg-white! data-active:text-black! data-active:font-bold"
                         >
                           {link.label}
                         </NavigationMenuLink>

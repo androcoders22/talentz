@@ -7,8 +7,13 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans:
+    var(--font-century-gothic), "Century Gothic", CenturyGothic, AppleGothic,
+    sans-serif;
   --font-mono: var(--font-mono);
+  --font-century:
+    var(--font-century-gothic), "Century Gothic", CenturyGothic, AppleGothic,
+    sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);

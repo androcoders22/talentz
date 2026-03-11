@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 
@@ -7,16 +8,20 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
+const centuryGothic = localFont({
+  src: "./assest/centurygothic.ttf",
+  variable: "--font-century-gothic",
+});
+
 export const metadata: Metadata = {
-  title: "Talentz - Event Production, Musical Instruments, Light & Sound Oman",
+  title: "TALENTZ | AVL Rentals, Pro Audio, Music Gears.",
   description:
-    "Talentz offers Event Production Gear, Musical Instruments and more. Our shop and offices are located in Muscat, Oman.",
+    "TALENTZ - Ready for Every Stage. World-class event production resources, Pro Audio, and Music Gears in Oman.",
 };
 
 export default function RootLayout({
@@ -31,7 +36,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen flex-col`}
+        className={`${centuryGothic.variable} ${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen flex-col`}
       >
         <Navbar />
         <main className="flex-1">{children}</main>
