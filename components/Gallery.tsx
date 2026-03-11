@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, memo } from "react";
 import { motion, useSpring, useTransform, MotionValue } from "motion/react";
 import TiltedCard from "./TiltedCard";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
@@ -36,9 +36,7 @@ const projects = [
   {
     src: "/new/6L8A9483.jpg",
   },
-  {
-    src: "/new/DAS_0439.jpg",
-  },
+
   {
     src: "/new/DSC01552.jpg",
   },
@@ -75,83 +73,90 @@ interface GalleryItemProps {
   total: number;
   isMobile: boolean;
   offset: number;
+  isPriority?: boolean;
 }
 
-const GalleryItem = ({
-  project,
-  index,
-  springX,
-  total,
-  isMobile,
-  offset,
-}: GalleryItemProps) => {
-  const cardProgress = useTransform(springX, (val: number) => {
-    const normalizedVal = ((val % total) + total) % total;
-    let diff = index - normalizedVal;
-    while (diff > total / 2) diff -= total;
-    while (diff < -total / 2) diff += total;
-    return diff;
-  });
+const GalleryItem = memo(
+  ({
+    project,
+    index,
+    springX,
+    total,
+    isMobile,
+    offset,
+    isPriority,
+  }: GalleryItemProps) => {
+    const cardProgress = useTransform(springX, (val: number) => {
+      const normalizedVal = ((val % total) + total) % total;
+      let diff = index - normalizedVal;
+      while (diff > total / 2) diff -= total;
+      while (diff < -total / 2) diff += total;
+      return diff;
+    });
 
-  const cardX = useTransform(cardProgress, (p: number) => p * offset);
-  const scale = useTransform(
-    cardProgress,
-    [-1, 0, 1],
-    [isMobile ? 0.72 : 0.8, isMobile ? 0.98 : 1.04, isMobile ? 0.72 : 0.8],
-  );
-  const opacity = useTransform(cardProgress, (p: number) => {
-    if (isMobile) {
-      return Math.abs(p) < 0.55 ? 1 : 0;
-    }
-    const abs = Math.abs(p);
-    if (abs >= 1.5) return 0;
-    if (abs >= 1) return 0.85;
-    return 1 - abs * 0.15;
-  });
-  const zIndex = useTransform(cardProgress, [-1, 0, 1], [10, 50, 10]);
-  const blurValue = useTransform(cardProgress, (p: number) => {
-    if (isMobile) return 0;
-    return Math.min(4, Math.abs(p) * 4);
-  });
-  const blurFilter = useTransform(blurValue, (v: number) => `blur(${v}px)`);
+    const cardX = useTransform(cardProgress, (p: number) => p * offset);
+    const scale = useTransform(
+      cardProgress,
+      [-1, 0, 1],
+      [isMobile ? 0.72 : 0.8, isMobile ? 0.98 : 1.04, isMobile ? 0.72 : 0.8],
+    );
+    const opacity = useTransform(cardProgress, (p: number) => {
+      if (isMobile) {
+        return Math.abs(p) < 0.55 ? 1 : 0;
+      }
+      const abs = Math.abs(p);
+      if (abs >= 1.5) return 0;
+      if (abs >= 1) return 0.85;
+      return 1 - abs * 0.15;
+    });
+    const zIndex = useTransform(cardProgress, [-1, 0, 1], [10, 50, 10]);
+    const blurValue = useTransform(cardProgress, (p: number) => {
+      if (isMobile) return 0;
+      return Math.min(4, Math.abs(p) * 4);
+    });
+    const blurFilter = useTransform(blurValue, (v: number) => `blur(${v}px)`);
 
-  return (
-    <motion.div
-      className="absolute top-[44%] left-1/2 rounded-xl overflow-hidden"
-      style={{
-        x: cardX,
-        translateX: "-50%",
-        translateY: "-50%",
-        scale,
-        zIndex,
-        opacity,
-        filter: blurFilter,
-        transformStyle: "preserve-3d",
-      }}
-    >
-      <div className="pointer-events-none sm:pointer-events-auto">
-        <TiltedCard
-          imageSrc={project.src}
-          altText=""
-          captionText=""
-          containerHeight={isMobile ? "245px" : "min(400px, 54vw)"}
-          containerWidth={isMobile ? "90vw" : "min(820px, 72vw)"}
-          imageHeight={isMobile ? "245px" : "min(400px, 54vw)"}
-          imageWidth={isMobile ? "90vw" : "min(820px, 72vw)"}
-          imageObjectFit="cover"
-          rotateAmplitude={5}
-          scaleOnHover={1.02}
-          showMobileWarning={false}
-          showTooltip={false}
-          displayOverlayContent={true}
-          overlayContent={
-            <div className="w-full h-full bg-linear-to-t from-black/40 via-transparent to-transparent" />
-          }
-        />
-      </div>
-    </motion.div>
-  );
-};
+    return (
+      <motion.div
+        className="absolute top-[44%] left-1/2 rounded-xl overflow-hidden will-change-transform"
+        style={{
+          x: cardX,
+          translateX: "-50%",
+          translateY: "-50%",
+          scale,
+          zIndex,
+          opacity,
+          filter: blurFilter,
+          transformStyle: "preserve-3d",
+        }}
+      >
+        <div className="pointer-events-none sm:pointer-events-auto">
+          <TiltedCard
+            imageSrc={project.src}
+            altText=""
+            captionText=""
+            containerHeight={isMobile ? "245px" : "min(400px, 54vw)"}
+            containerWidth={isMobile ? "90vw" : "min(820px, 72vw)"}
+            imageHeight={isMobile ? "245px" : "min(400px, 54vw)"}
+            imageWidth={isMobile ? "90vw" : "min(820px, 72vw)"}
+            imageObjectFit="cover"
+            rotateAmplitude={5}
+            scaleOnHover={1.02}
+            showMobileWarning={false}
+            showTooltip={false}
+            displayOverlayContent={true}
+            isPriority={isPriority}
+            overlayContent={
+              <div className="w-full h-full bg-linear-to-t from-black/40 via-transparent to-transparent" />
+            }
+          />
+        </div>
+      </motion.div>
+    );
+  },
+);
+
+GalleryItem.displayName = "GalleryItem";
 
 const Gallery = () => {
   const [position, setPosition] = useState(0);
@@ -188,11 +193,21 @@ const Gallery = () => {
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setPosition((prev) => prev + 1);
+      handleNext();
     }, 3500);
 
     return () => window.clearInterval(interval);
-  }, [total]);
+  }, [position, total]);
+
+  const visibleIndices = useMemo(() => {
+    const buffer = 2; // Render current, 2 left, 2 right
+    const indices = [];
+    const center = Math.round(position);
+    for (let i = -buffer; i <= buffer; i++) {
+      indices.push((((center + i) % total) + total) % total);
+    }
+    return Array.from(new Set(indices));
+  }, [position, total]);
 
   return (
     <section className="container mx-auto px-4">
@@ -229,15 +244,19 @@ const Gallery = () => {
               }
             }}
           >
-            {projects.map((project, index) => (
+            {visibleIndices.map((idx) => (
               <GalleryItem
-                key={index}
-                project={project}
-                index={index}
+                key={idx}
+                project={projects[idx]}
+                index={idx}
                 springX={springX}
                 total={total}
                 isMobile={isMobile}
                 offset={offset}
+                isPriority={
+                  idx === ((Math.round(position) % total) + total) % total ||
+                  idx === (((Math.round(position) + 1) % total) + total) % total
+                }
               />
             ))}
           </motion.div>

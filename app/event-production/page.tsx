@@ -1,9 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  type ReactNode,
+} from "react";
 import Image from "next/image";
 import Link from "next/link";
-import FlowingMenu from "@/components/FlowingMenu";
 import {
   IconBrandYoutube,
   IconBrandInstagram,
@@ -13,9 +18,14 @@ import {
   IconMapPin,
   IconClock,
   IconBrandFacebook,
-  IconBrandX,
   IconBrandLinkedin,
+  IconChevronLeft,
+  IconChevronRight,
 } from "@tabler/icons-react";
+import ScrollingBento from "@/components/ScrollingBento";
+import { Slider } from "@/components/ui/slider";
+import useEmblaCarousel from "embla-carousel-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 declare global {
   interface Window {
@@ -24,81 +34,187 @@ declare global {
   }
 }
 
+const instagramPostImages = [
+  "/new/6L8A0127.jpg",
+  "/new/6L8A2595.jpg",
+  "/new/6L8A2615.jpg",
+  "/new/6L8A3952.jpg",
+  "/new/6L8A4309.jpg",
+  "/new/6L8A4423.jpg",
+  "/new/6L8A9208.jpg",
+  "/new/6L8A9379.jpg",
+  "/new/6L8A9483.jpg",
+  "/new/DAS_0439.jpg",
+  "/new/DSC00782.jpg",
+  "/new/DSC01552.jpg",
+  "/new/DSC02598.jpg",
+  "/new/DSC04010.jpg",
+  "/new/DSC04045.jpg",
+  "/new/DSC05565.jpg",
+  "/new/DSC06641.jpg",
+  "/new/DSC07075.jpg",
+  "/new/DSC07093.jpg",
+  "/new/DSC07951.jpg",
+  "/new/RED_5641.jpg",
+  "/new/TALENTZ-03.jpg",
+  "/new/TALENTZOCEC-005.jpg",
+  "/new/TALENTZOCEC-040.jpg",
+];
+
+const instagramPosts = instagramPostImages.map((src, index) => ({
+  src,
+  alt: `Talentz Instagram post ${index + 1}`,
+}));
+
+const instagramCardCount = instagramPosts.length + 1;
+const budgetMin = 0;
+const budgetMax = 1000;
+
+const announcements = [
+  {
+    title: "Warehouse Restock: Popular Models Back in Inventory",
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
+    description:
+      "Our latest shipment has arrived and several high-demand models are now back in stock. This restock includes some of the most requested items from the past few months. Availability may be limited, so customers are encouraged to place orders early while inventory lasts.",
+  },
+  {
+    title: "What’s Driving Demand This Season",
+    image: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a",
+    description:
+      "Market demand continues to shift as customers prioritize durability, design, and efficiency. In this article, we explore the key factors influencing buying decisions and how these trends shape the products we keep in inventory.",
+  },
+  {
+    title: "Behind the Scenes: How Our Supply Chain Works",
+    image: "https://images.unsplash.com/photo-1601597111158-2fceff292cdc",
+    description:
+      "From sourcing to delivery, our supply chain is built for reliability. Take a closer look at how we coordinate logistics, manage inventory, and ensure consistent product availability for our customers.",
+  },
+  {
+    title: "New Arrivals: Expanding Our Product Line",
+    image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7",
+    description:
+      "We’re introducing several new additions to our catalog. These products have been selected based on customer feedback and current market demand, offering improved performance and modern design.",
+  },
+  {
+    title: "Quality First: Our Product Selection Process",
+    image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952",
+    description:
+      "Every product we offer goes through a careful selection process. From evaluating build quality to ensuring long-term reliability, our goal is to provide products that meet high standards and customer expectations.",
+  },
+];
+
+function SectionHeader({
+  eyebrow,
+  title,
+  description,
+  action,
+  className = "",
+}: {
+  eyebrow: string;
+  title: ReactNode;
+  description?: ReactNode;
+  action?: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`mb-8 flex flex-col gap-6 md:mb-10 md:flex-row md:items-end md:justify-between ${className}`}
+    >
+      <div className="max-w-3xl">
+        <div className="mb-4 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.42em] text-zinc-500">
+          <span className="h-7 w-px bg-white/60" />
+          <span>{eyebrow}</span>
+        </div>
+        <h2 className="text-4xl font-medium tracking-tight text-white md:text-5xl lg:text-[3.75rem] lg:leading-[0.98]">
+          {title}
+        </h2>
+        {description ? (
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-400 md:text-base">
+            {description}
+          </p>
+        ) : null}
+      </div>
+      {action ? <div className="md:shrink-0">{action}</div> : null}
+    </div>
+  );
+}
+
 export default function EventProductionPage() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
   const [budget, setBudget] = useState(500);
-  const playerRef = useRef<any>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // Instagram Carousel Drag State
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-
-  // Physics momentum tracking
-  const [velX, setVelX] = useState(0);
-  const momentumID = useRef<number | null>(null);
-
-  const startDragging = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    if (!carouselRef.current) return;
-    setStartX(e.pageX - carouselRef.current.offsetLeft);
-    setScrollLeft(carouselRef.current.scrollLeft);
-
-    // Stop any existing momentum
-    if (momentumID.current) cancelAnimationFrame(momentumID.current);
-  };
-
-  const stopDragging = () => {
-    setIsDragging(false);
-    beginMomentumLoop();
-  };
-
-  const onDrag = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging || !carouselRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - carouselRef.current.offsetLeft;
-
-    // Calculate difference to set new velocity and scroll position
-    const walk = (x - startX) * 2;
-    const prevScrollLeft = carouselRef.current.scrollLeft;
-    carouselRef.current.scrollLeft = scrollLeft - walk;
-
-    setVelX(carouselRef.current.scrollLeft - prevScrollLeft);
-  };
-
-  const beginMomentumLoop = () => {
-    let velocity = velX;
-
-    const momentumLoop = () => {
-      if (!carouselRef.current) return;
-
-      carouselRef.current.scrollLeft += velocity;
-      velocity *= 0.95; // friction factor
-
-      if (Math.abs(velocity) > 0.5) {
-        momentumID.current = requestAnimationFrame(momentumLoop);
-      }
-    };
-
-    momentumID.current = requestAnimationFrame(momentumLoop);
-  };
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    return () => {
-      if (momentumID.current) cancelAnimationFrame(momentumID.current);
+    const updateItemsPerPage = () => {
+      if (window.innerWidth >= 1280) setItemsPerPage(5);
+      else if (window.innerWidth >= 1024) setItemsPerPage(4);
+      else if (window.innerWidth >= 768) setItemsPerPage(3);
+      else if (window.innerWidth >= 640) setItemsPerPage(2);
+      else setItemsPerPage(1);
     };
+    updateItemsPerPage();
+    window.addEventListener("resize", updateItemsPerPage);
+    return () => window.removeEventListener("resize", updateItemsPerPage);
   }, []);
+
+  const totalCardsCount = instagramCardCount;
+  const totalPages = Math.ceil(totalCardsCount / itemsPerPage);
+
+  const handleInstagramPrev = useCallback(() => {
+    setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
+  }, [totalPages]);
+
+  const handleInstagramNext = useCallback(() => {
+    setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
+  }, [totalPages]);
+
+  // Calculate the starting index for the current page
+  // If it's the last page, we shift the startIndex back to always show a full row if possible
+  const rawStartIndex = currentPage * itemsPerPage;
+  const startIndex =
+    currentPage === totalPages - 1 && totalCardsCount > itemsPerPage
+      ? totalCardsCount - itemsPerPage
+      : rawStartIndex;
+
+  const progressPercent =
+    (startIndex / (totalCardsCount - itemsPerPage || 1)) * 100;
+
+  // Use adjusted startIndex to calculate progress labels
+  const instagramProgressStart = startIndex + 1;
+  const instagramProgressEnd = Math.min(
+    totalCardsCount,
+    startIndex + itemsPerPage,
+  );
+  const instagramProgressWidth = (itemsPerPage / totalCardsCount) * 100;
+  const instagramProgressOffset = (startIndex / totalCardsCount) * 100;
+
+  const instagramProgressLabel = `${String(instagramProgressStart).padStart(
+    2,
+    "0",
+  )}-${String(instagramProgressEnd).padStart(2, "0")} / ${String(
+    totalCardsCount,
+  ).padStart(2, "0")}`;
+
+  const playerRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      if (heroRef.current) {
+        const y = window.scrollY;
+        if (y < 800) {
+          heroRef.current.style.transform = `translateY(${y * 0.15}px)`;
+          heroRef.current.style.opacity = Math.max(0, 1 - y / 600).toString();
+        }
+      }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const budgetLabel = `OMR ${budget >= budgetMax ? "1M+" : `${budget}K`}`;
 
   const initPlayer = useCallback(() => {
     if (!window.YT || !window.YT.Player) return;
@@ -247,11 +363,8 @@ export default function EventProductionPage() {
 
         {/* Hero Content Overlay - Parallax and Fade */}
         <div
-          className="absolute inset-0 z-10 flex flex-col justify-center container mx-auto px-4 pointer-events-none"
-          style={{
-            transform: `translateY(${scrollY * 0.15}px)`,
-            opacity: Math.max(0, 1 - scrollY / 600),
-          }}
+          ref={heroRef}
+          className="absolute inset-0 z-10 flex flex-col justify-center container mx-auto px-4 pointer-events-none will-change-[transform,opacity]"
         >
           <div className="pointer-events-auto max-w-2xl mt-10 md:ml-3">
             <h1 className="text-4xl md:text-6xl lg:text-[4rem] font-medium text-white mb-6 leading-[1.1] tracking-tight flex flex-col gap-2">
@@ -300,69 +413,19 @@ export default function EventProductionPage() {
         </div>
       </section>
 
-      {/* Section 1: Introduction
-      <section className="bg-zinc-950 relative z-10 w-full border-t border-white/5">
-        <div className="h-[300px] md:h-[350px] relative w-full border-b border-t border-white/5">
-          <FlowingMenu
-            items={[
-              {
-                link: "#",
-                text: "Resounding Success",
-                image: "/new/6L8A0127.jpg",
-              },
-              {
-                link: "#",
-                text: "Diverse Gatherings",
-                image: "/new/6L8A4309.jpg",
-              },
-              {
-                link: "#",
-                text: "World-Class Execution",
-                image: "/new/TALENTZOCEC-005.jpg",
-              },
-              {
-                link: "#",
-                text: "Unforgettable Experiences",
-                image: "/new/TALENTZOCEC-010.jpg",
-              },
-              {
-                link: "#",
-                text: "Cutting-Edge Tech",
-                image: "/new/6L8A4415.jpg",
-              },
-            ]}
-            speed={15}
-            textColor="#ffffff"
-            bgColor="#000000"
-            marqueeBgColor="#ffffff"
-            marqueeTextColor="#000000"
-            borderColor="rgba(255,255,255,0.1)"
-          />
-        </div>
-      </section> */}
-
       {/* Section 2: Equipment / Capabilities */}
       <section
         id="equipment"
-        className="py-16 bg-zinc-950 relative overflow-hidden border-y border-white/5 z-10"
+        className="py-12 md:py-16 bg-zinc-950 relative overflow-hidden border-y border-white/5 z-10"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0,transparent_100%)] pointer-events-none" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 auto-rows-[160px] md:auto-rows-[280px]">
             {/* Card 1: Left tall */}
-            <div className="feature-card col-span-2 md:col-span-1 md:row-span-2 bg-zinc-950 border border-white/10 p-5 md:p-6 flex flex-row md:flex-col justify-between relative group transition-colors duration-500 hover:bg-white [&.is-active]:bg-white text-white hover:text-black [&.is-active]:text-black overflow-hidden">
+            <div className="feature-card col-span-2 md:col-span-1 md:row-span-2 bg-zinc-950 border border-white/10 p-5 md:p-6 flex flex-row md:flex-col justify-start relative group transition-colors duration-500 hover:bg-white [&.is-active]:bg-white text-white hover:text-black [&.is-active]:text-black overflow-hidden">
               <div className="absolute inset-y-0 left-0 w-[65%] bg-linear-to-r from-zinc-950 via-zinc-950/95 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/95 group-[.is-active]:via-white/95 transition-colors duration-500 z-1 md:hidden" />
-              <div className="w-1/2 md:w-full h-[120%] md:h-1/2 absolute right-0 top-1/2 -translate-y-1/2 md:translate-y-0 md:relative md:top-auto md:mt-4 z-0">
-                <Image
-                  src="/new/6L8A2615.jpg"
-                  alt="Inventory"
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-contain object-right py-4 md:py-0 md:object-center grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none drop-shadow-2xl"
-                />
-              </div>
-              <div className="space-y-1 md:space-y-3 mb-0 md:mb-2 text-left w-[50%] pr-2 md:pr-0 md:w-full z-10 relative">
-                <h3 className="text-2xl md:text-3xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
+              <div className="space-y-1 md:space-y-3 mb-4 md:mb-6 text-left w-[50%] pr-2 md:pr-0 md:w-full z-10 relative">
+                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
                   Technology
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 font-light text-[11px] leading-tight md:text-sm transition-colors duration-500">
@@ -370,13 +433,22 @@ export default function EventProductionPage() {
                   equipment in Oman.
                 </p>
               </div>
+              <div className="w-1/2 md:w-full h-[120%] md:h-[55%] absolute right-0 top-1/2 -translate-y-1/2 md:translate-y-0 md:top-auto md:bottom-0 md:left-0 z-0">
+                <Image
+                  src="/new/6L8A2615.jpg"
+                  alt="Inventory"
+                  width={600}
+                  height={800}
+                  className="h-full w-full object-cover object-center grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
+                />
+              </div>
             </div>
 
             {/* Card 2: Top Right wide */}
             <div className="feature-card col-span-2 md:col-span-2 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-5 md:p-6 flex flex-col justify-center relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden">
               <div className="absolute inset-y-0 left-0 w-[70%] bg-linear-to-r from-zinc-950 via-zinc-950/95 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/95 group-[.is-active]:via-white/95 transition-colors duration-500 z-1 md:hidden" />
               <div className="space-y-1 md:space-y-3 w-[55%] md:w-auto md:max-w-xs z-10 relative">
-                <h3 className="text-2xl md:text-3xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
+                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
                   Exhibition <br className="hidden md:block" /> Stands
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 font-light text-xs md:text-sm transition-colors duration-500 hidden md:block">
@@ -391,9 +463,9 @@ export default function EventProductionPage() {
                 <Image
                   src="/new/RED_5641.jpg"
                   alt="Lighting"
-                  fill
-                  sizes="(max-width: 768px) 50vw, 66vw"
-                  className="object-cover md:object-contain object-left md:object-right grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 md:scale-110 pointer-events-none"
+                  width={800}
+                  height={600}
+                  className="h-full w-full object-cover md:object-contain object-left md:object-right grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 md:scale-110 pointer-events-none"
                 />
               </div>
             </div>
@@ -401,13 +473,13 @@ export default function EventProductionPage() {
             {/* Card 3: Bottom Left small */}
             <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-4 md:p-6 flex flex-col items-start justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden">
               <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
-              <div className="w-[120%] h-[120%] md:w-[60%] md:h-[60%] absolute right-[-10%] top-[-10%] md:bottom-2 md:top-auto z-0 opacity-60 md:opacity-100 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
+              <div className="w-[45%] h-full absolute right-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
                 <Image
                   src="/new/DSC01552.jpg"
                   alt="Microphone"
                   fill
                   sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover md:object-contain object-top md:object-center scale-[1.3] grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
+                  className="object-cover grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
                 />
               </div>
               <div className="space-y-1 z-10 mt-auto md:mt-0 md:space-y-2 w-full relative">
@@ -420,21 +492,22 @@ export default function EventProductionPage() {
               </div>
             </div>
 
-            {/* Card 4: Bottom Right small */}
-            <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
-              <div className="absolute inset-0 top-0 h-full w-full opacity-60 md:opacity-100 md:h-[60%] group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity z-0">
+            {/* Card 4: Flipped Layout */}
+            <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-start items-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
+              <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
+              <div className="w-[45%] h-full absolute left-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
                 <Image
                   src="/new/TALENTZOCEC-040.jpg"
                   alt="Trussing"
                   fill
                   sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover object-bottom grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
+                  className="object-cover grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
                 />
               </div>
-              <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
-              <div className="space-y-1 md:space-y-2 relative z-10 mt-auto text-left">
+              <div className="space-y-1 md:space-y-2 relative z-10 text-right">
                 <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide text-balance">
-                  Tents, Barriers, etc
+                  Tents, <br />
+                  Barriers, etc
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light transition-colors duration-500">
                   Trusses, staging{" "}
@@ -442,246 +515,136 @@ export default function EventProductionPage() {
                 </p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Section X: The "Window" Exposing the BG Video */}
-      <section className="py-10 md:py-16 bg-black/40 backdrop-blur-sm relative flex items-center justify-center z-10 w-full border-t border-b border-white/5 min-h-[25vh] md:min-h-[35vh]">
-        <div className="container mx-auto px-4 text-center relative pointer-events-none">
-          <h2 className="text-4xl sm:text-6xl md:text-8xl lg:text-[8rem] font-black uppercase tracking-widest text-white/30 inline-block">
-            EVENT PRODUCTION
-          </h2>
-        </div>
-      </section>
-
-      {/* Section 4: Recent Projects Gallery */}
-      <section
-        id="portfolio"
-        className="py-24 bg-zinc-950 relative z-10 w-full border-t border-white/5 overflow-hidden"
-      >
-        <div className="container mx-auto px-4">
-          <div className="mb-16">
-            <h2 className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-500 mb-4 border-l-2 border-white/20 pl-4 inline-block">
-              Our Portfolio
-            </h2>
-            <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-              Recent Projects
-            </h3>
-          </div>
-
-          <div className="w-full">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 auto-rows-[200px] md:auto-rows-[400px]">
-              {/* Project 1 - Tall */}
-              <div className="col-span-2 md:col-span-1 row-span-2 relative group overflow-hidden bg-zinc-900 border border-white/5">
-                <Image
-                  src="/new/6L8A0127.jpg"
-                  alt="Live Concert"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                  <h4 className="text-white text-2xl font-medium translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    Live Concert
-                  </h4>
-                  <p className="text-zinc-400 text-sm mt-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 uppercase tracking-wider">
-                    Full AV Production
-                  </p>
-                </div>
+            {/* Card 5: LED Screens (Wide) */}
+            <div className="feature-card col-span-2 md:col-span-2 md:row-span-1 bg-zinc-950 border border-white/10 p-5 md:p-6 flex flex-col justify-center relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
+              <div className="absolute inset-y-0 left-0 w-[70%] bg-linear-to-r from-zinc-950 via-zinc-950/95 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/95 group-[.is-active]:via-white/95 transition-colors duration-500 z-1 md:hidden" />
+              <div className="space-y-1 md:space-y-3 w-[55%] md:w-auto md:max-w-xs z-10 relative">
+                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
+                  LED Screens
+                </h3>
+                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 font-light text-xs md:text-sm transition-colors duration-500 hidden md:block">
+                  High-definition indoor & outdoor LED video walls for crystal
+                  clear visual communication.
+                </p>
               </div>
-
-              {/* Project 2 - Wide */}
-              <div className="col-span-2 lg:col-span-2 row-span-1 relative group overflow-hidden bg-zinc-900 border border-white/5">
+              <div className="w-[60%] md:w-1/2 h-full absolute right-[-5%] top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
                 <Image
-                  src="/new/6L8A4309.jpg"
-                  alt="Corporate Event"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  src="/new/6L8A4415.jpg"
+                  alt="LED Screen"
+                  width={800}
+                  height={600}
+                  className="h-full w-full object-cover md:object-contain object-left md:object-right grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 md:scale-110 pointer-events-none"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                  <h4 className="text-white text-2xl font-medium translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    Corporate Event
-                  </h4>
-                  <p className="text-zinc-400 text-sm mt-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 uppercase tracking-wider">
-                    Lighting & Stage
-                  </p>
-                </div>
               </div>
+            </div>
 
-              {/* Project 3 - Regular */}
-              <div className="col-span-1 row-span-1 relative group overflow-hidden bg-zinc-900 border border-white/5">
+            {/* Card 6: Lighting Design */}
+            <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
+              <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
+              <div className="w-[45%] h-full absolute right-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
                 <Image
-                  src="/new/TALENTZOCEC-005.jpg"
-                  alt="Exhibition Setup"
+                  src="/new/6L8A3952.jpg"
+                  alt="Lighting"
                   fill
-                  sizes="(max-width: 768px) 100vw, 25vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                  <h4 className="text-white text-2xl font-medium translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    Exhibition Setup
-                  </h4>
-                  <p className="text-zinc-400 text-sm mt-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 uppercase tracking-wider">
-                    LED Screens
-                  </p>
-                </div>
               </div>
-
-              {/* Project 4 - Regular */}
-              <div className="col-span-1 row-span-1 relative group overflow-hidden bg-zinc-900 border border-white/5">
-                <Image
-                  src="/new/DSC00782.jpg"
-                  alt="Music Festival"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 25vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                  <h4 className="text-white text-2xl font-medium translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    Music Festival
-                  </h4>
-                  <p className="text-zinc-400 text-sm mt-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 uppercase tracking-wider">
-                    Stage & Lighting
-                  </p>
-                </div>
+              <div className="space-y-1 md:space-y-2 relative z-10 mt-auto text-left">
+                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide text-balance">
+                  Lighting <br className="hidden md:block" /> Design
+                </h3>
+                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light transition-colors duration-500">
+                  Atmospheric lighting & visuals.
+                </p>
               </div>
+            </div>
 
-              {/* Project 5 - Wide */}
-              <div className="col-span-2 lg:col-span-2 row-span-1 relative group overflow-hidden bg-zinc-900 border border-white/5">
+            {/* Card 7: Flipped Layout */}
+            <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-start items-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
+              <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
+              <div className="w-[45%] h-full absolute left-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
                 <Image
                   src="/new/DAS_0439.jpg"
-                  alt="Outdoor Stage"
+                  alt="Sound Solutions"
+                  loading="eager"
                   fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover object-bottom group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                  <h4 className="text-white text-2xl font-medium translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    Outdoor Stage
-                  </h4>
-                  <p className="text-zinc-400 text-sm mt-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 uppercase tracking-wider">
-                    Trussing & Sound
-                  </p>
-                </div>
+              </div>
+              <div className="space-y-1 md:space-y-2 relative z-10 text-right">
+                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide text-balance">
+                  Sound <br /> Solutions
+                </h3>
+                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light transition-colors duration-500">
+                  World-class pro audio systems.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 8: Staging & Decor */}
+            <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
+              <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
+              <div className="w-[45%] h-full absolute right-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
+                <Image
+                  src="/new/TALENTZOCEC-010.jpg"
+                  alt="Professional Staging"
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
+                />
+              </div>
+              <div className="space-y-1 md:space-y-2 relative z-10 mt-auto text-left">
+                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide text-balance">
+                  Professional <br className="hidden md:block" /> Staging
+                </h3>
+                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light transition-colors duration-500">
+                  Custom staging for any scale.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 9: Flipped Layout */}
+            <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-start items-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
+              <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
+              <div className="w-[45%] h-full absolute left-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
+                <Image
+                  src="/new/6L8A9208.jpg"
+                  alt="Event Logistics"
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
+                />
+              </div>
+              <div className="space-y-1 md:space-y-2 relative z-10 text-right">
+                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide text-balance">
+                  Event <br className="hidden md:block" /> Logistics
+                </h3>
+                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light transition-colors duration-500">
+                  End-to-end production support.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section X: Statistics / Impact */}
+      {/* Section 4: Projects Gallery */}
       <section
-        id="impact"
-        className="py-16 bg-black/40 backdrop-blur-sm relative z-10 w-full border-t border-white/5"
+        id="portfolio"
+        className="py-12 md:py-16 bg-zinc-950 relative z-10 w-full border-t border-white/5 overflow-hidden"
       >
         <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-            {/* Left side content */}
-            <div className="lg:w-1/2 space-y-6 text-center lg:text-left">
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.05]">
-                They Say Numbers <br className="hidden lg:block" />
-                Don&apos;t Lie, and Neither <br className="hidden lg:block" />
-                Do Ours.
-              </h2>
-              <p className="text-zinc-400 text-base md:text-lg font-light max-w-md leading-relaxed">
-                Our results speak louder than words, delivering measurable
-                success and undeniable growth.
-              </p>
+          <SectionHeader
+            eyebrow="Featured Work"
+            title="Our Gallery"
+            description="A closer look at the stages, screen builds, lighting environments, and live event moments shaped by Talentz."
+          />
 
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-4">
-                <button className="px-5 md:px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-xs md:text-sm flex items-center gap-2">
-                  Let&apos;s Collaborate
-                </button>
-                <button className="px-5 md:px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-xs md:text-sm flex items-center gap-2">
-                  Book a Call
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M7 17l9.2-9.2M17 17V7H7" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            {/* Right side stats */}
-            <div className="lg:w-1/2 w-full flex justify-center lg:justify-end mt-8 lg:mt-0">
-              <div className="w-full max-w-[650px] relative flex flex-col justify-center">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-y-8 md:gap-y-10 gap-x-4 md:gap-x-6 relative z-10">
-                  {/* Stat 1 */}
-                  <div className="text-center space-y-1 border-r border-white/10 md:border-transparent">
-                    <h4 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight">
-                      15+
-                    </h4>
-                    <p className="text-zinc-400 text-[10px] md:text-xs font-light uppercase tracking-wider">
-                      Years Exp.
-                    </p>
-                  </div>
-
-                  {/* Stat 2 */}
-                  <div className="text-center space-y-1">
-                    <h4 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight">
-                      5k+
-                    </h4>
-                    <p className="text-zinc-400 text-[10px] md:text-xs font-light uppercase tracking-wider">
-                      Events Done
-                    </p>
-                  </div>
-
-                  {/* Stat 3 */}
-                  <div className="text-center space-y-1 border-r border-white/10 md:border-transparent">
-                    <h4 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight">
-                      400+
-                    </h4>
-                    <p className="text-zinc-400 text-[10px] md:text-xs font-light uppercase tracking-wider">
-                      Partner Brands
-                    </p>
-                  </div>
-
-                  {/* Divider */}
-                  <div className="hidden md:block md:col-span-3 w-full h-px bg-white/10 my-2"></div>
-
-                  {/* Stat 4 */}
-                  <div className="text-center space-y-1">
-                    <h4 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight">
-                      100%
-                    </h4>
-                    <p className="text-zinc-400 text-[10px] md:text-xs font-light uppercase tracking-wider">
-                      Commitment
-                    </p>
-                  </div>
-
-                  {/* Stat 5 */}
-                  <div className="text-center space-y-1 border-r border-white/10 md:border-transparent">
-                    <h4 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight">
-                      50+
-                    </h4>
-                    <p className="text-zinc-400 text-[10px] md:text-xs font-light uppercase tracking-wider">
-                      Team Members
-                    </p>
-                  </div>
-
-                  {/* Stat 6 */}
-                  <div className="text-center space-y-1">
-                    <h4 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight">
-                      24/7
-                    </h4>
-                    <p className="text-zinc-400 text-[10px] md:text-xs font-light uppercase tracking-wider">
-                      Logistics
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="relative">
+            <ScrollingBento speed={1.5} />
           </div>
         </div>
       </section>
@@ -689,219 +652,178 @@ export default function EventProductionPage() {
       {/* Section X: Instagram Posts */}
       <section
         id="social"
-        className="py-20 md:py-24 bg-zinc-950 border-t border-white/5 relative z-10 w-full overflow-hidden"
+        className="py-12 md:py-16 bg-black border-t border-white/5 relative z-10 w-full overflow-hidden"
       >
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 gap-6">
-            <div>
-              <h2 className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-500 mb-4 border-l-2 border-white pl-4 inline-block">
-                Social Feed
-              </h2>
-              <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-                Our Recent Instagram Posts
-              </h3>
-            </div>
-            <Link
-              href="https://www.instagram.com/talentzeventsproduction/"
-              target="_blank"
-              className="group flex items-center gap-3 text-sm font-medium text-zinc-300 hover:text-white transition-colors"
-            >
-              <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-white/40 transition-colors">
-                <IconBrandInstagram className="h-5 w-5" />
-              </div>
-              <span>@talentzeventsproduction</span>
-            </Link>
+          <SectionHeader
+            eyebrow="Social Feed"
+            title="Instagram Posts"
+            description="Fresh production highlights, stage builds, and event snapshots from the Talentz feed."
+            action={
+              <Link
+                href="https://www.instagram.com/talentzeventsproduction/"
+                target="_blank"
+                className="group flex items-center gap-3 text-sm font-medium text-zinc-300 transition-colors hover:text-white"
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(145deg,#833ab4_0%,#c13584_35%,#fd1d1d_68%,#fcb045_100%)] text-white transition-transform duration-300 group-hover:scale-110">
+                  <IconBrandInstagram className="h-5 w-5" />
+                </div>
+                <span>@talentzeventsproduction</span>
+              </Link>
+            }
+          />
+
+          <div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentPage}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5"
+              >
+                {[...instagramPosts, { isFollowCard: true }]
+                  .slice(startIndex, startIndex + itemsPerPage)
+                  .map((item) => {
+                    if ("isFollowCard" in item) {
+                      return (
+                        <Link
+                          key="follow-card"
+                          href="https://www.instagram.com/talentzeventsproduction/"
+                          target="_blank"
+                          className="group block h-full"
+                        >
+                          <article className="relative flex aspect-4/5 flex-col justify-between overflow-hidden rounded-[1.75rem] bg-[linear-gradient(145deg,#833ab4_0%,#c13584_35%,#fd1d1d_68%,#fcb045_100%)] p-6 shadow-xl md:p-7">
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.18),transparent_40%)] opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
+                            <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-white/15 backdrop-blur-md transition-transform duration-500 group-hover:scale-110">
+                              <IconBrandInstagram className="h-8 w-8 text-white" />
+                            </div>
+                            <div className="relative z-10 space-y-3">
+                              <p className="text-xs font-medium uppercase tracking-[0.35em] text-white/70">
+                                Instagram
+                              </p>
+                              <div>
+                                <h4 className="text-3xl font-semibold tracking-tight text-white">
+                                  Follow Us
+                                </h4>
+                                <p className="mt-2 text-sm text-white/80">
+                                  @talentzeventsproduction
+                                </p>
+                              </div>
+                            </div>
+                          </article>
+                        </Link>
+                      );
+                    }
+                    return (
+                      <Link
+                        key={item.src}
+                        href="https://www.instagram.com/talentzeventsproduction/"
+                        target="_blank"
+                        className="group block h-full"
+                      >
+                        <article className="relative aspect-4/5 overflow-hidden rounded-[1.75rem] bg-zinc-900 shadow-xl">
+                          <Image
+                            src={item.src}
+                            alt={item.alt}
+                            width={400}
+                            height={500}
+                            quality={75}
+                            decoding="async"
+                            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/15 to-transparent" />
+                        </article>
+                      </Link>
+                    );
+                  })}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Horizontal Scroll Layout */}
-          <div className="relative w-full overflow-hidden group/carousel">
-            {/* Scroll Container */}
-            <div
-              ref={carouselRef}
-              onMouseDown={startDragging}
-              onMouseLeave={stopDragging}
-              onMouseUp={stopDragging}
-              onMouseMove={onDrag}
-              className={`flex overflow-x-auto gap-4 md:gap-6 pt-4 md:pt-16 pb-8 md:pb-20 px-4 md:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-center cursor-grab active:cursor-grabbing select-none ${!isDragging ? "scroll-smooth snap-x snap-mandatory" : ""}`}
-            >
-              {/* Post 1 */}
-              <Link
-                href="https://www.instagram.com/talentzeventsproduction/"
-                target="_blank"
-                onClick={(e) => {
-                  if (isDragging) e.preventDefault();
-                }}
-                className="flex-none w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-4/5 snap-center md:snap-start relative group overflow-hidden bg-zinc-950 rounded-lg shrink-0 border border-white/5 hover:border-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl md:-translate-y-6 md:hover:-translate-y-8"
+          <div className="relative z-30 mt-8 flex items-center justify-between gap-6 px-1">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={handleInstagramPrev}
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-white/5 text-white transition-colors hover:bg-white/10"
+                aria-label="Previous Instagram post"
               >
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src="/new/DSC01552.jpg"
-                    alt="Instagram Post 1"
-                    fill
-                    sizes="(max-width: 768px) 75vw, 25vw"
-                    className="object-cover scale-[1.02] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                  />
-                </div>
-                {/* Vintage overlay effect */}
-                <div className="absolute inset-0 bg-neutral-900/10 group-hover:bg-black/40 transition-colors duration-500 z-10 mixt-blend-overlay"></div>
-                {/* Gradient vignette */}
-                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-
-                {/* Content Overlay */}
-                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                  <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-                    <IconBrandInstagram className="text-white w-6 h-6" />
-                  </div>
-                  <p className="mt-4 text-sm font-medium text-white translate-y-8 group-hover:translate-y-0 transition-transform duration-500 delay-75 ease-out">
-                    View on Instagram
-                  </p>
-                </div>
-              </Link>
-
-              {/* Post 2 */}
-              <Link
-                href="https://www.instagram.com/talentzeventsproduction/"
-                target="_blank"
-                onClick={(e) => {
-                  if (isDragging) e.preventDefault();
-                }}
-                className="flex-none w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-4/5 snap-center md:snap-start relative group overflow-hidden bg-zinc-950 rounded-lg shrink-0 border border-white/5 hover:border-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl md:translate-y-6 md:hover:translate-y-4"
+                <IconChevronLeft className="h-5 w-5" stroke={1.5} />
+              </button>
+              <button
+                type="button"
+                onClick={handleInstagramNext}
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-white/5 text-white transition-colors hover:bg-white/10"
+                aria-label="Next Instagram post"
               >
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src="/new/6L8A4415.jpg"
-                    alt="Instagram Post 2"
-                    fill
-                    sizes="(max-width: 768px) 75vw, 25vw"
-                    className="object-cover scale-[1.02] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-neutral-900/10 group-hover:bg-black/40 transition-colors duration-500 z-10 mixt-blend-overlay"></div>
-                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-
-                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                  <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-                    <IconBrandInstagram className="text-white w-6 h-6" />
-                  </div>
-                  <p className="mt-4 text-sm font-medium text-white translate-y-8 group-hover:translate-y-0 transition-transform duration-500 delay-75 ease-out">
-                    View on Instagram
-                  </p>
-                </div>
-              </Link>
-
-              {/* Post 3 */}
-              <Link
-                href="https://www.instagram.com/talentzeventsproduction/"
-                target="_blank"
-                onClick={(e) => {
-                  if (isDragging) e.preventDefault();
-                }}
-                className="flex-none w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-4/5 snap-center md:snap-start relative group overflow-hidden bg-zinc-950 rounded-lg shrink-0 border border-white/5 hover:border-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl md:-translate-y-6 md:hover:-translate-y-8"
-              >
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src="/new/6L8A4309.jpg"
-                    alt="Instagram Post 3"
-                    fill
-                    sizes="(max-width: 768px) 75vw, 25vw"
-                    className="object-cover scale-[1.02] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-neutral-900/10 group-hover:bg-black/40 transition-colors duration-500 z-10 mixt-blend-overlay"></div>
-                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-
-                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                  <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-                    <IconBrandInstagram className="text-white w-6 h-6" />
-                  </div>
-                  <p className="mt-4 text-sm font-medium text-white translate-y-8 group-hover:translate-y-0 transition-transform duration-500 delay-75 ease-out">
-                    View on Instagram
-                  </p>
-                </div>
-              </Link>
-
-              {/* Post 4 */}
-              <Link
-                href="https://www.instagram.com/talentzeventsproduction/"
-                target="_blank"
-                onClick={(e) => {
-                  if (isDragging) e.preventDefault();
-                }}
-                className="flex-none w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-4/5 snap-center md:snap-start relative group overflow-hidden bg-zinc-950 rounded-lg shrink-0 border border-white/5 hover:border-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl md:translate-y-6 md:hover:translate-y-4"
-              >
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src="/new/TALENTZOCEC-010.jpg"
-                    alt="Instagram Post 4"
-                    fill
-                    sizes="(max-width: 768px) 75vw, 25vw"
-                    className="object-cover scale-[1.02] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-neutral-900/10 group-hover:bg-black/40 transition-colors duration-500 z-10 mixt-blend-overlay"></div>
-                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-
-                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                  <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-                    <IconBrandInstagram className="text-white w-6 h-6" />
-                  </div>
-                  <p className="mt-4 text-sm font-medium text-white translate-y-8 group-hover:translate-y-0 transition-transform duration-500 delay-75 ease-out">
-                    View on Instagram
-                  </p>
-                </div>
-              </Link>
-
-              {/* Post 5 */}
-              <Link
-                href="https://www.instagram.com/talentzeventsproduction/"
-                target="_blank"
-                onClick={(e) => {
-                  if (isDragging) e.preventDefault();
-                }}
-                className="flex-none w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-4/5 snap-center md:snap-start relative group overflow-hidden bg-zinc-950 rounded-lg shrink-0 border border-white/5 hover:border-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl md:-translate-y-6 md:hover:-translate-y-8"
-              >
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src="/new/RED_5641.jpg"
-                    alt="Instagram Post 5"
-                    fill
-                    sizes="(max-width: 768px) 75vw, 25vw"
-                    className="object-cover scale-[1.02] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-neutral-900/10 group-hover:bg-black/40 transition-colors duration-500 z-10 mixt-blend-overlay"></div>
-                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-
-                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                  <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-out shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-                    <IconBrandInstagram className="text-white w-6 h-6" />
-                  </div>
-                  <p className="mt-4 text-sm font-medium text-white translate-y-8 group-hover:translate-y-0 transition-transform duration-500 delay-75 ease-out">
-                    View on Instagram
-                  </p>
-                </div>
-              </Link>
-
-              {/* "See More" Card */}
-              <Link
-                href="https://www.instagram.com/talentzeventsproduction/"
-                target="_blank"
-                onClick={(e) => {
-                  if (isDragging) e.preventDefault();
-                }}
-                className={`flex-none w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-4/5 snap-center md:snap-start relative group overflow-hidden bg-zinc-900 rounded-lg shrink-0 border border-white/5 hover:bg-zinc-800 transition-all duration-300 flex flex-col items-center justify-center gap-4 md:translate-y-6 md:hover:translate-y-4 ${isDragging ? "pointer-events-none" : ""}`}
-              >
-                <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <IconBrandInstagram className="text-white w-7 h-7" />
-                </div>
-                <span className="text-sm font-medium text-white uppercase tracking-widest bg-gradient-to-r from-zinc-100 to-zinc-500 bg-clip-text text-transparent">
-                  View Gallery
-                </span>
-              </Link>
+                <IconChevronRight className="h-5 w-5" stroke={1.5} />
+              </button>
             </div>
 
-            {/* Edge fade gradients for scroll indication (Desktop) */}
-            <div className="hidden md:block absolute top-0 right-0 bottom-8 w-32 bg-gradient-to-l from-zinc-950 to-transparent pointer-events-none z-30"></div>
+            <div className="ml-auto flex w-32 flex-col items-end gap-2 md:w-40">
+              <div className="text-[11px] font-medium tracking-[0.2em] text-white/45 tabular-nums">
+                {instagramProgressLabel}
+              </div>
+              <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+                <div
+                  className="absolute top-0 h-full rounded-full bg-white transition-[left,width] duration-300 ease-out"
+                  style={{
+                    left: `${Math.min(100 - instagramProgressWidth, progressPercent)}%`,
+                    width: `${instagramProgressWidth}%`,
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section: Announcements */}
+      <section
+        id="announcements"
+        className="py-12 md:py-16 bg-zinc-950 border-t border-white/5 relative z-10 w-full overflow-hidden"
+      >
+        <div className="container mx-auto px-4">
+          <SectionHeader
+            eyebrow="News & Updates"
+            title="Announcements"
+            description="Stay informed with the latest updates on our inventory, product releases, and behind-the-scenes insights."
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {announcements.map((item, index) => (
+              <div
+                key={index}
+                className="group relative flex flex-col justify-between bg-zinc-900/30 border border-white/5 p-1 rounded-[1.75rem] overflow-hidden transition-all duration-500 hover:bg-zinc-900/50 hover:border-white/10"
+              >
+                <div className="relative aspect-video overflow-hidden rounded-[1.5rem]">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
+                </div>
+                <div className="flex grow flex-col p-5 md:p-6">
+                  <h3 className="mb-2 text-lg font-medium leading-[1.2] text-white">
+                    {item.title}
+                  </h3>
+                  <p className="grow line-clamp-3 text-[13px] font-light leading-relaxed text-zinc-500">
+                    {item.description}
+                  </p>
+                  <div className="mt-5 flex items-center justify-between">
+                    <div className="h-px grow bg-white/10 transition-colors group-hover:bg-white/20" />
+                    <button className="ml-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all group-hover:bg-white group-hover:text-black">
+                      <IconChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -909,23 +831,14 @@ export default function EventProductionPage() {
       {/* Section 3: Testimonials */}
       <section
         id="testimonials"
-        className="py-16 md:py-20 bg-zinc-950 border-t border-white/5 relative z-10 w-full overflow-hidden"
+        className="py-12 md:py-16 bg-zinc-950 border-t border-white/5 relative z-10 w-full overflow-hidden"
       >
         <div className="container mx-auto px-4">
-          <div className="mb-12 md:mb-16">
-            <h2 className="text-white text-6xl md:text-7xl lg:text-[9rem] font-medium tracking-tighter leading-none mb-4 md:mb-6">
-              Testimonials
-            </h2>
-            <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
-              <span className="text-3xl md:text-4xl font-bold tracking-tighter text-white">
-                ©2026
-              </span>
-              <p className="text-zinc-400 text-sm max-w-[280px] leading-relaxed">
-                100+ top brands trusted us to elevate their events and
-                production quality.
-              </p>
-            </div>
-          </div>
+          <SectionHeader
+            eyebrow="Client Stories"
+            title="Testimonials"
+            description="100+ brands have trusted Talentz to elevate their events, environments, and production quality."
+          />
 
           {/* Stacked Vertical Layout on Mobile, Masonry Grid on Desktop */}
           <div className="flex flex-col md:grid md:grid-cols-3 gap-4 md:space-x-0 pt-2 pb-8">
@@ -1138,70 +1051,69 @@ export default function EventProductionPage() {
           </div>
         </div>
       </section>
-      {/* Section X: Contact Us */}
       <section
         id="contact-us"
-        className="pt-16 pb-10 md:pt-20 md:pb-14 bg-zinc-950 relative z-10 w-full border-t border-white/5 overflow-hidden"
+        className="py-12 md:py-16 bg-zinc-950 relative z-10 w-full border-t border-white/5 overflow-hidden"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(255,255,255,0.03)_0,transparent_50%)] pointer-events-none" />
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col lg:flex-row ">
-            {/* Left section */}
-            <div className="lg:w-[35%] flex flex-col justify-start">
-              <h2 className="text-xs font-bold tracking-[0.3em] uppercase text-zinc-500 mb-4 border-l-2 border-[#ffffff] pl-4 inline-block">
-                Start Your Journey
-              </h2>
-              <h3 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white tracking-tight leading-[1.1] mb-6">
-                Let&apos;s Innovate <br /> Together
-              </h3>
-              <p className="text-zinc-400 text-sm md:text-base leading-relaxed font-light mb-8 max-w-md">
-                We&apos;re ready to transform your ideas with our cutting-edge
-                solutions in AR, VR, Holograms, Interactive Screens, and more.
-                Have a question or want to collaborate? Fill out the form.
-              </p>
-            </div>
+          <div className="rounded-[2rem] border border-white/10 bg-zinc-900/30 p-6 md:p-8 lg:p-10">
+            <div className="flex flex-col gap-8 lg:flex-row lg:gap-10">
+              <div className="lg:w-[35%]">
+                <div className="mb-4 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.42em] text-zinc-500">
+                  <span className="h-7 w-px bg-white/60" />
+                  <span>Start Your Journey</span>
+                </div>
+                <h2 className="text-4xl font-medium tracking-tight text-white md:text-5xl lg:text-[3.25rem] lg:leading-[1.05]">
+                  Let&apos;s Innovate
+                  <br className="hidden md:block" /> Together
+                </h2>
+                <p className="mt-4 max-w-md text-sm leading-relaxed text-zinc-400 md:text-base">
+                  We deliver AV solutions for events including LED displays,
+                  speaker systems, lighting design, staging, and end-to-end
+                  production support. Share your brief below and we&apos;ll get
+                  back to you.
+                </p>
+              </div>
 
-            {/* Right section (Form) */}
-            <div className="lg:w-[65%] w-full">
-              <form className="space-y-8 md:space-y-10 bg-zinc-900/40 border border-white/5 p-6 md:p-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-                  {/* Full Name */}
+              <form className="space-y-6 md:space-y-7 lg:w-[65%]">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
                   <div className="relative group">
                     <input
                       type="text"
                       id="fullName"
-                      className="w-full bg-transparent border-b border-white/20 py-3 text-white text-sm focus:outline-none focus:border-[#ffffff] transition-colors peer placeholder-transparent"
+                      className="peer w-full border-b border-white/20 bg-transparent py-2.5 text-sm text-white transition-colors placeholder-transparent focus:border-[#ffffff] focus:outline-none"
                       placeholder="Full Name*"
                     />
                     <label
                       htmlFor="fullName"
-                      className="absolute left-0 top-3 text-zinc-500 text-sm transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500 cursor-text"
+                      className="absolute left-0 top-2.5 cursor-text text-sm text-zinc-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500"
                     >
                       Full Name*
                     </label>
                   </div>
-                  {/* Email */}
                   <div className="relative group">
                     <input
                       type="email"
                       id="email"
-                      className="w-full bg-transparent border-b border-white/20 py-3 text-white text-sm focus:outline-none focus:border-[#ffffff] transition-colors peer placeholder-transparent"
+                      className="peer w-full border-b border-white/20 bg-transparent py-2.5 text-sm text-white transition-colors placeholder-transparent focus:border-[#ffffff] focus:outline-none"
                       placeholder="Email*"
                     />
                     <label
                       htmlFor="email"
-                      className="absolute left-0 top-3 text-zinc-500 text-sm transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500 cursor-text"
+                      className="absolute left-0 top-2.5 cursor-text text-sm text-zinc-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500"
                     >
                       Email*
                     </label>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-                  {/* Phone */}
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
                   <div className="flex items-end gap-4 relative">
-                    <div className="flex items-center gap-2 border-b border-white/20 py-3 text-white cursor-pointer hover:border-white/40 transition-colors shrink-0">
-                      <span className="text-lg leading-none">🇴🇲</span>
+                    <div className="flex shrink-0 items-center gap-2 border-b border-white/20 py-2.5 text-white transition-colors hover:border-white/40">
+                      <span className="text-sm font-semibold tracking-[0.28em]">
+                        OM
+                      </span>
                       <span className="text-sm">+968</span>
                       <svg
                         width="10"
@@ -1209,7 +1121,7 @@ export default function EventProductionPage() {
                         viewBox="0 0 10 6"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="opacity-50 ml-1"
+                        className="ml-1 opacity-50"
                       >
                         <path
                           d="M1 1L5 5L9 1"
@@ -1220,41 +1132,54 @@ export default function EventProductionPage() {
                         />
                       </svg>
                     </div>
-                    <div className="relative group flex-grow">
+                    <div className="relative group grow">
                       <input
                         type="tel"
                         id="phone"
-                        className="w-full bg-transparent border-b border-white/20 py-3 text-white text-sm focus:outline-none focus:border-[#ffffff] transition-colors peer placeholder-transparent"
+                        className="peer w-full border-b border-white/20 bg-transparent py-2.5 text-sm text-white transition-colors placeholder-transparent focus:border-[#ffffff] focus:outline-none"
                         placeholder="Phone*"
                       />
                       <label
                         htmlFor="phone"
-                        className="absolute left-0 top-3 text-zinc-500 text-sm transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500 cursor-text"
+                        className="absolute left-0 top-2.5 cursor-text text-sm text-zinc-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500"
                       >
                         Phone*
                       </label>
                     </div>
                   </div>
-                  {/* Company Name */}
                   <div className="relative group">
                     <input
                       type="text"
                       id="company"
-                      className="w-full bg-transparent border-b border-white/20 py-3 text-white text-sm focus:outline-none focus:border-[#ffffff] transition-colors peer placeholder-transparent"
+                      className="peer w-full border-b border-white/20 bg-transparent py-2.5 text-sm text-white transition-colors placeholder-transparent focus:border-[#ffffff] focus:outline-none"
                       placeholder="Company Name"
                     />
                     <label
                       htmlFor="company"
-                      className="absolute left-0 top-3 text-zinc-500 text-sm transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500 cursor-text"
+                      className="absolute left-0 top-2.5 cursor-text text-sm text-zinc-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500"
                     >
                       Company Name
                     </label>
                   </div>
                 </div>
 
-                {/* Categories */}
-                <div className="pt-2 text-left">
-                  <div className="flex flex-wrap gap-x-6 gap-y-4">
+                <div className="relative group">
+                  <textarea
+                    id="remark"
+                    rows={2}
+                    className="peer w-full resize-none border-b border-white/20 bg-transparent py-2.5 text-sm text-white transition-colors placeholder-transparent focus:border-[#ffffff] focus:outline-none"
+                    placeholder="Remark"
+                  />
+                  <label
+                    htmlFor="remark"
+                    className="absolute left-0 top-2.5 cursor-text text-sm text-zinc-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500"
+                  >
+                    Remark
+                  </label>
+                </div>
+
+                <div className="pt-1 text-left">
+                  <div className="flex flex-wrap gap-x-5 gap-y-3">
                     {[
                       "End Client",
                       "Agency",
@@ -1265,7 +1190,7 @@ export default function EventProductionPage() {
                     ].map((cat) => (
                       <label
                         key={cat}
-                        className="flex items-center gap-2.5 cursor-pointer group"
+                        className="group flex cursor-pointer items-center gap-2.5"
                       >
                         <input
                           type="radio"
@@ -1273,10 +1198,10 @@ export default function EventProductionPage() {
                           className="peer sr-only"
                           defaultChecked={cat === "End Client"}
                         />
-                        <div className="w-4 h-4 rounded-full border border-white/30 peer-checked:border-[#ffffff] group-hover:border-white/60 flex items-center justify-center transition-colors">
-                          <div className="w-2 h-2 rounded-full bg-[#ffffff] opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+                        <div className="flex h-4 w-4 items-center justify-center rounded-full border border-white/30 transition-colors group-hover:border-white/60 peer-checked:border-[#ffffff]">
+                          <div className="h-2 w-2 rounded-full bg-[#ffffff] opacity-0 transition-opacity peer-checked:opacity-100" />
                         </div>
-                        <span className="text-sm text-zinc-400 peer-checked:text-white group-hover:text-zinc-200 transition-colors font-light">
+                        <span className="text-sm font-light text-zinc-400 transition-colors group-hover:text-zinc-200 peer-checked:text-white">
                           {cat}
                         </span>
                       </label>
@@ -1284,39 +1209,64 @@ export default function EventProductionPage() {
                   </div>
                 </div>
 
-                {/* Budget Slider */}
-                <div className="pt-4 text-left">
-                  <div className="flex justify-between items-center mb-3">
-                    <label className="text-xs uppercase tracking-[0.1em] text-zinc-500 font-medium">
+                <div className="pt-2 text-left md:max-w-3xl">
+                  <div className="mb-2 flex items-center justify-between">
+                    <label className="text-xs font-medium uppercase tracking-widest text-zinc-500">
                       Budget
                     </label>
-                    <span className="text-white text-sm font-medium">
-                      AED {budget >= 1000 ? "1M+" : `${budget}K`}
+                    <span className="text-sm font-medium text-white">
+                      {budgetLabel}
                     </span>
                   </div>
-                  <div className="relative pt-1 group">
-                    <input
-                      type="range"
-                      min="0"
-                      max="1000"
-                      value={budget}
-                      onChange={(e) => setBudget(Number(e.target.value))}
-                      className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#ffffff] group-hover:bg-white/20 transition-colors"
-                    />
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setBudget(budgetMin)}
+                        className="h-2.5 w-2.5 shrink-0 rounded-full bg-white/45 transition-colors hover:bg-white"
+                        aria-label="Set budget to minimum"
+                      />
+                      <Slider
+                        aria-label="Budget"
+                        min={budgetMin}
+                        max={budgetMax}
+                        step={25}
+                        value={budget}
+                        onValueChange={(value) =>
+                          setBudget(Array.isArray(value) ? value[0] : value)
+                        }
+                        className="flex-1"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setBudget(budgetMax)}
+                        className="h-2.5 w-2.5 shrink-0 rounded-full bg-white/45 transition-colors hover:bg-white"
+                        aria-label="Set budget to maximum"
+                      />
+                    </div>
+                    <div className="mt-1 flex justify-between text-[11px] uppercase tracking-[0.18em] text-zinc-500">
+                      <span className="inline-flex items-center gap-2">
+                        <span className="h-1 w-1 rounded-full bg-white/60" />
+                        OMR 0
+                      </span>
+                      <span className="inline-flex items-center gap-2">
+                        OMR 1M+
+                        <span className="h-1 w-1 rounded-full bg-white/60" />
+                      </span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Agreement */}
-                <div className="pt-4 text-left mt-2 lg:mt-4">
-                  <label className="flex items-start gap-3 cursor-pointer group">
+                <div className="flex flex-col items-start justify-between gap-6 pt-4 md:flex-row md:items-center">
+                  <label className="group flex cursor-pointer items-start gap-3">
                     <input type="checkbox" className="peer sr-only" />
-                    <div className="w-4 h-4 md:w-5 md:h-5 rounded border border-white/30 peer-checked:bg-[#ffffff] peer-checked:border-[#ffffff] group-hover:border-white/60 flex items-center justify-center transition-colors shrink-0 mt-0.5 md:mt-0">
+                    <div className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/30 transition-colors group-hover:border-white/60 peer-checked:border-[#ffffff] peer-checked:bg-[#ffffff] md:mt-0 md:h-5 md:w-5">
                       <svg
                         width="12"
                         height="10"
                         viewBox="0 0 12 10"
                         fill="none"
-                        className="opacity-0 peer-checked:opacity-100 transition-opacity text-white scale-75 md:scale-100"
+                        className="scale-75 text-white opacity-0 transition-opacity peer-checked:opacity-100 md:scale-100"
                       >
                         <path
                           d="M1 5L4.5 8.5L11 1.5"
@@ -1327,19 +1277,19 @@ export default function EventProductionPage() {
                         />
                       </svg>
                     </div>
-                    <span className="text-sm text-zinc-400 group-hover:text-zinc-300 leading-relaxed font-light transition-colors">
+                    <span className="max-w-xs text-[13px] font-light leading-snug text-zinc-400 transition-colors group-hover:text-zinc-300">
                       I have read the Terms and Condition & Privacy Notice
                       agreement
                     </span>
                   </label>
-                </div>
 
-                <button
-                  type="button"
-                  className="w-full md:w-auto px-8 md:px-12 py-3.5 md:py-4 bg-white text-black font-semibold text-xs md:text-sm uppercase tracking-[0.15em] hover:bg-zinc-200 hover:scale-[1.02] transition-all duration-300 rounded-sm"
-                >
-                  Submit
-                </button>
+                  <button
+                    type="button"
+                    className="w-full rounded-sm bg-white px-8 py-3 text-xs font-semibold uppercase tracking-[0.15em] text-black transition-all duration-300 hover:scale-[1.02] hover:bg-zinc-200 md:w-auto md:px-12 md:py-3.5 md:text-sm"
+                  >
+                    Submit
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -1347,7 +1297,7 @@ export default function EventProductionPage() {
       </section>
 
       {/* Footer Section */}
-      <section className="bg-black text-white pt-20 pb-12 overflow-hidden border-t border-white/5">
+      <section className="bg-black text-white pt-16 pb-12 overflow-hidden border-t border-white/5">
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex flex-col gap-6">
             {/* Top Part: Logo and Description from Footer.tsx */}
