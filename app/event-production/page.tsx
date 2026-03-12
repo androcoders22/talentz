@@ -23,9 +23,48 @@ import {
   IconChevronRight,
 } from "@tabler/icons-react";
 import ScrollingBento from "@/components/ScrollingBento";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import useEmblaCarousel from "embla-carousel-react";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { isValidPhoneNumber } from "libphonenumber-js";
+import { z } from "zod/v3";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+
+const businessTypeOptions = [
+  "End Client",
+  "Agency",
+  "Event Company",
+  "Fabricator",
+  "AV Company",
+  "Other",
+] as const;
+
+const formSchema = z.object({
+  fullName: z.string().trim().min(2, "Name must be at least 2 characters"),
+  email: z.string().trim().email("Invalid email address"),
+  phone: z
+    .string()
+    .trim()
+    .min(1, "Phone number is required")
+    .refine(
+      (val) => isValidPhoneNumber(val, "OM"),
+      "Enter a valid phone number",
+    ),
+  company: z.string().optional(),
+  remark: z.string().optional(),
+  businessType: z.enum(businessTypeOptions),
+  budget: z.number().min(0).max(1000),
+  terms: z.boolean().refine((val) => val === true, "You must accept the terms"),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 declare global {
   interface Window {
@@ -72,30 +111,35 @@ const budgetMax = 1000;
 
 const announcements = [
   {
+    id: "warehouse-restock",
     title: "Warehouse Restock: Popular Models Back in Inventory",
     image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
     description:
       "Our latest shipment has arrived and several high-demand models are now back in stock. This restock includes some of the most requested items from the past few months. Availability may be limited, so customers are encouraged to place orders early while inventory lasts.",
   },
   {
+    id: "driving-demand",
     title: "What’s Driving Demand This Season",
     image: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a",
     description:
       "Market demand continues to shift as customers prioritize durability, design, and efficiency. In this article, we explore the key factors influencing buying decisions and how these trends shape the products we keep in inventory.",
   },
   {
+    id: "supply-chain",
     title: "Behind the Scenes: How Our Supply Chain Works",
     image: "https://images.unsplash.com/photo-1601597111158-2fceff292cdc",
     description:
       "From sourcing to delivery, our supply chain is built for reliability. Take a closer look at how we coordinate logistics, manage inventory, and ensure consistent product availability for our customers.",
   },
   {
+    id: "new-arrivals",
     title: "New Arrivals: Expanding Our Product Line",
     image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7",
     description:
       "We’re introducing several new additions to our catalog. These products have been selected based on customer feedback and current market demand, offering improved performance and modern design.",
   },
   {
+    id: "quality-first",
     title: "Quality First: Our Product Selection Process",
     image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952",
     description:
@@ -139,11 +183,76 @@ function SectionHeader({
   );
 }
 
+const contactFieldClassName =
+  "peer h-12 w-full rounded-none border-0 border-b border-white/15 bg-transparent px-0 pb-2 pt-5 text-sm text-white shadow-none outline-none transition-colors placeholder:text-transparent focus-visible:border-white focus-visible:ring-0 focus-visible:ring-offset-0";
+
+const floatingLabelClassName =
+  "absolute left-0 top-3 cursor-text text-sm text-zinc-500 transition-all duration-200 peer-focus:-top-4 peer-focus:text-[11px] peer-focus:text-white peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-[11px] peer-not-placeholder-shown:text-zinc-400";
+
+function FloatingField({
+  id,
+  label,
+  error,
+  className,
+  children,
+}: {
+  id: string;
+  label: string;
+  error?: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className={cn("relative", className)}>
+      {children}
+      <label htmlFor={id} className={floatingLabelClassName}>
+        {label}
+      </label>
+      {error ? <p className="mt-2 text-xs text-red-400">{error}</p> : null}
+    </div>
+  );
+}
+
 export default function EventProductionPage() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [budget, setBudget] = useState(500);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(0);
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      company: "",
+      remark: "",
+      businessType: "End Client",
+      budget: 500,
+      terms: false,
+    },
+  });
+
+  const budget = watch("budget");
+  const phoneValue = watch("phone");
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      console.log(data);
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      alert("Form submitted successfully!");
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    }
+  };
 
   useEffect(() => {
     const updateItemsPerPage = () => {
@@ -794,8 +903,9 @@ export default function EventProductionPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {announcements.map((item, index) => (
-              <div
+              <Link
                 key={index}
+                href={`/announcements/${item.id}`}
                 className="group relative flex flex-col justify-between bg-zinc-900/30 border border-white/5 p-1 rounded-[1.75rem] overflow-hidden transition-all duration-500 hover:bg-zinc-900/50 hover:border-white/10"
               >
                 <div className="relative aspect-video overflow-hidden rounded-[1.5rem]">
@@ -817,12 +927,12 @@ export default function EventProductionPage() {
                   </p>
                   <div className="mt-5 flex items-center justify-between">
                     <div className="h-px grow bg-white/10 transition-colors group-hover:bg-white/20" />
-                    <button className="ml-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all group-hover:bg-white group-hover:text-black">
+                    <div className="ml-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all group-hover:bg-white group-hover:text-black">
                       <IconChevronRight className="h-4 w-4" />
-                    </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -1059,7 +1169,7 @@ export default function EventProductionPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="rounded-[2rem] border border-white/10 bg-zinc-900/30 p-6 md:p-8 lg:p-10">
             <div className="flex flex-col gap-8 lg:flex-row lg:gap-10">
-              <div className="lg:w-[35%]">
+              <div className="lg:w-[25%]">
                 <div className="mb-4 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.42em] text-zinc-500">
                   <span className="h-7 w-px bg-white/60" />
                   <span>Start Your Journey</span>
@@ -1071,224 +1181,260 @@ export default function EventProductionPage() {
                 <p className="mt-4 max-w-md text-sm leading-relaxed text-zinc-400 md:text-base">
                   We deliver AV solutions for events including LED displays,
                   speaker systems, lighting design, staging, and end-to-end
-                  production support. Share your brief below and we&apos;ll get
-                  back to you.
+                  production support.
+                  <br />
+                  <br />
+                  Share your brief below and we&apos;ll get back to you.
                 </p>
               </div>
 
-              <form className="space-y-6 md:space-y-7 lg:w-[65%]">
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
-                  <div className="relative group">
-                    <input
-                      type="text"
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="space-y-7 md:space-y-8 lg:w-[75%]"
+              >
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+                  <FloatingField
+                    id="fullName"
+                    label="Full Name*"
+                    error={errors.fullName?.message}
+                  >
+                    <Input
+                      {...register("fullName")}
                       id="fullName"
-                      className="peer w-full border-b border-white/20 bg-transparent py-2.5 text-sm text-white transition-colors placeholder-transparent focus:border-[#ffffff] focus:outline-none"
-                      placeholder="Full Name*"
+                      type="text"
+                      placeholder=" "
+                      aria-invalid={!!errors.fullName}
+                      className={contactFieldClassName}
                     />
-                    <label
-                      htmlFor="fullName"
-                      className="absolute left-0 top-2.5 cursor-text text-sm text-zinc-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500"
-                    >
-                      Full Name*
-                    </label>
-                  </div>
-                  <div className="relative group">
-                    <input
-                      type="email"
+                  </FloatingField>
+
+                  <FloatingField
+                    id="email"
+                    label="Email*"
+                    error={errors.email?.message}
+                  >
+                    <Input
+                      {...register("email")}
                       id="email"
-                      className="peer w-full border-b border-white/20 bg-transparent py-2.5 text-sm text-white transition-colors placeholder-transparent focus:border-[#ffffff] focus:outline-none"
-                      placeholder="Email*"
+                      type="email"
+                      placeholder=" "
+                      autoComplete="email"
+                      aria-invalid={!!errors.email}
+                      className={contactFieldClassName}
+                    />
+                  </FloatingField>
+
+                  <div className="relative">
+                    <Controller
+                      name="phone"
+                      control={control}
+                      render={({ field }) => (
+                        <PhoneInput
+                          {...field}
+                          id="phone"
+                          placeholder=" "
+                          defaultCountry="OM"
+                          className="peer flex h-12 w-full items-end border-0 border-b border-white/15 bg-transparent px-0 pb-2 pt-5 text-sm text-white transition-colors focus-within:border-white [&_.PhoneInputCountry]:mr-3 [&_.PhoneInputCountryIcon]:h-4 [&_.PhoneInputCountryIcon]:w-6 [&_.PhoneInputCountryIcon--border]:border-none [&_.PhoneInputCountryIconImg]:rounded-sm [&_.PhoneInputCountryIconImg]:object-cover [&_.PhoneInputInput]:w-full [&_.PhoneInputInput]:bg-transparent [&_.PhoneInputInput]:outline-none [&_.PhoneInputInput]:placeholder:text-transparent [&_.PhoneInputCountrySelect]:bg-zinc-950 [&_.PhoneInputCountrySelect]:text-white"
+                        />
+                      )}
                     />
                     <label
-                      htmlFor="email"
-                      className="absolute left-0 top-2.5 cursor-text text-sm text-zinc-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500"
+                      htmlFor="phone"
+                      className={cn(
+                        "absolute top-3 cursor-text text-sm transition-all duration-200",
+                        "peer-focus-within:-top-4 peer-focus-within:left-0 peer-focus-within:text-[11px] peer-focus-within:text-white",
+                        phoneValue
+                          ? "-top-4 left-0 text-[11px] text-zinc-400"
+                          : "left-14 text-zinc-500",
+                      )}
                     >
-                      Email*
+                      Phone*
                     </label>
+                    {errors.phone ? (
+                      <p className="mt-2 text-xs text-red-400">
+                        {errors.phone?.message}
+                      </p>
+                    ) : null}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
-                  <div className="flex items-end gap-4 relative">
-                    <div className="flex shrink-0 items-center gap-2 border-b border-white/20 py-2.5 text-white transition-colors hover:border-white/40">
-                      <span className="text-sm font-semibold tracking-[0.28em]">
-                        OM
-                      </span>
-                      <span className="text-sm">+968</span>
-                      <svg
-                        width="10"
-                        height="6"
-                        viewBox="0 0 10 6"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="ml-1 opacity-50"
-                      >
-                        <path
-                          d="M1 1L5 5L9 1"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <div className="relative group grow">
-                      <input
-                        type="tel"
-                        id="phone"
-                        className="peer w-full border-b border-white/20 bg-transparent py-2.5 text-sm text-white transition-colors placeholder-transparent focus:border-[#ffffff] focus:outline-none"
-                        placeholder="Phone*"
-                      />
-                      <label
-                        htmlFor="phone"
-                        className="absolute left-0 top-2.5 cursor-text text-sm text-zinc-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500"
-                      >
-                        Phone*
-                      </label>
-                    </div>
-                  </div>
-                  <div className="relative group">
-                    <input
-                      type="text"
+                  <FloatingField
+                    id="company"
+                    label="Company Name"
+                    error={errors.company?.message}
+                  >
+                    <Input
+                      {...register("company")}
                       id="company"
-                      className="peer w-full border-b border-white/20 bg-transparent py-2.5 text-sm text-white transition-colors placeholder-transparent focus:border-[#ffffff] focus:outline-none"
-                      placeholder="Company Name"
+                      type="text"
+                      placeholder=" "
+                      className={contactFieldClassName}
                     />
-                    <label
-                      htmlFor="company"
-                      className="absolute left-0 top-2.5 cursor-text text-sm text-zinc-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500"
-                    >
-                      Company Name
-                    </label>
-                  </div>
-                </div>
+                  </FloatingField>
 
-                <div className="relative group">
-                  <textarea
+                  <FloatingField
                     id="remark"
-                    rows={2}
-                    className="peer w-full resize-none border-b border-white/20 bg-transparent py-2.5 text-sm text-white transition-colors placeholder-transparent focus:border-[#ffffff] focus:outline-none"
-                    placeholder="Remark"
-                  />
-                  <label
-                    htmlFor="remark"
-                    className="absolute left-0 top-2.5 cursor-text text-sm text-zinc-500 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#ffffff] peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-zinc-500"
+                    label="Remark"
+                    error={errors.remark?.message}
                   >
-                    Remark
-                  </label>
+                    <Textarea
+                      {...register("remark")}
+                      id="remark"
+                      rows={1}
+                      placeholder=" "
+                      className={cn(
+                        contactFieldClassName,
+                        "min-h-[52px] resize-none pt-5",
+                      )}
+                    />
+                  </FloatingField>
                 </div>
 
-                <div className="pt-1 text-left">
-                  <div className="flex flex-wrap gap-x-5 gap-y-3">
-                    {[
-                      "End Client",
-                      "Agency",
-                      "Event Company",
-                      "Fabricator",
-                      "AV Company",
-                      "Other",
-                    ].map((cat) => (
-                      <label
-                        key={cat}
-                        className="group flex cursor-pointer items-center gap-2.5"
-                      >
-                        <input
-                          type="radio"
-                          name="business_type"
-                          className="peer sr-only"
-                          defaultChecked={cat === "End Client"}
-                        />
-                        <div className="flex h-4 w-4 items-center justify-center rounded-full border border-white/30 transition-colors group-hover:border-white/60 peer-checked:border-[#ffffff]">
-                          <div className="h-2 w-2 rounded-full bg-[#ffffff] opacity-0 transition-opacity peer-checked:opacity-100" />
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr,1.4fr]">
+                  <fieldset className="space-y-4">
+                    <legend className="text-xs font-medium uppercase tracking-[0.28em] text-zinc-500">
+                      I am an...
+                    </legend>
+                    <Controller
+                      name="businessType"
+                      control={control}
+                      render={({ field }) => (
+                        <div className="flex flex-wrap gap-2.5">
+                          {businessTypeOptions.map((option) => {
+                            const isActive = field.value === option;
+
+                            return (
+                              <Button
+                                key={option}
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                aria-pressed={isActive}
+                                onClick={() => field.onChange(option)}
+                                className={cn(
+                                  "h-10 rounded-full border px-4 text-[13px] font-normal tracking-normal",
+                                  isActive
+                                    ? "border-white bg-white text-black hover:bg-zinc-100"
+                                    : "border-white/10 bg-white/[0.03] text-zinc-300 hover:border-white/30 hover:bg-white/[0.08] hover:text-white",
+                                )}
+                              >
+                                {option}
+                              </Button>
+                            );
+                          })}
                         </div>
-                        <span className="text-sm font-light text-zinc-400 transition-colors group-hover:text-zinc-200 peer-checked:text-white">
-                          {cat}
-                        </span>
+                      )}
+                    />
+                  </fieldset>
+
+                  <div className="flex flex-col justify-end">
+                    <div className="mb-3 flex items-center justify-between">
+                      <label className="text-xs font-medium uppercase tracking-[0.28em] text-zinc-500">
+                        Budget
                       </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-2 text-left md:max-w-3xl">
-                  <div className="mb-2 flex items-center justify-between">
-                    <label className="text-xs font-medium uppercase tracking-widest text-zinc-500">
-                      Budget
-                    </label>
-                    <span className="text-sm font-medium text-white">
-                      {budgetLabel}
-                    </span>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={() => setBudget(budgetMin)}
-                        className="h-2.5 w-2.5 shrink-0 rounded-full bg-white/45 transition-colors hover:bg-white"
-                        aria-label="Set budget to minimum"
-                      />
-                      <Slider
-                        aria-label="Budget"
-                        min={budgetMin}
-                        max={budgetMax}
-                        step={25}
-                        value={budget}
-                        onValueChange={(value) =>
-                          setBudget(Array.isArray(value) ? value[0] : value)
-                        }
-                        className="flex-1"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setBudget(budgetMax)}
-                        className="h-2.5 w-2.5 shrink-0 rounded-full bg-white/45 transition-colors hover:bg-white"
-                        aria-label="Set budget to maximum"
-                      />
-                    </div>
-                    <div className="mt-1 flex justify-between text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-                      <span className="inline-flex items-center gap-2">
-                        <span className="h-1 w-1 rounded-full bg-white/60" />
-                        OMR 0
-                      </span>
-                      <span className="inline-flex items-center gap-2">
-                        OMR 1M+
-                        <span className="h-1 w-1 rounded-full bg-white/60" />
+                      <span className="text-sm font-medium text-white">
+                        {budgetLabel}
                       </span>
                     </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-start justify-between gap-6 pt-4 md:flex-row md:items-center">
-                  <label className="group flex cursor-pointer items-start gap-3">
-                    <input type="checkbox" className="peer sr-only" />
-                    <div className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/30 transition-colors group-hover:border-white/60 peer-checked:border-[#ffffff] peer-checked:bg-[#ffffff] md:mt-0 md:h-5 md:w-5">
-                      <svg
-                        width="12"
-                        height="10"
-                        viewBox="0 0 12 10"
-                        fill="none"
-                        className="scale-75 text-white opacity-0 transition-opacity peer-checked:opacity-100 md:scale-100"
-                      >
-                        <path
-                          d="M1 5L4.5 8.5L11 1.5"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setValue("budget", budgetMin, {
+                              shouldDirty: true,
+                              shouldTouch: true,
+                            })
+                          }
+                          className="h-2.5 w-2.5 shrink-0 rounded-full bg-white/35 transition-colors hover:bg-white"
+                          aria-label="Set budget to minimum"
                         />
-                      </svg>
+                        <div className="flex-1 px-1">
+                          <Controller
+                            name="budget"
+                            control={control}
+                            render={({ field }) => (
+                              <Slider
+                                aria-label="Budget"
+                                min={budgetMin}
+                                max={budgetMax}
+                                step={25}
+                                value={field.value}
+                                onValueChange={(value) =>
+                                  field.onChange(
+                                    Array.isArray(value) ? value[0] : value,
+                                  )
+                                }
+                                className="w-full"
+                              />
+                            )}
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setValue("budget", budgetMax, {
+                              shouldDirty: true,
+                              shouldTouch: true,
+                            })
+                          }
+                          className="h-2.5 w-2.5 shrink-0 rounded-full bg-white/35 transition-colors hover:bg-white"
+                          aria-label="Set budget to maximum"
+                        />
+                      </div>
+                      <div className="mt-1 flex justify-between text-[11px] uppercase tracking-[0.18em] text-zinc-500">
+                        <span className="inline-flex items-center gap-2">
+                          <span className="h-1 w-1 rounded-full bg-white/60" />
+                          OMR 0
+                        </span>
+                        <span className="inline-flex items-center gap-2">
+                          OMR 1M+
+                          <span className="h-1 w-1 rounded-full bg-white/60" />
+                        </span>
+                      </div>
                     </div>
-                    <span className="max-w-xs text-[13px] font-light leading-snug text-zinc-400 transition-colors group-hover:text-zinc-300">
-                      I have read the Terms and Condition & Privacy Notice
-                      agreement
-                    </span>
-                  </label>
+                  </div>
+                </div>
 
-                  <button
-                    type="button"
-                    className="w-full rounded-sm bg-white px-8 py-3 text-xs font-semibold uppercase tracking-[0.15em] text-black transition-all duration-300 hover:scale-[1.02] hover:bg-zinc-200 md:w-auto md:px-12 md:py-3.5 md:text-sm"
+                <div className="flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-6 md:flex-row md:items-center">
+                  <div className="space-y-2">
+                    <Controller
+                      name="terms"
+                      control={control}
+                      render={({ field }) => (
+                        <label
+                          htmlFor="terms"
+                          className="group flex cursor-pointer items-start gap-3"
+                        >
+                          <Checkbox
+                            id="terms"
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            aria-invalid={!!errors.terms}
+                            className="mt-0.5"
+                          />
+                          <span className="max-w-xl text-[13px] font-light leading-snug text-zinc-400 transition-colors group-hover:text-zinc-300">
+                            I have read the Terms and Condition & Privacy Notice
+                            agreement
+                          </span>
+                        </label>
+                      )}
+                    />
+                    {errors.terms ? (
+                      <p className="text-xs text-red-400">
+                        {errors.terms.message}
+                      </p>
+                    ) : null}
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="h-auto w-full rounded-sm border-0 bg-white px-8 py-3 text-xs font-semibold uppercase tracking-[0.15em] text-black transition-all duration-300 hover:scale-[1.02] hover:bg-zinc-200 disabled:opacity-60 md:w-auto md:px-12 md:py-3.5 md:text-sm"
                   >
-                    Submit
-                  </button>
+                    {isSubmitting ? "Sending..." : "Submit"}
+                  </Button>
                 </div>
               </form>
             </div>
