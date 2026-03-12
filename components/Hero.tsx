@@ -7,7 +7,7 @@ export function Hero() {
     <section className="container mx-auto px-4 pt-8 md:pt-12 pb-10">
       <div className="flex flex-col items-start mb-4 md:mb-8">
         <h1 className="tracking-tight leading-[1.05] font-sans">
-          <span className="font-bold -tracking-tight text-[3rem] sm:text-[4rem] md:text-[4.8rem] text-gray-900 block mb-3 md:mb-4">
+          <span className="font-bold tracking-tight text-[3rem] sm:text-[4rem] md:text-[4.8rem] text-gray-900 block mb-3 md:mb-4">
             TALENTZ
           </span>
 
