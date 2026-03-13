@@ -49,7 +49,7 @@ export function Navbar() {
 
   const eventsLinks = [
     { label: "Overview", href: "/event-production" },
-    { label: "Equipment & Capabilities", href: "/event-production#equipment" },
+    { label: "Our Expertise", href: "/event-production#equipment" },
     { label: "Recent Projects", href: "/event-production#portfolio" },
     { label: "Impact & Numbers", href: "/event-production#impact" },
     { label: "Social Feed", href: "/event-production#social" },

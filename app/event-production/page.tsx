@@ -26,7 +26,6 @@ import ScrollingBento from "@/components/ScrollingBento";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -60,7 +59,6 @@ const formSchema = z.object({
   company: z.string().optional(),
   remark: z.string().optional(),
   businessType: z.enum(businessTypeOptions),
-  budget: z.number().min(0).max(1000),
   terms: z.boolean().refine((val) => val === true, "You must accept the terms"),
 });
 
@@ -106,8 +104,6 @@ const instagramPosts = instagramPostImages.map((src, index) => ({
 }));
 
 const instagramCardCount = instagramPosts.length + 1;
-const budgetMin = 0;
-const budgetMax = 1000;
 
 const announcements = [
   {
@@ -223,7 +219,6 @@ export default function EventProductionPage() {
     handleSubmit,
     control,
     watch,
-    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -234,12 +229,10 @@ export default function EventProductionPage() {
       company: "",
       remark: "",
       businessType: "End Client",
-      budget: 500,
       terms: false,
     },
   });
 
-  const budget = watch("budget");
   const phoneValue = watch("phone");
 
   const onSubmit = async (data: FormValues) => {
@@ -322,8 +315,6 @@ export default function EventProductionPage() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const budgetLabel = `OMR ${budget >= budgetMax ? "1M+" : `${budget}K`}`;
 
   const initPlayer = useCallback(() => {
     if (!window.YT || !window.YT.Player) return;
@@ -438,9 +429,8 @@ export default function EventProductionPage() {
         <div className="fixed top-0 left-0 w-full h-dvh z-[-1] pointer-events-none overflow-hidden bg-black">
           {/* Fallback Image while video is loading */}
           <div
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              isVideoLoaded ? "opacity-0" : "opacity-100"
-            }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ${isVideoLoaded ? "opacity-0" : "opacity-100"
+              }`}
           >
             <Image
               src="/events-hero.png"
@@ -455,9 +445,8 @@ export default function EventProductionPage() {
           {/* YouTube Player Container */}
           <div
             ref={containerRef}
-            className={`absolute top-1/2 left-1/2 w-[max(100vw,177.77vh)] h-[max(56.25vw,100vh)] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-1000 flex items-center justify-center ${
-              isVideoLoaded ? "opacity-100" : "opacity-0"
-            }`}
+            className={`absolute top-1/2 left-1/2 w-[max(100vw,177.77vh)] h-[max(56.25vw,100vh)] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-1000 flex items-center justify-center ${isVideoLoaded ? "opacity-100" : "opacity-0"
+              }`}
           >
             <div
               id="yt-player"
@@ -480,8 +469,9 @@ export default function EventProductionPage() {
               <span className="flex items-center gap-4">Event Production </span>
             </h1>
             <p className="text-lg text-white/80 font-normal tracking-wide mb-10 leading-relaxed max-w-md">
-              Unlock a world of possibilities with Talentz, the ultimate
-              destination for world-class high-quality events in Oman & GCC.
+              Unlock a world of possibilities with Talentz — delivering
+              world-class audio-visual solutions and unforgettable event
+              experiences across Oman and the GCC.
             </p>
             <div className="flex flex-row items-center gap-6 sm:gap-8 mt-2 md:mt-0">
               <button className="px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-black/30 border border-white/20 hover:bg-white/10 transition-colors text-sm flex items-center gap-2 backdrop-blur-sm">
@@ -522,13 +512,19 @@ export default function EventProductionPage() {
         </div>
       </section>
 
-      {/* Section 2: Equipment / Capabilities */}
+      {/* Section 2: Our Expertise */}
       <section
         id="equipment"
         className="py-12 md:py-16 bg-zinc-950 relative overflow-hidden border-y border-white/5 z-10"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0,transparent_100%)] pointer-events-none" />
         <div className="container mx-auto px-4 relative z-10">
+          <SectionHeader
+            eyebrow="What We Do Best"
+            title="Our Expertise"
+            description="From cutting-edge technology to full-scale logistics, explore the core capabilities that power every Talentz production."
+            className="mb-10"
+          />
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 auto-rows-[160px] md:auto-rows-[280px]">
             {/* Card 1: Left tall */}
             <div className="feature-card col-span-2 md:col-span-1 md:row-span-2 bg-zinc-950 border border-white/10 p-5 md:p-6 flex flex-row md:flex-col justify-start relative group transition-colors duration-500 hover:bg-white [&.is-active]:bg-white text-white hover:text-black [&.is-active]:text-black overflow-hidden">
@@ -902,7 +898,7 @@ export default function EventProductionPage() {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {announcements.map((item, index) => (
+            {announcements.slice(0, 2).map((item, index) => (
               <Link
                 key={index}
                 href={`/announcements/${item.id}`}
@@ -954,7 +950,7 @@ export default function EventProductionPage() {
           <div className="flex flex-col md:grid md:grid-cols-3 gap-4 md:space-x-0 pt-2 pb-8">
             {/* Column 1 */}
             <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-0 snap-center shrink-0">
-              {/* Black Card */}
+              {/* Cloud 9 Testimonial (Active) */}
               <div className="bg-black border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between h-[260px]">
                 <div>
                   <div className="flex gap-1 mb-4">
@@ -985,7 +981,8 @@ export default function EventProductionPage() {
                 </div>
               </div>
 
-              {/* Zinc Card (Formerly White) */}
+              {/* Other testimonials preserved for future use */}
+              {/*
               <div className="bg-zinc-900 border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between h-[220px] shadow-sm">
                 <div>
                   <div className="flex gap-1 mb-4">
@@ -1022,11 +1019,12 @@ export default function EventProductionPage() {
                   </div>
                 </div>
               </div>
+              */}
             </div>
 
-            {/* Column 2 */}
+            {/* Column 2 (commented for now) */}
+            {/*
             <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-0 snap-center shrink-0">
-              {/* Tall Image Card */}
               <div className="relative bg-black border border-white/10 text-white p-5 md:p-7 flex flex-col justify-end h-[496px] overflow-hidden group">
                 <Image
                   src="/new/TALENTZOCEC-005.jpg"
@@ -1086,9 +1084,9 @@ export default function EventProductionPage() {
               </div>
             </div>
 
-            {/* Column 3 */}
+            {/* Column 3 (commented for now) */}
+            {/*
             <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-0 snap-center shrink-0">
-              {/* Zinc Card (Formerly White) */}
               <div className="bg-zinc-900 border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between h-[240px] shadow-sm">
                 <div>
                   <div className="flex gap-1 mb-4">
@@ -1120,7 +1118,6 @@ export default function EventProductionPage() {
                 </div>
               </div>
 
-              {/* Black Card */}
               <div className="bg-black border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between h-[240px]">
                 <div>
                   <div className="flex gap-1 mb-4">
@@ -1158,6 +1155,7 @@ export default function EventProductionPage() {
                 </div>
               </div>
             </div>
+            */}
           </div>
         </div>
       </section>
@@ -1291,7 +1289,7 @@ export default function EventProductionPage() {
                   </FloatingField>
                 </div>
 
-                <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr,1.4fr]">
+                <div className="grid grid-cols-1 gap-8">
                   <fieldset className="space-y-4">
                     <legend className="text-xs font-medium uppercase tracking-[0.28em] text-zinc-500">
                       I am an...
@@ -1327,74 +1325,6 @@ export default function EventProductionPage() {
                       )}
                     />
                   </fieldset>
-
-                  <div className="flex flex-col justify-end">
-                    <div className="mb-3 flex items-center justify-between">
-                      <label className="text-xs font-medium uppercase tracking-[0.28em] text-zinc-500">
-                        Budget
-                      </label>
-                      <span className="text-sm font-medium text-white">
-                        {budgetLabel}
-                      </span>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-3">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setValue("budget", budgetMin, {
-                              shouldDirty: true,
-                              shouldTouch: true,
-                            })
-                          }
-                          className="h-2.5 w-2.5 shrink-0 rounded-full bg-white/35 transition-colors hover:bg-white"
-                          aria-label="Set budget to minimum"
-                        />
-                        <div className="flex-1 px-1">
-                          <Controller
-                            name="budget"
-                            control={control}
-                            render={({ field }) => (
-                              <Slider
-                                aria-label="Budget"
-                                min={budgetMin}
-                                max={budgetMax}
-                                step={25}
-                                value={field.value}
-                                onValueChange={(value) =>
-                                  field.onChange(
-                                    Array.isArray(value) ? value[0] : value,
-                                  )
-                                }
-                                className="w-full"
-                              />
-                            )}
-                          />
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setValue("budget", budgetMax, {
-                              shouldDirty: true,
-                              shouldTouch: true,
-                            })
-                          }
-                          className="h-2.5 w-2.5 shrink-0 rounded-full bg-white/35 transition-colors hover:bg-white"
-                          aria-label="Set budget to maximum"
-                        />
-                      </div>
-                      <div className="mt-1 flex justify-between text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-                        <span className="inline-flex items-center gap-2">
-                          <span className="h-1 w-1 rounded-full bg-white/60" />
-                          OMR 0
-                        </span>
-                        <span className="inline-flex items-center gap-2">
-                          OMR 1M+
-                          <span className="h-1 w-1 rounded-full bg-white/60" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 <div className="flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-6 md:flex-row md:items-center">
