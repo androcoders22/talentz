@@ -104,6 +104,11 @@ export function Navbar() {
                                 } else {
                                   setCurrentHash("");
                                 }
+                                document.dispatchEvent(
+                                  new KeyboardEvent("keydown", {
+                                    key: "Escape",
+                                  }),
+                                );
                               }}
                             />
                           }
@@ -135,6 +140,11 @@ export function Navbar() {
                                 } else {
                                   setCurrentHash("");
                                 }
+                                document.dispatchEvent(
+                                  new KeyboardEvent("keydown", {
+                                    key: "Escape",
+                                  }),
+                                );
                               }}
                             />
                           }
@@ -211,7 +221,14 @@ export function Navbar() {
                     <Link
                       key={link.label}
                       href={link.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        if (link.href.includes("#")) {
+                          setCurrentHash("#" + link.href.split("#")[1]);
+                        } else {
+                          setCurrentHash("");
+                        }
+                      }}
                       className={`px-6 py-2.5 rounded-2xl text-[15px] font-medium transition-all ${
                         isLinkActive(link.href)
                           ? "bg-white text-black font-bold"
@@ -229,7 +246,14 @@ export function Navbar() {
                     <Link
                       key={link.label}
                       href={link.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        if (link.href.includes("#")) {
+                          setCurrentHash("#" + link.href.split("#")[1]);
+                        } else {
+                          setCurrentHash("");
+                        }
+                      }}
                       className={`px-6 py-2.5 rounded-2xl text-[15px] font-medium transition-all ${
                         isLinkActive(link.href)
                           ? "bg-white text-black font-bold"
