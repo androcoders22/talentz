@@ -6,7 +6,6 @@ import {
   IconChevronLeft,
   IconBrandInstagram,
   IconBrandLinkedin,
-  IconBrandTwitter,
   IconMapPin,
   IconPhone,
   IconBrandWhatsapp,
@@ -16,8 +15,7 @@ import {
   IconBrandYoutube,
 } from "@tabler/icons-react";
 import ClientScrollSpy from "./client-scroll-spy";
-
-import { Footer } from "@/components/Footer";
+import { ShareButton } from "./share-button";
 
 export default async function AnnouncementPage({
   params,
@@ -46,7 +44,7 @@ export default async function AnnouncementPage({
 
         <div className="relative z-10 container mx-auto px-4 md:px-8 pt-8 md:pt-12 lg:pt-16">
           {/* Back Button */}
-          <Link href="/event-production#announcements">
+          <Link href="/event-production#blog">
             <Button
               variant="ghost"
               className="text-neutral-400 hover:text-white hover:bg-white/10 md:-ml-4 "
@@ -97,20 +95,38 @@ export default async function AnnouncementPage({
                   <div className="text-white font-semibold mb-6 border-l-2 border-purple-500 pl-4">
                     Table of Contents
                   </div>
-                  <ul className="space-y-4 text-sm font-medium text-neutral-400 pl-4 border-l-2 border-white/10" id="toc-list">
-                    <li className="hover:text-white cursor-pointer transition-colors" data-target="a-new-era">
+                  <ul
+                    className="space-y-4 text-sm font-medium text-neutral-400 pl-4 border-l-2 border-white/10"
+                    id="toc-list"
+                  >
+                    <li
+                      className="hover:text-white cursor-pointer transition-colors"
+                      data-target="a-new-era"
+                    >
                       A New Era of Event Production
                     </li>
-                    <li className="hover:text-white cursor-pointer transition-colors" data-target="upgraded-inventory">
+                    <li
+                      className="hover:text-white cursor-pointer transition-colors"
+                      data-target="upgraded-inventory"
+                    >
                       Upgraded Inventory
                     </li>
-                    <li className="hover:text-white cursor-pointer transition-colors" data-target="streamlined-processes">
+                    <li
+                      className="hover:text-white cursor-pointer transition-colors"
+                      data-target="streamlined-processes"
+                    >
                       Streamlined Processes
                     </li>
-                    <li className="hover:text-white cursor-pointer transition-colors" data-target="looking-ahead">
+                    <li
+                      className="hover:text-white cursor-pointer transition-colors"
+                      data-target="looking-ahead"
+                    >
                       Looking Ahead
                     </li>
-                    <li className="hover:text-white cursor-pointer transition-colors" data-target="our-commitment">
+                    <li
+                      className="hover:text-white cursor-pointer transition-colors"
+                      data-target="our-commitment"
+                    >
                       Our Commitment
                     </li>
                   </ul>
@@ -121,17 +137,7 @@ export default async function AnnouncementPage({
                   <h3 className="text-sm font-semibold text-white mb-4">
                     Share Article
                   </h3>
-                  <div className="flex gap-3">
-                    <button className="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-500 flex items-center justify-center text-white hover:opacity-90 transition-opacity">
-                      <IconBrandInstagram className="w-5 h-5" />
-                    </button>
-                    <button className="w-10 h-10 rounded-full bg-[#0077b5] flex items-center justify-center text-white hover:opacity-90 transition-opacity">
-                      <IconBrandLinkedin className="w-5 h-5" />
-                    </button>
-                    <button className="w-10 h-10 rounded-full bg-black border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors">
-                      <IconBrandTwitter className="w-5 h-5" />
-                    </button>
-                  </div>
+                  <ShareButton />
                 </div>
               </div>
             </div>
@@ -139,7 +145,10 @@ export default async function AnnouncementPage({
             {/* Main Content */}
             <div className="lg:col-span-9 order-1 lg:order-2 w-full">
               <div className="prose md:prose-lg prose-invert max-w-none text-neutral-300 leading-relaxed space-y-6 md:space-y-8">
-                <h2 id="a-new-era" className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-4 md:mb-6 scroll-m-24">
+                <h2
+                  id="a-new-era"
+                  className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-4 md:mb-6 scroll-m-24"
+                >
                   A New Era of Event Production
                 </h2>
                 <p>
@@ -147,22 +156,28 @@ export default async function AnnouncementPage({
                   months, our team has been working tirelessly to bring you a
                   suite of new tools and enhancements designed to elevate your
                   experience. Whether you are an event producer, institute
-                  partner, or looking for our specialized services, these updates
-                  are tailored to meet your evolving needs.
+                  partner, or looking for our specialized services, these
+                  updates are tailored to meet your evolving needs.
                 </p>
 
-                <h2 id="upgraded-inventory" className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mt-8 md:mt-12 mb-4 md:mb-6 scroll-m-24">
+                <h2
+                  id="upgraded-inventory"
+                  className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mt-8 md:mt-12 mb-4 md:mb-6 scroll-m-24"
+                >
                   Upgraded Inventory
                 </h2>
                 <p>
-                  One of our biggest areas of focus has been our Event Production
-                  capabilities. We have upgraded our inventory with
-                  state-of-the-art equipment, including the latest mixing consoles
-                  and lighting arrays. Our goal is to ensure that every event we
-                  touch is nothing short of spectacular.
+                  One of our biggest areas of focus has been our Event
+                  Production capabilities. We have upgraded our inventory with
+                  state-of-the-art equipment, including the latest mixing
+                  consoles and lighting arrays. Our goal is to ensure that every
+                  event we touch is nothing short of spectacular.
                 </p>
 
-                <h2 id="streamlined-processes" className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mt-8 md:mt-12 mb-4 md:mb-6 scroll-m-24">
+                <h2
+                  id="streamlined-processes"
+                  className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mt-8 md:mt-12 mb-4 md:mb-6 scroll-m-24"
+                >
                   Streamlined Processes
                 </h2>
                 <p>
@@ -178,41 +193,48 @@ export default async function AnnouncementPage({
                   <li>Streamlined project management workflows</li>
                 </ul>
 
-                <h2 id="looking-ahead" className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mt-8 md:mt-12 mb-4 md:mb-6 scroll-m-24">
+                <h2
+                  id="looking-ahead"
+                  className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mt-8 md:mt-12 mb-4 md:mb-6 scroll-m-24"
+                >
                   Looking Ahead
                 </h2>
                 <p>
                   This is just the beginning. We have a robust roadmap for the
                   upcoming year, packed with innovative solutions that will
                   continue to empower our clients. We invite you to explore the
-                  new features and share your feedback with us. Your insights are
-                  invaluable as we continue to grow and improve.
+                  new features and share your feedback with us. Your insights
+                  are invaluable as we continue to grow and improve.
                 </p>
 
-                <h2 id="our-commitment" className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mt-8 md:mt-12 mb-4 md:mb-6 scroll-m-24">
+                <h2
+                  id="our-commitment"
+                  className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mt-8 md:mt-12 mb-4 md:mb-6 scroll-m-24"
+                >
                   Our Commitment
                 </h2>
                 <p>
                   At Talentz, our core philosophy revolves around exceeding
                   expectations. With these new updates, we are taking a
-                  significant leap forward in how we deliver value to our partners
-                  and clients. From the smallest intimate gatherings to massive
-                  arena-scale productions, our commitment remains unchanged:
-                  flawless execution, unparalleled creativity, and a seamless
-                  experience from start to finish.
+                  significant leap forward in how we deliver value to our
+                  partners and clients. From the smallest intimate gatherings to
+                  massive arena-scale productions, our commitment remains
+                  unchanged: flawless execution, unparalleled creativity, and a
+                  seamless experience from start to finish.
                 </p>
 
                 <blockquote className="border-l-4 border-blue-500 pl-4 sm:pl-6 py-3 sm:py-4 my-6 sm:my-8 italic text-lg sm:text-xl text-neutral-400 bg-white/5 rounded-r-lg">
-                  "The evolution of Talentz is driven by our passion for creating
-                  unforgettable moments. These updates are a testament to our
-                  ongoing dedication to the art of event production."
+                  "The evolution of Talentz is driven by our passion for
+                  creating unforgettable moments. These updates are a testament
+                  to our ongoing dedication to the art of event production."
                 </blockquote>
 
                 <p>
-                  We have also expanded our team with industry-leading experts in
-                  sound engineering, lighting design, and stage management. Their
-                  combined experience brings a new dimension to our capabilities,
-                  allowing us to tackle even more complex and ambitious projects.
+                  We have also expanded our team with industry-leading experts
+                  in sound engineering, lighting design, and stage management.
+                  Their combined experience brings a new dimension to our
+                  capabilities, allowing us to tackle even more complex and
+                  ambitious projects.
                 </p>
 
                 <p>
@@ -220,6 +242,57 @@ export default async function AnnouncementPage({
                   for more updates, and as always, feel free to reach out to our
                   support team if you have any questions or need assistance.
                 </p>
+
+                {/* Author Section */}
+                <div className="mt-8 md:mt-10 flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-6 bg-white/5 p-5 sm:p-6 rounded-2xl border border-white/5">
+                  <div className="relative w-25 h-25 shrink-0 rounded-full overflow-hidden border border-white/10 sm:mt-1">
+                    <Image
+                      src="/new/TALENTZ-03.jpg"
+                      alt="Author"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col flex-1 w-full text-center sm:text-left">
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
+                      <div>
+                        <h3 className="text-lg font-bold text-white">
+                          Lorem Ipsum
+                        </h3>
+                        <p className="text-neutral-400 text-sm font-medium">
+                          Lead Event Producer
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-center sm:justify-end gap-2 text-neutral-400">
+                        <Link
+                          href="#"
+                          className="p-1.5 rounded-full bg-white/5 hover:bg-white/10 hover:text-white transition-colors"
+                        >
+                          <IconBrandLinkedin className="w-4 h-4" />
+                        </Link>
+                        <Link
+                          href="#"
+                          className="p-1.5 rounded-full bg-white/5 hover:bg-white/10 hover:text-white transition-colors"
+                        >
+                          <IconBrandInstagram className="w-4 h-4" />
+                        </Link>
+                        <Link
+                          href="#"
+                          className="p-1.5 rounded-full bg-white/5 hover:bg-white/10 hover:text-white transition-colors"
+                        >
+                          <IconBrandFacebook className="w-4 h-4" />
+                        </Link>
+                      </div>
+                    </div>
+                    <p className="text-neutral-300 text-sm leading-relaxed">
+                      With over 15 years of experience in event production,
+                      Lorem has orchestrated some of the largest scale events in
+                      the region. Specializing in immersive audio-visual
+                      experiences and stage design, their passion lies in
+                      creating unforgettable moments.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -343,4 +416,3 @@ export default async function AnnouncementPage({
     </>
   );
 }
-

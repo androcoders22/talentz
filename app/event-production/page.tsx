@@ -105,41 +105,13 @@ const instagramPosts = instagramPostImages.map((src, index) => ({
 
 const instagramCardCount = instagramPosts.length + 1;
 
-const announcements = [
+const blog = [
   {
     id: "warehouse-restock",
     title: "Warehouse Restock: Popular Models Back in Inventory",
     image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
     description:
       "Our latest shipment has arrived and several high-demand models are now back in stock. This restock includes some of the most requested items from the past few months. Availability may be limited, so customers are encouraged to place orders early while inventory lasts.",
-  },
-  {
-    id: "driving-demand",
-    title: "What’s Driving Demand This Season",
-    image: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a",
-    description:
-      "Market demand continues to shift as customers prioritize durability, design, and efficiency. In this article, we explore the key factors influencing buying decisions and how these trends shape the products we keep in inventory.",
-  },
-  {
-    id: "supply-chain",
-    title: "Behind the Scenes: How Our Supply Chain Works",
-    image: "https://images.unsplash.com/photo-1601597111158-2fceff292cdc",
-    description:
-      "From sourcing to delivery, our supply chain is built for reliability. Take a closer look at how we coordinate logistics, manage inventory, and ensure consistent product availability for our customers.",
-  },
-  {
-    id: "new-arrivals",
-    title: "New Arrivals: Expanding Our Product Line",
-    image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7",
-    description:
-      "We’re introducing several new additions to our catalog. These products have been selected based on customer feedback and current market demand, offering improved performance and modern design.",
-  },
-  {
-    id: "quality-first",
-    title: "Quality First: Our Product Selection Process",
-    image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952",
-    description:
-      "Every product we offer goes through a careful selection process. From evaluating build quality to ensuring long-term reliability, our goal is to provide products that meet high standards and customer expectations.",
   },
 ];
 
@@ -429,8 +401,9 @@ export default function EventProductionPage() {
         <div className="fixed top-0 left-0 w-full h-dvh z-[-1] pointer-events-none overflow-hidden bg-black">
           {/* Fallback Image while video is loading */}
           <div
-            className={`absolute inset-0 transition-opacity duration-1000 ${isVideoLoaded ? "opacity-0" : "opacity-100"
-              }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              isVideoLoaded ? "opacity-0" : "opacity-100"
+            }`}
           >
             <Image
               src="/events-hero.png"
@@ -445,8 +418,9 @@ export default function EventProductionPage() {
           {/* YouTube Player Container */}
           <div
             ref={containerRef}
-            className={`absolute top-1/2 left-1/2 w-[max(100vw,177.77vh)] h-[max(56.25vw,100vh)] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-1000 flex items-center justify-center ${isVideoLoaded ? "opacity-100" : "opacity-0"
-              }`}
+            className={`absolute top-1/2 left-1/2 w-[max(100vw,177.77vh)] h-[max(56.25vw,100vh)] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-1000 flex items-center justify-center ${
+              isVideoLoaded ? "opacity-100" : "opacity-0"
+            }`}
           >
             <div
               id="yt-player"
@@ -526,12 +500,12 @@ export default function EventProductionPage() {
             className="mb-10"
           />
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 auto-rows-[160px] md:auto-rows-[280px]">
-            {/* Card 1: Left tall */}
+            {/* Card 1: Event Technology (Tall) */}
             <div className="feature-card col-span-2 md:col-span-1 md:row-span-2 bg-zinc-950 border border-white/10 p-5 md:p-6 flex flex-row md:flex-col justify-start relative group transition-colors duration-500 hover:bg-white [&.is-active]:bg-white text-white hover:text-black [&.is-active]:text-black overflow-hidden">
               <div className="absolute inset-y-0 left-0 w-[65%] bg-linear-to-r from-zinc-950 via-zinc-950/95 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/95 group-[.is-active]:via-white/95 transition-colors duration-500 z-1 md:hidden" />
               <div className="space-y-1 md:space-y-3 mb-4 md:mb-6 text-left w-[50%] pr-2 md:pr-0 md:w-full z-10 relative">
                 <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
-                  Technology
+                  Event <br /> Technology
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 font-light text-[11px] leading-tight md:text-sm transition-colors duration-500">
                   Continuous investment in the largest and most cutting-edge AV
@@ -541,7 +515,7 @@ export default function EventProductionPage() {
               <div className="w-1/2 md:w-full h-[120%] md:h-[55%] absolute right-0 top-1/2 -translate-y-1/2 md:translate-y-0 md:top-auto md:bottom-0 md:left-0 z-0">
                 <Image
                   src="/new/6L8A2615.jpg"
-                  alt="Inventory"
+                  alt="Event Technology"
                   width={600}
                   height={800}
                   className="h-full w-full object-cover object-center grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
@@ -549,25 +523,25 @@ export default function EventProductionPage() {
               </div>
             </div>
 
-            {/* Card 2: Top Right wide */}
+            {/* Card 2: Professional Audio Systems (Wide) */}
             <div className="feature-card col-span-2 md:col-span-2 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-5 md:p-6 flex flex-col justify-center relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden">
               <div className="absolute inset-y-0 left-0 w-[70%] bg-linear-to-r from-zinc-950 via-zinc-950/95 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/95 group-[.is-active]:via-white/95 transition-colors duration-500 z-1 md:hidden" />
               <div className="space-y-1 md:space-y-3 w-[55%] md:w-auto md:max-w-xs z-10 relative">
                 <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
-                  Exhibition <br className="hidden md:block" /> Stands
+                  Professional <br className="hidden md:block" /> Audio Systems
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 font-light text-xs md:text-sm transition-colors duration-500 hidden md:block">
-                  From architectural lighting to glitzy fashion shows, advanced
-                  visual setups redefine audience engagement.
+                  World-class sound reinforcement solutions and live audio
+                  management for crystal clear acoustics.
                 </p>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 font-light text-[11px] md:hidden transition-colors duration-500">
-                  Advanced visual setups redefine audience engagement.
+                  World-class sound reinforcement solutions.
                 </p>
               </div>
               <div className="w-[60%] md:w-1/2 h-full absolute right-[-5%] top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
                 <Image
-                  src="/new/RED_5641.jpg"
-                  alt="Lighting"
+                  src="/new/DAS_0439.jpg"
+                  alt="Professional Audio Systems"
                   width={800}
                   height={600}
                   className="h-full w-full object-cover md:object-contain object-left md:object-right grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 md:scale-110 pointer-events-none"
@@ -575,13 +549,13 @@ export default function EventProductionPage() {
               </div>
             </div>
 
-            {/* Card 3: Bottom Left small */}
+            {/* Card 3: Kinetic Systems (Small) */}
             <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-4 md:p-6 flex flex-col items-start justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden">
               <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
               <div className="w-[45%] h-full absolute right-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
                 <Image
-                  src="/new/DSC01552.jpg"
-                  alt="Microphone"
+                  src="/new/6L8A3952.jpg"
+                  alt="Kinetic Systems"
                   fill
                   sizes="(max-width: 768px) 50vw, 33vw"
                   className="object-cover grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
@@ -589,21 +563,21 @@ export default function EventProductionPage() {
               </div>
               <div className="space-y-1 z-10 mt-auto md:mt-0 md:space-y-2 w-full relative">
                 <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
-                  Corporate <br className="hidden md:block" /> Events
+                  Kinetic <br className="hidden md:block" /> Systems
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light mt-1 transition-colors duration-500 hidden sm:block">
-                  Line arrays & pro sound.
+                  Automated motion control.
                 </p>
               </div>
             </div>
 
-            {/* Card 4: Flipped Layout */}
+            {/* Card 4: Lighting Systems (Small) */}
             <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-start items-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
               <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
               <div className="w-[45%] h-full absolute left-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
                 <Image
-                  src="/new/TALENTZOCEC-040.jpg"
-                  alt="Trussing"
+                  src="/new/RED_5641.jpg"
+                  alt="Lighting Systems"
                   fill
                   sizes="(max-width: 768px) 50vw, 33vw"
                   className="object-cover grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
@@ -611,32 +585,30 @@ export default function EventProductionPage() {
               </div>
               <div className="space-y-1 md:space-y-2 relative z-10 text-right">
                 <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide text-balance">
-                  Tents, <br />
-                  Barriers, etc
+                  Lighting <br /> Systems
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light transition-colors duration-500">
-                  Trusses, staging{" "}
-                  <span className="hidden sm:inline">& barriers</span>
+                  Atmospheric visual design.
                 </p>
               </div>
             </div>
 
-            {/* Card 5: LED Screens (Wide) */}
+            {/* Card 5: LED Video & Display Systems (Wide) */}
             <div className="feature-card col-span-2 md:col-span-2 md:row-span-1 bg-zinc-950 border border-white/10 p-5 md:p-6 flex flex-col justify-center relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
               <div className="absolute inset-y-0 left-0 w-[70%] bg-linear-to-r from-zinc-950 via-zinc-950/95 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/95 group-[.is-active]:via-white/95 transition-colors duration-500 z-1 md:hidden" />
               <div className="space-y-1 md:space-y-3 w-[55%] md:w-auto md:max-w-xs z-10 relative">
                 <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
-                  LED Screens
+                  LED Video & <br className="hidden md:block" /> Display Systems
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 font-light text-xs md:text-sm transition-colors duration-500 hidden md:block">
                   High-definition indoor & outdoor LED video walls for crystal
-                  clear visual communication.
+                  clear immersive visual communication.
                 </p>
               </div>
               <div className="w-[60%] md:w-1/2 h-full absolute right-[-5%] top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
                 <Image
                   src="/new/6L8A4415.jpg"
-                  alt="LED Screen"
+                  alt="LED Video & Display Systems"
                   width={800}
                   height={600}
                   className="h-full w-full object-cover md:object-contain object-left md:object-right grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 md:scale-110 pointer-events-none"
@@ -644,13 +616,13 @@ export default function EventProductionPage() {
               </div>
             </div>
 
-            {/* Card 6: Lighting Design */}
+            {/* Card 6: Staging & Structural Systems (Small) */}
             <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
               <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
               <div className="w-[45%] h-full absolute right-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
                 <Image
-                  src="/new/6L8A3952.jpg"
-                  alt="Lighting"
+                  src="/new/TALENTZOCEC-040.jpg"
+                  alt="Staging & Structural Systems"
                   fill
                   sizes="(max-width: 768px) 50vw, 33vw"
                   className="object-cover grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
@@ -658,77 +630,10 @@ export default function EventProductionPage() {
               </div>
               <div className="space-y-1 md:space-y-2 relative z-10 mt-auto text-left">
                 <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide text-balance">
-                  Lighting <br className="hidden md:block" /> Design
+                  Staging <br className="hidden md:block" /> Systems
                 </h3>
                 <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light transition-colors duration-500">
-                  Atmospheric lighting & visuals.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 7: Flipped Layout */}
-            <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-start items-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
-              <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
-              <div className="w-[45%] h-full absolute left-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
-                <Image
-                  src="/new/DAS_0439.jpg"
-                  alt="Sound Solutions"
-                  loading="eager"
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
-                />
-              </div>
-              <div className="space-y-1 md:space-y-2 relative z-10 text-right">
-                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide text-balance">
-                  Sound <br /> Solutions
-                </h3>
-                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light transition-colors duration-500">
-                  World-class pro audio systems.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 8: Staging & Decor */}
-            <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
-              <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
-              <div className="w-[45%] h-full absolute right-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
-                <Image
-                  src="/new/TALENTZOCEC-010.jpg"
-                  alt="Professional Staging"
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
-                />
-              </div>
-              <div className="space-y-1 md:space-y-2 relative z-10 mt-auto text-left">
-                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide text-balance">
-                  Professional <br className="hidden md:block" /> Staging
-                </h3>
-                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light transition-colors duration-500">
-                  Custom staging for any scale.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 9: Flipped Layout */}
-            <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-start items-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
-              <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
-              <div className="w-[45%] h-full absolute left-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
-                <Image
-                  src="/new/6L8A9208.jpg"
-                  alt="Event Logistics"
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover grayscale group-hover:grayscale-0 group-[.is-active]:grayscale-0 transition-all duration-700 pointer-events-none"
-                />
-              </div>
-              <div className="space-y-1 md:space-y-2 relative z-10 text-right">
-                <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide text-balance">
-                  Event <br className="hidden md:block" /> Logistics
-                </h3>
-                <p className="text-zinc-500 group-hover:text-zinc-600 group-[.is-active]:text-zinc-600 text-[10px] md:text-xs font-light transition-colors duration-500">
-                  End-to-end production support.
+                  Custom staging & trussing.
                 </p>
               </div>
             </div>
@@ -885,23 +790,23 @@ export default function EventProductionPage() {
         </div>
       </section>
 
-      {/* Section: Announcements */}
+      {/* Section: Blog */}
       <section
-        id="announcements"
+        id="blog"
         className="py-12 md:py-16 bg-zinc-950 border-t border-white/5 relative z-10 w-full overflow-hidden"
       >
         <div className="container mx-auto px-4">
           <SectionHeader
             eyebrow="News & Updates"
-            title="Announcements"
+            title="Blogs & Updates"
             description="Stay informed with the latest updates on our inventory, product releases, and behind-the-scenes insights."
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {announcements.slice(0, 2).map((item, index) => (
+            {blog.map((item, index) => (
               <Link
                 key={index}
-                href={`/announcements/${item.id}`}
+                href={`/blog/${item.id}`}
                 className="group relative flex flex-col justify-between bg-zinc-900/30 border border-white/5 p-1 rounded-[1.75rem] overflow-hidden transition-all duration-500 hover:bg-zinc-900/50 hover:border-white/10"
               >
                 <div className="relative aspect-video overflow-hidden rounded-[1.5rem]">
@@ -951,7 +856,7 @@ export default function EventProductionPage() {
             {/* Column 1 */}
             <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-0 snap-center shrink-0">
               {/* Cloud 9 Testimonial (Active) */}
-              <div className="bg-black border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between h-[260px]">
+              <div className="bg-black border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between">
                 <div>
                   <div className="flex gap-1 mb-4">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -965,18 +870,23 @@ export default function EventProductionPage() {
                     ))}
                   </div>
                   <p className="text-sm font-light leading-relaxed text-zinc-300">
-                    "Truly world class service. Talentz provides Light & Sound
-                    with giant LED screens that is really an eye/ear candy.
-                    Simply the best in the business!"
+                    Working with Talentz has been a truly great experience so
+                    far; they have an amazing team, a perfect environment and
+                    true professionalism. None of their team members from labor
+                    to managerial level has ever said no to any work or last
+                    minute requests and would support and stand with us together
+                    to achieve one goal that is CLIENT satisfaction. I highly
+                    recommend them for future events in Oman and wish them a
+                    great success in near future.
                   </p>
                 </div>
                 <div className="flex items-center gap-3 mt-6">
                   <div className="w-10 h-10 bg-white/10 flex items-center justify-center text-sm font-bold">
-                    C
+                    MEO
                   </div>
                   <div>
-                    <h4 className="font-medium text-sm">Cloud 9 Band Oman</h4>
-                    <p className="text-xs text-zinc-500 mt-0.5">Client</p>
+                    <h4 className="font-medium text-sm">Mosaic Events Oman</h4>
+                    <p className="text-xs text-zinc-500 mt-0.5">Yaseen Kamal</p>
                   </div>
                 </div>
               </div>
