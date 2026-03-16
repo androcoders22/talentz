@@ -244,11 +244,7 @@ export default async function AnnouncementPage({
                 </p>
 
                 {/* Author Section */}
-<<<<<<< HEAD
                 <div className="mt-8 md:mt-10 flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-6 bg-black/40 p-5 sm:p-6 rounded-2xl border border-white/5">
-=======
-                <div className="mt-8 md:mt-10 flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-6 bg-white/5 p-5 sm:p-6 rounded-2xl border border-white/5">
->>>>>>> dcbc502e3082cdfe7b91139ef224313987bfe8bc
                   <div className="relative w-25 h-25 shrink-0 rounded-full overflow-hidden border border-white/10 sm:mt-1">
                     <Image
                       src="/new/TALENTZ-03.jpg"
