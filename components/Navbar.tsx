@@ -59,9 +59,8 @@ export function Navbar() {
     { label: "Overview", href: "/event-production" },
     { label: "Our Expertise", href: "/event-production#equipment" },
     { label: "Recent Projects", href: "/event-production#portfolio" },
-    { label: "Impact & Numbers", href: "/event-production#impact" },
     { label: "Social Feed", href: "/event-production#social" },
-    { label: "Announcements", href: "/event-production#announcements" },
+    { label: "Blogs & Updates", href: "/event-production#blog" },
     { label: "Testimonials", href: "/event-production#testimonials" },
     { label: "Contact Us", href: "/event-production#contact-us" },
   ];
@@ -167,10 +166,10 @@ export function Navbar() {
 
                 <NavigationMenuItem>
                   <NavigationMenuLink
-                    render={<Link href="/event-production#announcements" />}
+                    render={<Link href="/event-production#blog" />}
                     className="bg-transparent text-white hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white h-9 px-4 py-2 rounded-lg text-sm font-medium transition-all inline-flex items-center justify-center w-max"
                   >
-                    Announcements
+                    Blog
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
@@ -307,11 +306,11 @@ export function Navbar() {
                   <div className="mt-2 h-px bg-white/10 mx-6 my-2" />
 
                   <Link
-                    href="/event-production#announcements"
+                    href="/event-production#blog"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="px-6 py-3 rounded-2xl text-base font-medium transition-all text-white hover:bg-white/5"
                   >
-                    Announcements
+                    Blog
                   </Link>
                   <Link
                     href="/###"
