@@ -72,7 +72,7 @@ export default async function AnnouncementPage({
               </Badge>
             </div>
 
-            <div className="w-full relative aspect-[4/3] sm:aspect-video md:aspect-[2.5/1 mt-6 md:mt-8 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
+            <div className="w-full relative aspect-4/3 sm:aspect-video md:aspect-[2.5/1 mt-6 md:mt-8 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
               <Image
                 src="/new/TALENTZ-03.jpg"
                 alt="Announcement Header"

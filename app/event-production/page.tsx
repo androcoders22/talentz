@@ -1224,7 +1224,7 @@ export default function EventProductionPage() {
                                   "h-10 rounded-full border px-4 text-[13px] font-normal tracking-normal",
                                   isActive
                                     ? "border-white bg-white text-black hover:bg-zinc-100"
-                                    : "border-white/10 bg-white/[0.03] text-zinc-300 hover:border-white/30 hover:bg-white/[0.08] hover:text-white",
+                                    : "border-white/10 bg-white/3 text-zinc-300 hover:border-white/30 hover:bg-white/8 hover:text-white",
                                 )}
                               >
                                 {option}
