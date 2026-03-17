@@ -263,7 +263,7 @@ export default function ScrollingBento({ speed = 1.0 }: { speed?: number }) {
 
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto gap-3 md:gap-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-stretch h-[350px] md:h-[500px]"
+          className="flex overflow-x-auto gap-3 md:gap-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-stretch h-87.5 md:h-125"
         >
           <div
             ref={firstHalfRef}
