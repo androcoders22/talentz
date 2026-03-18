@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { IconChevronRight } from "@tabler/icons-react";
-import { DevToArticle } from "@/types/blog";
+import { BlogPost } from "@/types/blog";
+import { blogApi } from "@/lib/api/blogs";
 import { SectionHeader } from "./SectionHeader";
 
 const staticBlog = [
@@ -18,17 +19,13 @@ const staticBlog = [
 ];
 
 export function BlogSection() {
-  const [blogs, setBlogs] = useState<DevToArticle[]>([]);
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [isLoadingBlogs, setIsLoadingBlogs] = useState(true);
 
   useEffect(() => {
     async function fetchBlogs() {
       try {
-        const response = await fetch(
-          "https://dev.to/api/articles?username=d3vshoaib",
-        );
-        if (!response.ok) throw new Error("Failed to fetch blogs");
-        const data = await response.json();
+        const data = await blogApi.getActive();
         setBlogs(data);
       } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -69,15 +66,14 @@ export function BlogSection() {
             : blogs.length > 0
               ? blogs.map((item) => (
                   <Link
-                    key={item.id}
-                    href={`/blog/${item.id}`}
+                    key={item._id}
+                    href={`/blog/${item._id}`}
                     className="group relative flex flex-col justify-between bg-zinc-900/30 border border-white/5 p-1 rounded-[1.75rem] overflow-hidden transition-all duration-500 hover:bg-zinc-900/50 hover:border-white/10"
                   >
                     <div className="relative aspect-video overflow-hidden rounded-[1.5rem]">
                       <Image
                         src={
-                          item.cover_image ||
-                          item.social_image ||
+                          item.coverImage ||
                           "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d"
                         }
                         alt={item.title}
@@ -92,12 +88,13 @@ export function BlogSection() {
                         {item.title}
                       </h3>
                       <p className="grow line-clamp-3 text-[13px] font-light leading-relaxed text-zinc-500">
-                        {item.description}
+                        {item.subTitle ||
+                          "Read more about this topic in our detailed blog post."}
                       </p>
                       <div className="mt-5 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <span className="text-[11px] text-zinc-600 uppercase tracking-wider">
-                            {new Date(item.published_at).toLocaleDateString(
+                            {new Date(item.createdAt).toLocaleDateString(
                               "en-US",
                               {
                                 day: "numeric",

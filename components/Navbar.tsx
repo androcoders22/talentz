@@ -70,6 +70,10 @@ export function Navbar() {
     { label: "Professional Audio", href: "/#" },
   ];
 
+  if (pathname.startsWith("/dashboard")) {
+    return null;
+  }
+
   return (
     <header className="sticky top-0 z-9999 w-full pt-4 bg-transparent">
       <div className="container mx-auto px-4">

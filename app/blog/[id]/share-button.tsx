@@ -18,7 +18,7 @@ export function ShareButton() {
       }}
     >
       {copied ? (
-        <IconCheck className="mr-1 h-5 w-5 text-green-600" />
+        <IconCheck className="mr-1 h-5 w-5 text-white" />
       ) : (
         <IconShare className="mr-1 h-5 w-5" />
       )}

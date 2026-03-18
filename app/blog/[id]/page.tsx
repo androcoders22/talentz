@@ -14,16 +14,21 @@ import {
   IconBrandFacebook,
   IconBrandYoutube,
 } from "@tabler/icons-react";
-import ClientScrollSpy from "./client-scroll-spy";
 import { ShareButton } from "./share-button";
-import { DevToArticle } from "@/types/blog";
+import { BlogPost } from "@/types/blog";
 import { notFound } from "next/navigation";
+import connectToDatabase from "@/lib/mongodb";
+import Blog from "@/models/Blog";
+import BlogPreview, {
+  BlogCatalog,
+} from "@/components/dashboard/blogs/BlogPreview";
 
-async function getArticle(id: string): Promise<DevToArticle | null> {
+async function getArticle(id: string): Promise<BlogPost | null> {
   try {
-    const response = await fetch(`https://dev.to/api/articles/${id}`);
-    if (!response.ok) return null;
-    return response.json();
+    await connectToDatabase();
+    const blog = await Blog.findById(id);
+    if (!blog || !blog.isActive) return null;
+    return JSON.parse(JSON.stringify(blog));
   } catch (error) {
     console.error("Error fetching article:", error);
     return null;
@@ -45,19 +50,8 @@ export default async function AnnouncementPage({
     notFound();
   }
 
-  const publishDate = new Date(article.published_at);
-
-  // Normalize tags as the API can be inconsistent (sometimes string, sometimes array)
-  const articleTags = Array.isArray(article.tags)
-    ? article.tags
-    : typeof article.tag_list === "string"
-      ? article.tag_list
-          .split(",")
-          .map((t) => t.trim())
-          .filter(Boolean)
-      : Array.isArray(article.tag_list)
-        ? article.tag_list
-        : [];
+  const publishDate = new Date(article.createdAt);
+  const articleTags = new Array<string>();
 
   return (
     <>
@@ -66,7 +60,7 @@ export default async function AnnouncementPage({
         <div className="fixed top-0 left-0 w-full h-dvh z-[-1] pointer-events-none overflow-hidden bg-[#0a0a0a]">
           <div className="absolute top-0 left-0 w-full h-[60vh] md:h-[70vh]">
             <Image
-              src={article.cover_image || "/new/TALENTZ-03.jpg"}
+              src={article.coverImage || "/new/TALENTZ-03.jpg"}
               alt={article.title}
               fill
               className="object-cover opacity-30"
@@ -90,9 +84,14 @@ export default async function AnnouncementPage({
 
           {/* Header Section */}
           <div className="flex flex-col items-start text-left w-full mb-8 md:mb-12 space-y-4">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight text-white ">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-tight text-white ">
               {article.title}
             </h1>
+            {article.subTitle && (
+              <p className="text-lg sm:text-xl text-neutral-300 font-medium mt-2 leading-relaxed max-w-4xl">
+                {article.subTitle}
+              </p>
+            )}
             <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-neutral-400 font-medium mt-2">
               <span>
                 {publishDate.toLocaleDateString("en-US", {
@@ -122,7 +121,7 @@ export default async function AnnouncementPage({
 
             <div className="w-full relative aspect-4/3 sm:aspect-video md:aspect-2.5/1 mt-6 md:mt-8 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
               <Image
-                src={article.cover_image || "/new/TALENTZ-03.jpg"}
+                src={article.coverImage || "/new/TALENTZ-03.jpg"}
                 alt={article.title}
                 fill
                 className="object-cover"
@@ -133,11 +132,10 @@ export default async function AnnouncementPage({
 
           {/* Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 mt-8 md:mt-12 lg:mt-20">
-            <ClientScrollSpy />
-
             {/* Left Sidebar (Sticky) */}
             <div className="lg:col-span-3 order-2 lg:order-1">
               <div className="sticky top-24 lg:top-32 space-y-8 lg:space-y-12">
+                <BlogCatalog content={article.content} />
                 {/* Share Article */}
                 <div>
                   <h3 className="text-sm font-semibold text-white mb-4">
@@ -151,46 +149,7 @@ export default async function AnnouncementPage({
             {/* Main Content */}
             <div className="lg:col-span-9 order-1 lg:order-2 w-full">
               <div className="prose md:prose-lg prose-invert max-w-none text-neutral-300 leading-relaxed devto-content">
-                {article.body_html ? (
-                  <div
-                    dangerouslySetInnerHTML={{ __html: article.body_html }}
-                  />
-                ) : (
-                  <p>{article.description}</p>
-                )}
-
-                {/* Author Section */}
-                <div className="mt-16 md:mt-20 flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-6 bg-black/40 p-5 sm:p-6 rounded-2xl border border-white/5 not-prose">
-                  <div className="relative w-20 h-20 shrink-0 rounded-full overflow-hidden border border-white/10 sm:mt-1">
-                    <Image
-                      src={article.user.profile_image}
-                      alt={article.user.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="flex flex-col flex-1 w-full text-center sm:text-left">
-                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
-                      <div>
-                        <h3 className="text-lg font-bold text-white">
-                          {article.user.name}
-                        </h3>
-                        <p className="text-neutral-400 text-sm font-medium">
-                          Author @dev.to/{article.user.username}
-                        </p>
-                      </div>
-                      <div className="flex items-center justify-center sm:justify-end gap-2 text-neutral-400">
-                        <Link
-                          href={`https://dev.to/${article.user.username}`}
-                          target="_blank"
-                          className="p-1.5 rounded-full bg-white/5 hover:bg-white/10 hover:text-white transition-colors"
-                        >
-                          <IconBrandLinkedin className="w-4 h-4" />
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <BlogPreview content={article.content} />
               </div>
             </div>
           </div>
