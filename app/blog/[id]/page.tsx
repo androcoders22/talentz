@@ -151,6 +151,44 @@ export default async function AnnouncementPage({
               <div className="prose md:prose-lg prose-invert max-w-none text-neutral-300 leading-relaxed devto-content">
                 <BlogPreview content={article.content} />
               </div>
+
+              {/* Author Section */}
+              <div className="mt-12 md:mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row gap-6 md:gap-8 items-stretch">
+                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden shrink-0 border-2 border-white/10">
+                  <Image
+                    src="/author.jpg"
+                    alt="Silvana Dionísio Fernandes"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex-1 flex flex-col justify-between py-1">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-3">
+                    <div>
+                      <h3 className="text-xl md:text-2xl font-bold text-white">
+                        Silvana Dionísio Fernandes
+                      </h3>
+                      <p className="text-neutral-400 font-medium">Manager</p>
+                    </div>
+                    <Link
+                      href="https://instagram.com/sil_dionisio"
+                      target="_blank"
+                      className="inline-flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition-colors shrink-0"
+                    >
+                      <IconBrandInstagram className="w-5 h-5" />
+                      <span>@sil_dionisio</span>
+                    </Link>
+                  </div>
+                  <p className="text-neutral-300 leading-relaxed text-sm md:text-base mt-auto">
+                    I’ve been living in Oman for the past 10 years and have a
+                    strong background in events management. After graduating in
+                    events management, I went on to complete my MBA, combining
+                    creativity with strategic business skills. Passionate about
+                    organizing impactful events and delivering memorable
+                    experiences.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
