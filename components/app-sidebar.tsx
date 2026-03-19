@@ -59,16 +59,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Menu</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xs font-medium">Menu</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
+                    className="text-[15.5px] [&>svg]:size-4.5 py-2.5 transition-colors duration-200"
                     render={
                       <a href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
+                        <item.icon stroke={2} />
+                        <span className="font-medium">{item.title}</span>
                       </a>
                     }
                   />
@@ -83,10 +84,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               onClick={handleLogout}
-              className="text-red-500 hover:text-red-600 hover:bg-red-50"
+              className="text-red-500 hover:text-red-600 hover:bg-red-50 text-[15.5px] [&>svg]:size-4.5 py-2.5 transition-colors duration-200"
             >
-              <IconLogout />
-              <span>Logout</span>
+              <IconLogout stroke={2} />
+              <span className="font-medium">Logout</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

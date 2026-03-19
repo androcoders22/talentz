@@ -189,7 +189,7 @@ export function InstagramSection() {
           </AnimatePresence>
         </div>
 
-        <div className="relative z-30 mt-8 flex items-center justify-between gap-6 px-1">
+        <div className="relative z-30 mt-8 flex items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <button
               type="button"
