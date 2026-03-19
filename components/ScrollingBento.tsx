@@ -114,7 +114,7 @@ const VirtualizedColumn = memo(
           <div
             key={`${item.id}-${suffix}`}
             onClick={() => onImageClick(item.src)}
-            className="relative overflow-hidden bg-zinc-900 border border-white/10 group/item shrink-0 cursor-pointer transform-gpu"
+            className="relative overflow-hidden rounded-sm bg-zinc-900 border border-white/10 group/item shrink-0 cursor-pointer transform-gpu"
             style={{ flex: item.span }}
           >
             {isInView && (
@@ -246,7 +246,7 @@ export default function ScrollingBento({ speed = 1.0 }: { speed?: number }) {
         <div className="absolute inset-y-0 left-2 md:left-6 flex items-center z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <button
             onClick={() => handleScroll("left")}
-            className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black hover:scale-105 transition-all shadow-xl"
+            className="w-10 h-10 md:w-12 md:h-12 rounded-sm bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black hover:scale-105 transition-all shadow-xl"
           >
             <IconChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
           </button>
@@ -255,7 +255,7 @@ export default function ScrollingBento({ speed = 1.0 }: { speed?: number }) {
         <div className="absolute inset-y-0 right-2 md:right-6 flex items-center z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <button
             onClick={() => handleScroll("right")}
-            className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black hover:scale-105 transition-all shadow-xl"
+            className="w-10 h-10 md:w-12 md:h-12 rounded-sm bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black hover:scale-105 transition-all shadow-xl"
           >
             <IconChevronRight className="w-5 h-5 md:w-6 md:h-6" />
           </button>
@@ -300,7 +300,7 @@ export default function ScrollingBento({ speed = 1.0 }: { speed?: number }) {
             <div className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden outline-none">
               <button
                 onClick={() => setIsDialogOpen(false)}
-                className="absolute top-4 right-4 z-50 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-md transition-all border border-white/20"
+                className="absolute top-4 right-4 z-50 p-2 bg-black/50 hover:bg-black/80 text-white rounded-sm backdrop-blur-md transition-all border border-white/20"
                 aria-label="Close"
               >
                 <IconX className="w-6 h-6" />

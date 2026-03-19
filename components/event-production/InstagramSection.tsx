@@ -112,7 +112,7 @@ export function InstagramSection() {
               target="_blank"
               className="group flex items-center gap-3 text-sm font-medium text-zinc-300 transition-colors hover:text-white"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(145deg,#833ab4_0%,#c13584_35%,#fd1d1d_68%,#fcb045_100%)] text-white transition-transform duration-300 group-hover:scale-110">
+              <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-[linear-gradient(145deg,#833ab4_0%,#c13584_35%,#fd1d1d_68%,#fcb045_100%)] text-white transition-transform duration-300 group-hover:scale-110">
                 <IconBrandInstagram className="h-5 w-5" />
               </div>
               <span>@talentzeventsproduction</span>
@@ -141,9 +141,9 @@ export function InstagramSection() {
                         target="_blank"
                         className="group block h-full"
                       >
-                        <article className="relative flex aspect-4/5 flex-col justify-between overflow-hidden rounded-[1.75rem] bg-[linear-gradient(145deg,#833ab4_0%,#c13584_35%,#fd1d1d_68%,#fcb045_100%)] p-6 shadow-xl md:p-7">
+                        <article className="relative flex aspect-4/5 flex-col justify-between overflow-hidden rounded-sm bg-[linear-gradient(145deg,#833ab4_0%,#c13584_35%,#fd1d1d_68%,#fcb045_100%)] p-6 shadow-xl md:p-7">
                           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.18),transparent_40%)] opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
-                          <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-white/15 backdrop-blur-md transition-transform duration-500 group-hover:scale-110">
+                          <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-sm bg-white/15 backdrop-blur-md transition-transform duration-500 group-hover:scale-110">
                             <IconBrandInstagram className="h-8 w-8 text-white" />
                           </div>
                           <div className="relative z-10 space-y-3">
@@ -170,7 +170,7 @@ export function InstagramSection() {
                       target="_blank"
                       className="group block h-full"
                     >
-                      <article className="relative aspect-4/5 overflow-hidden rounded-[1.75rem] bg-zinc-900 shadow-xl">
+                      <article className="relative aspect-4/5 overflow-hidden rounded-sm bg-zinc-900 shadow-xl">
                         <Image
                           src={(item as any).src}
                           alt={(item as any).alt}
@@ -194,7 +194,7 @@ export function InstagramSection() {
             <button
               type="button"
               onClick={handleInstagramPrev}
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-white/5 text-white transition-colors hover:bg-white/10"
+              className="flex h-11 w-11 items-center justify-center rounded-sm bg-white/5 text-white transition-colors hover:bg-white/10"
               aria-label="Previous Instagram post"
             >
               <IconChevronLeft className="h-5 w-5" stroke={1.5} />
@@ -202,7 +202,7 @@ export function InstagramSection() {
             <button
               type="button"
               onClick={handleInstagramNext}
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-white/5 text-white transition-colors hover:bg-white/10"
+              className="flex h-11 w-11 items-center justify-center rounded-sm bg-white/5 text-white transition-colors hover:bg-white/10"
               aria-label="Next Instagram post"
             >
               <IconChevronRight className="h-5 w-5" stroke={1.5} />
@@ -213,9 +213,9 @@ export function InstagramSection() {
             <div className="text-[11px] font-medium tracking-[0.2em] text-white/45 tabular-nums">
               {instagramProgressLabel}
             </div>
-            <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+            <div className="relative h-1.5 w-full overflow-hidden rounded-sm bg-white/10">
               <div
-                className="absolute top-0 h-full rounded-full bg-white transition-[left,width] duration-300 ease-out"
+                className="absolute top-0 h-full rounded-sm bg-white transition-[left,width] duration-300 ease-out"
                 style={{
                   left: `${Math.min(100 - instagramProgressWidth, progressPercent)}%`,
                   width: `${instagramProgressWidth}%`,

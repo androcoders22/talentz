@@ -63,7 +63,7 @@ export function ExpertiseSection() {
         />
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 auto-rows-[160px] md:auto-rows-[280px]">
           {/* Card 1: Event Technology (Tall) */}
-          <div className="feature-card col-span-2 md:col-span-1 md:row-span-2 bg-zinc-950 border border-white/10 p-5 md:p-6 flex flex-row md:flex-col justify-start relative group transition-colors duration-500 hover:bg-white [&.is-active]:bg-white text-white hover:text-black [&.is-active]:text-black overflow-hidden">
+          <div className="feature-card col-span-2 md:col-span-1 md:row-span-2 bg-zinc-950 rounded-sm border border-white/10 p-5 md:p-6 flex flex-row md:flex-col justify-start relative group transition-colors duration-500 hover:bg-white [&.is-active]:bg-white text-white hover:text-black [&.is-active]:text-black overflow-hidden">
             <div className="absolute inset-y-0 left-0 w-[65%] bg-linear-to-r from-zinc-950 via-zinc-950/95 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/95 group-[.is-active]:via-white/95 transition-colors duration-500 z-1 md:hidden" />
             <div className="space-y-1 md:space-y-3 mb-4 md:mb-6 text-left w-[50%] pr-2 md:pr-0 md:w-full z-10 relative">
               <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
@@ -86,7 +86,7 @@ export function ExpertiseSection() {
           </div>
 
           {/* Card 2: Professional Audio Systems (Wide) */}
-          <div className="feature-card col-span-2 md:col-span-2 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-5 md:p-6 flex flex-col justify-center relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden">
+          <div className="feature-card col-span-2 md:col-span-2 md:row-span-1 bg-zinc-950 rounded-sm text-white border border-white/10 p-5 md:p-6 flex flex-col justify-center relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden">
             <div className="absolute inset-y-0 left-0 w-[70%] bg-linear-to-r from-zinc-950 via-zinc-950/95 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/95 group-[.is-active]:via-white/95 transition-colors duration-500 z-1 md:hidden" />
             <div className="space-y-1 md:space-y-3 w-[55%] md:w-auto md:max-w-xs z-10 relative">
               <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
@@ -112,7 +112,7 @@ export function ExpertiseSection() {
           </div>
 
           {/* Card 3: Kinetic Systems (Small) */}
-          <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 text-white border border-white/10 p-4 md:p-6 flex flex-col items-start justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden">
+          <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 rounded-sm text-white border border-white/10 p-4 md:p-6 flex flex-col items-start justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden">
             <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
             <div className="w-[45%] h-full absolute right-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
               <Image
@@ -134,7 +134,7 @@ export function ExpertiseSection() {
           </div>
 
           {/* Card 4: Lighting Systems (Small) */}
-          <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-start items-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
+          <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 rounded-sm border border-white/10 p-4 md:p-6 flex flex-col justify-start items-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
             <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
             <div className="w-[45%] h-full absolute left-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
               <Image
@@ -156,7 +156,7 @@ export function ExpertiseSection() {
           </div>
 
           {/* Card 5: LED Video & Display Systems (Wide) */}
-          <div className="feature-card col-span-2 md:col-span-2 md:row-span-1 bg-zinc-950 border border-white/10 p-5 md:p-6 flex flex-col justify-center relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
+          <div className="feature-card col-span-2 md:col-span-2 md:row-span-1 bg-zinc-950 rounded-sm border border-white/10 p-5 md:p-6 flex flex-col justify-center relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
             <div className="absolute inset-y-0 left-0 w-[70%] bg-linear-to-r from-zinc-950 via-zinc-950/95 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/95 group-[.is-active]:via-white/95 transition-colors duration-500 z-1 md:hidden" />
             <div className="space-y-1 md:space-y-3 w-[55%] md:w-auto md:max-w-xs z-10 relative">
               <h3 className="text-xl md:text-2xl font-medium leading-[1.1] transition-colors duration-500 uppercase tracking-wide">
@@ -179,7 +179,7 @@ export function ExpertiseSection() {
           </div>
 
           {/* Card 6: Staging & Structural Systems (Small) */}
-          <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 border border-white/10 p-4 md:p-6 flex flex-col justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
+          <div className="feature-card col-span-1 md:col-span-1 md:row-span-1 bg-zinc-950 rounded-sm border border-white/10 p-4 md:p-6 flex flex-col justify-end relative group hover:bg-white [&.is-active]:bg-white hover:text-black [&.is-active]:text-black transition-colors duration-500 overflow-hidden text-white">
             <div className="absolute inset-x-0 bottom-0 h-[75%] bg-linear-to-t from-zinc-950 via-zinc-950/90 to-transparent group-hover:from-white group-[.is-active]:from-white group-hover:via-white/90 group-[.is-active]:via-white/90 transition-colors duration-500 z-1 md:hidden" />
             <div className="w-[45%] h-full absolute right-0 top-0 z-0 opacity-80 group-hover:opacity-100 group-[.is-active]:opacity-100 transition-opacity">
               <Image

@@ -20,7 +20,7 @@ export function TestimonialsSection() {
           {/* Column 1 */}
           <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-0 snap-center shrink-0">
             {/* Cloud 9 Testimonial (Active) */}
-            <div className="bg-black border border-white/10 text-white p-5 md:p-7 flex flex-col justify-between">
+            <div className="bg-black border border-white/10 rounded-sm text-white p-5 md:p-7 flex flex-col justify-between">
               <div>
                 <div className="flex gap-1 mb-4">
                   {[1, 2, 3, 4, 5].map((star) => (

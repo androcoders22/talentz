@@ -10,12 +10,6 @@ import { ContactSection } from "@/components/event-production/ContactSection";
 import { FooterSection } from "@/components/event-production/FooterSection";
 import { FloatingActions } from "@/components/event-production/FloatingActions";
 
-/**
- * EventProductionPage
- *
- * This page has been refactored to use modular components located in
- * @/components/event-production/ to improve maintainability and readability.
- */
 export default function EventProductionPage() {
   return (
     <main className="bg-transparent text-white min-h-screen relative">

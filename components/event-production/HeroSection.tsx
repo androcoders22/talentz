@@ -145,7 +145,7 @@ export function HeroSection() {
             experiences across Oman and the GCC.
           </p>
           <div className="flex flex-row items-center gap-6 sm:gap-8 mt-2 md:mt-0">
-            <button className="px-6 py-2.5 rounded-full font-medium text-zinc-300 bg-black/30 border border-white/20 hover:bg-white/10 transition-colors text-sm flex items-center gap-2 backdrop-blur-sm">
+            <button className="px-6 py-2.5 rounded-sm font-medium text-zinc-300 bg-black/30 border border-white/20 hover:bg-white/10 transition-colors text-sm flex items-center gap-2 backdrop-blur-sm">
               Contact Us <span className="text-xl mb-0.5 leading-none">»</span>
             </button>
             <button

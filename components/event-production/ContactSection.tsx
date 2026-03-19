@@ -42,7 +42,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const contactFieldClassName =
-  "peer h-12 w-full rounded-none border-0 border-b border-white/15 bg-transparent px-0 pb-2 pt-5 text-sm text-white shadow-none outline-none transition-colors placeholder:text-transparent focus-visible:border-white focus-visible:ring-0 focus-visible:ring-offset-0";
+  "peer h-12 w-full rounded-sm border-0 border-b border-white/15 bg-transparent px-0 pb-2 pt-5 text-sm text-white shadow-none outline-none transition-colors placeholder:text-transparent focus-visible:border-white focus-visible:ring-0 focus-visible:ring-offset-0";
 
 export function ContactSection() {
   const {
@@ -85,7 +85,7 @@ export function ContactSection() {
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(255,255,255,0.03)_0,transparent_50%)] pointer-events-none" />
       <div className="container mx-auto px-4 relative z-10">
-        <div className="rounded-[2rem] border border-white/10 bg-zinc-900/30 p-6 md:p-8 lg:p-10">
+        <div className="rounded-sm border border-white/10 bg-zinc-900/30 p-6 md:p-8 lg:p-10">
           <div className="flex flex-col gap-8 lg:flex-row lg:gap-10">
             <div className="lg:w-[25%]">
               <div className="mb-4 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.42em] text-zinc-500">
@@ -231,7 +231,7 @@ export function ContactSection() {
                               aria-pressed={isActive}
                               onClick={() => field.onChange(option)}
                               className={cn(
-                                "h-10 rounded-full border px-4 text-[13px] font-normal tracking-normal",
+                                "h-10 rounded-sm border px-4 text-[13px] font-normal tracking-normal",
                                 isActive
                                   ? "border-white bg-white text-black hover:bg-zinc-100"
                                   : "border-white/10 bg-white/3 text-zinc-300 hover:border-white/30 hover:bg-white/8 hover:text-white",
