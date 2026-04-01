@@ -81,14 +81,14 @@ export function Hero() {
           </div>
         </Link>
 
-        {/* Service & Repairs */}
+        {/* Distribution & Dealership */}
         <Link
-          href="/###"
+          href="/distribution-dealership"
           className="relative group overflow-hidden rounded-3xl bg-slate-900 md:flex-3 flex-1 min-h-75 md:min-h-0 block"
         >
           <img
             src="/repair-hero.jpg"
-            alt="Service & Repairs"
+            alt="Distribution & Dealership"
             className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-105 opacity-60"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent" />
@@ -106,8 +106,8 @@ export function Hero() {
               Distribution & Dealership
             </h3>
             <p className="text-white/80 text-sm">
-              Expert repairs for Pro Audio, Lighting gear, LED Screens & musical
-              instruments. Guitar luthier with 30+ years experience.
+              Authorized dealers and distributors for globally trusted audio,
+              music, and lighting brands.
             </p>
           </div>
         </Link>

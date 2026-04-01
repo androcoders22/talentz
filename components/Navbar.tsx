@@ -179,7 +179,7 @@ export function Navbar() {
 
                 <NavigationMenuItem>
                   <NavigationMenuLink
-                    render={<Link href="/###" />}
+                    render={<Link href="/distribution-dealership" />}
                     className="bg-transparent text-white hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white h-9 px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center justify-center w-max"
                   >
                     Distribution & Dealership
@@ -272,11 +272,10 @@ export function Navbar() {
                           setCurrentHash("");
                         }
                       }}
-                      className={`px-6 py-2.5 rounded-2xl text-[15px] font-medium transition-all ${
-                        isLinkActive(link.href)
+                      className={`px-6 py-2.5 rounded-2xl text-[15px] font-medium transition-all ${isLinkActive(link.href)
                           ? "bg-white text-black font-bold"
                           : "text-neutral-400 hover:bg-white hover:text-black"
-                      }`}
+                        }`}
                     >
                       {link.label}
                     </Link>
@@ -297,11 +296,10 @@ export function Navbar() {
                           setCurrentHash("");
                         }
                       }}
-                      className={`px-6 py-2.5 rounded-2xl text-[15px] font-medium transition-all ${
-                        isLinkActive(link.href)
+                      className={`px-6 py-2.5 rounded-2xl text-[15px] font-medium transition-all ${isLinkActive(link.href)
                           ? "bg-white text-black font-bold"
                           : "text-neutral-400 hover:bg-white hover:text-black"
-                      }`}
+                        }`}
                     >
                       {link.label}
                     </Link>
@@ -317,7 +315,7 @@ export function Navbar() {
                     Blog
                   </Link>
                   <Link
-                    href="/###"
+                    href="/distribution-dealership"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="px-6 py-3 rounded-2xl text-base font-medium transition-all text-white hover:bg-white/5"
                   >

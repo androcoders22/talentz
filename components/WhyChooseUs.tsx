@@ -1,61 +1,7 @@
 "use client";
 
+import { brands } from "@/lib/brands";
 import { RainbowButton } from "./ui/rainbow-button";
-
-const brands = [
-  {
-    name: "Yamaha",
-    logo: "https://in.yamaha.com/assets/common/images/logo/logo-yamaha-purple-01.svg",
-  },
-  {
-    name: "Sennheiser",
-    logo: "/Sennheiser-logo-new.png",
-  },
-  {
-    name: "Shure",
-    logo: "/shure-logo.webp",
-  },
-  {
-    name: "Roland",
-    logo: "https://static.roland.com/global/css/fonts/roland.svg",
-    invert: true,
-  },
-  {
-    name: "Kawai",
-    logo: "https://www.kawaipianoshouston.com/wp-content/uploads/2025/08/Kawai-Logo-1024x262.png",
-  },
-  {
-    name: "Boss",
-    logo: "/boos-logo.png",
-  },
-  {
-    name: "Ibanez",
-    logo: "https://www.ibanez.com/images/logo.png",
-    invert: true,
-  },
-  {
-    name: "Tama",
-    logo: "https://www.tama.com/images/logo.png",
-    invert: true,
-  },
-  {
-    name: "Taylor",
-    logo: "https://www.taylorguitars.com/themes/custom/tg_theme/images/desktop-logo.svg?v1",
-    invert: true,
-  },
-  {
-    name: "D'Addario",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Daddario_logo.png",
-  },
-  {
-    name: "Adamson",
-    logo: "https://adamson.ai/logo.svg",
-  },
-  {
-    name: "PreSonus",
-    logo: "https://intl.presonus.com/cdn/shop/files/presonus_logo.svg?v=1723628827&width=145",
-  },
-];
 
 export function WhyChooseUs() {
   return (
@@ -78,7 +24,7 @@ export function WhyChooseUs() {
 
         {/* Brand Logos Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8 items-center justify-items-center">
-          {brands.map((brand) => (
+          {brands.slice(0, 12).map((brand) => (
             <div
               key={brand.name}
               className="group flex items-center justify-center p-4 rounded-xl hover:bg-black/3 transition-all duration-300 w-full"
