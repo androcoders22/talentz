@@ -14,12 +14,6 @@ const barlow = Barlow({
     display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
-    subsets: ["latin"],
-    weight: "400",
-    style: ["italic"],
-    display: "swap",
-});
 
 export default function DistributionDealershipPage() {
     return (
@@ -34,7 +28,7 @@ export default function DistributionDealershipPage() {
                     preload="auto"
                 >
                     <source
-                        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260228_065522_522e2295-ba22-457e-8fdb-fbcd68109c73.mp4"
+                        src="/Simple_Instrumental_Video_Generated.mp4"
                         type="video/mp4"
                     />
                 </video>
@@ -42,13 +36,13 @@ export default function DistributionDealershipPage() {
                 <div className="relative z-10 container mx-auto flex min-h-[90vh] flex-col items-center px-4 pb-14 pt-12 text-center sm:pt-16">
                     <div className="max-w-5xl">
                         <p
-                            className={`${barlow.className} text-white text-[2.05rem] sm:text-[2.8rem] md:text-[3.9rem] font-bold tracking-[-4px] leading-[0.95] drop-shadow-[0_4px_17px_rgba(0,0,0,0.46)]`}
+                            className={`${barlow.className} text-white text-[2.05rem] sm:text-[2.8rem] md:text-[3.9rem] font-bold drop-shadow-[0_4px_17px_rgba(0,0,0,0.46)]`}
                         >
                             Trusted partners of over 35
                         </p>
 
                         <h1
-                            className={`${instrumentSerif.className} mt-1.5 sm:mt-2 text-white italic text-[3.2rem] sm:text-[4.6rem] md:text-[6rem] lg:text-[84px] leading-[0.9] drop-shadow-[0_6px_20px_rgba(0,0,0,0.49)]`}
+                            className={`font-sans mt-1.5 sm:mt-2 text-white  text-[2.56rem] sm:text-[3.68rem] md:text-[4.8rem] lg:text-[67.2px] leading-[0.9] drop-shadow-[0_6px_20px_rgba(0,0,0,0.49)]`}
                         >
                             global quality brands in Oman
                         </h1>
@@ -75,7 +69,7 @@ export default function DistributionDealershipPage() {
                                                 #{index + 1}
                                             </span>
                                             <img
-                                                src={brand.logo}
+                                                src={brand.logo || `https://placehold.co/480x180/EFEFEF/111827?text=${encodeURIComponent(brand.name)}`}
                                                 alt={brand.name}
                                                 title={brand.name}
                                                 className={`hover:cursor-pointer h-12 w-auto max-w-full object-contain transition-all duration-300 group-hover:scale-105 sm:h-14 lg:h-16 ${isPlaceholder
