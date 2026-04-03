@@ -70,23 +70,23 @@ const baseBrands: BaseBrand[] = [
   },
   {
     name: "Rode",
-    logo: placeholderLogo("Rode"),
+    logo: "https://logos-world.net/wp-content/uploads/2023/03/Rode-Logo.png",
   },
   {
     name: "Behringer",
-    logo: placeholderLogo("Behringer"),
+    logo: "https://images.seeklogo.com/logo-png/22/2/behringer-logo-png_seeklogo-220338.png",
   },
   {
     name: "Focusrite",
-    logo: placeholderLogo("Focusrite"),
+    logo: "https://www.logo800.cn/uploads/logoxinshang/38/logo800_16491601289693748.png",
   },
   {
     name: "ABRSM",
-    logo: placeholderLogo("ABRSM"),
+    logo: "https://clipground.com/images/abrsm-logo-png-4.png",
   },
   {
     name: "M-Audio",
-    logo: placeholderLogo("M-Audio"),
+    logo: "https://vectorseek.com/wp-content/uploads/2023/06/m-audio-Logo-Vector.svg-.png",
   },
   {
     name: "sE Electronics",
@@ -94,75 +94,75 @@ const baseBrands: BaseBrand[] = [
   },
   {
     name: "Cort",
-    logo: placeholderLogo("Cort"),
+    logo: "https://vectorseek.com/wp-content/uploads/2023/10/Cort-Guitar-Logo-Vector.svg-.png",
   },
   {
     name: "Washburn",
-    logo: placeholderLogo("Washburn"),
+    logo: "https://cdn.freelogovectors.net/wp-content/uploads/2022/08/wu-washburn-university-logo-freelogovectors.net_.png",
   },
   {
     name: "D'Addario Orchestral",
-    logo: placeholderLogo("D'Addario Orchestral"),
+    logo: "https://www.pngkey.com/png/full/544-5442302_d-addario-logo-vector.png",
   },
   {
     name: "Evans Drumheads",
-    logo: placeholderLogo("Evans Drumheads"),
+    logo: "https://vectorseek.com/wp-content/uploads/2023/11/Evans-Drumheads-Logo-Vector.svg-.png",
   },
   {
     name: "Vandoren",
-    logo: placeholderLogo("Vandoren"),
+    logo: placeholderLogo("Vandroen"),
   },
   {
     name: "Neutrik",
-    logo: placeholderLogo("Neutrik"),
+    logo: "https://vectorseek.com/wp-content/uploads/2023/12/Neutrik-Wordmark-Logo-Vector.svg-.png",
   },
   {
     name: "Promark",
-    logo: placeholderLogo("Promark"),
+    logo: "https://stickypng.com/wp-content/uploads/2023/07/60119c3d1b7ff00004506af1.png",
   },
   {
     name: "Planet Waves",
-    logo: placeholderLogo("Planet Waves"),
+    logo: "https://www.seekpng.com/png/full/304-3042277_thank-you-for-empowering-us-to-do-what.png",
   },
   {
     name: "Christie",
-    logo: placeholderLogo("Christie"),
+    logo: "https://cdn.freelogovectors.net/wp-content/uploads/2021/07/christie-logo-freelogovectors.net_.png",
   },
   {
     name: "Ahuja",
-    logo: placeholderLogo("Ahuja"),
+    logo: "https://vectorseek.com/wp-content/uploads/2023/09/AHUJA-Logo-Vector.svg-.png",
   },
   {
     name: "Ortega",
-    logo: placeholderLogo("Ortega"),
+    logo: "https://ortega.com/wp-content/uploads/ortega-logo@2x.png",
   },
   {
     name: "Valencia",
-    logo: placeholderLogo("Valencia"),
+    logo: "https://logosmarcas.net/wp-content/uploads/2020/11/Valencia-Logo.png",
   },
   {
     name: "Aria",
-    logo: placeholderLogo("Aria"),
+    logo: "https://www.freepngdesign.com/content/uploads/images/p-408-8-aria-logo-png-transparent-logo-606093326138.png",
   },
   {
     name: "SX",
-    logo: placeholderLogo("SX"),
+    logo: "https://png.pngtree.com/png-vector/20220221/ourmid/pngtree-black-white-and-red-alphabet-letter-combination-logo-icon-designsx-s-x-vector-png-image_27873466.png",
   },
   {
     name: "Proel",
-    logo: placeholderLogo("Proel"),
+    logo: "https://www.prelectronics.com/media/0xdjazyt/proel-logo.png",
   },
   {
     name: "Mahalo",
-    logo: placeholderLogo("Mahalo"),
+    logo: "https://cdn-icons-png.flaticon.com/512/7984/7984994.png",
   },
   {
     name: "Maxtone",
-    logo: placeholderLogo("Maxtone"),
+    logo: "https://musicalesconcertina.com/assets/media/maxtone-logo.png",
   },
   {
     name: "Platinum Stands",
-    logo: placeholderLogo("Platinum Stands"),
+    logo: "https://vectorseek.com/wp-content/uploads/2023/10/Platinum-Logo-Vector.svg-.png",
   },
 ];
 

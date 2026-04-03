@@ -89,21 +89,37 @@ export function LatherBagCollection() {
                   </div>
                 </div>
               </div>
-              {/* Images - side by side on both mobile and desktop */}
+              {/* Videos - side by side on both mobile and desktop */}
               <div className="grid grid-cols-2 gap-3 md:w-2/3 md:gap-4">
                 <div className="relative overflow-hidden rounded-xl md:rounded-2xl min-h-30 md:min-h-0 md:h-full w-full">
-                  <img
-                    src="/lather-strore.jpeg"
-                    alt="Music Store Interior"
+                  <video
                     className="w-full h-full object-cover rounded-xl md:rounded-2xl md:absolute md:inset-0"
-                  />
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                  >
+                    <source
+                      src="/motion%20images/WhatsApp%20Video%202026-04-03%20at%201.07.23%20PM.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
                 </div>
                 <div className="relative overflow-hidden rounded-xl md:rounded-2xl min-h-30 md:min-h-0 md:h-full w-full">
-                  <img
-                    src="/lather-strore2.jpeg"
-                    alt="Music Equipment Display"
+                  <video
                     className="w-full h-full object-cover rounded-xl md:rounded-2xl md:absolute md:inset-0"
-                  />
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                  >
+                    <source
+                      src="/motion%20images/WhatsApp%20Video%202026-04-03%20at%201.07.41%20PM.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
                 </div>
               </div>
             </div>
