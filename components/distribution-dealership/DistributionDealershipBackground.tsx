@@ -129,7 +129,7 @@ export function DistributionDealershipBackground() {
         <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black">
             <video
                 ref={forwardVideoRef}
-                className={`absolute inset-0 h-full w-full scale-[1.06] object-cover transition-opacity duration-500 ease-out ${activeVideo === "forward" ? "opacity-100" : "opacity-0"}`}
+                className={`absolute inset-0 h-full w-full scale-[1.06] object-cover transition-opacity duration-200 ease-out ${activeVideo === "forward" ? "opacity-100" : "opacity-0"}`}
                 muted
                 playsInline
                 preload="auto"
@@ -141,7 +141,7 @@ export function DistributionDealershipBackground() {
 
             <video
                 ref={reverseVideoRef}
-                className={`absolute inset-0 h-full w-full scale-[1.06] object-cover transition-opacity duration-500 ease-out ${activeVideo === "reverse" ? "opacity-100" : "opacity-0"}`}
+                className={`absolute inset-0 h-full w-full scale-[1.06] object-cover transition-opacity duration-200 ease-out ${activeVideo === "reverse" ? "opacity-100" : "opacity-0"}`}
                 muted
                 playsInline
                 preload="auto"
