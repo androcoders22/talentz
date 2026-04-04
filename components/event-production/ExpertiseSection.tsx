@@ -143,27 +143,6 @@ export function ExpertiseSection() {
           className="mb-10"
         />
         <div ref={comboboxRef} className="mb-6 md:mb-8 max-w-xl relative">
-          <label
-            htmlFor="expertise-search"
-            className="mb-2 block text-[11px] uppercase tracking-[0.2em] text-zinc-400"
-          >
-            Search Expertise
-          </label>
-          <input
-            id="expertise-search"
-            type="text"
-            value={searchQuery}
-            onChange={(event) => {
-              setSearchQuery(event.target.value);
-              setIsComboboxOpen(true);
-            }}
-            onFocus={() => setIsComboboxOpen(true)}
-            placeholder="Search by equipment capability"
-            className="h-11 w-full rounded-sm border border-white/15 bg-zinc-900/90 px-3 text-sm text-white placeholder:text-zinc-500 focus:border-white/40 focus:outline-none"
-            role="combobox"
-            aria-expanded={isComboboxOpen}
-            aria-controls="expertise-search-list"
-          />
           {isComboboxOpen ? (
             <div className="absolute z-30 mt-2 w-full rounded-sm border border-white/15 bg-zinc-900/95 p-1 backdrop-blur-sm">
               {filteredExpertise.length ? (
