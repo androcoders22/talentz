@@ -1,5 +1,5 @@
 import { brands } from "@/lib/brands";
-import { Barlow, Instrument_Serif } from "next/font/google";
+import { Barlow } from "next/font/google";
 import {
     Dialog,
     DialogContent,
@@ -7,6 +7,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import { DistributionDealershipBackground } from "@/components/distribution-dealership/DistributionDealershipBackground";
 
 const barlow = Barlow({
     subsets: ["latin"],
@@ -19,30 +20,18 @@ export default function DistributionDealershipPage() {
     return (
         <main className="relative">
             <section className="relative isolate -mt-20 overflow-hidden pt-20">
-                <video
-                    className="absolute inset-0 h-full w-full object-cover"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="auto"
-                >
-                    <source
-                        src="/Simple_Instrumental_Video_Generated.mp4"
-                        type="video/mp4"
-                    />
-                </video>
+                <DistributionDealershipBackground />
 
-                <div className="relative z-10 container mx-auto flex min-h-[90vh] flex-col items-center px-4 pb-14 pt-12 text-center sm:pt-16">
-                    <div className="max-w-5xl">
+                <div className="relative z-10 container mx-auto flex min-h-[90vh] flex-col items-center px-4 pb-14 pt-8 text-center sm:pt-12">
+                    <div>
                         <p
-                            className={`${barlow.className} text-white text-[2.05rem] sm:text-[2.8rem] md:text-[3.9rem] font-bold drop-shadow-[0_4px_17px_rgba(0,0,0,0.46)]`}
+                            className={`font-sans text-white/90 text-[1.5rem] sm:text-[2rem] md:text-[3rem] drop-shadow-[0_4px_17px_rgba(0,0,0,0.46)]`}
                         >
                             Trusted partners of over 35
                         </p>
 
                         <h1
-                            className={`font-sans mt-1.5 sm:mt-2 text-white  text-[2.56rem] sm:text-[3.68rem] md:text-[4.8rem] lg:text-[67.2px] leading-[0.9] drop-shadow-[0_6px_20px_rgba(0,0,0,0.49)]`}
+                            className={`font-sans mt-1.5 sm:mt-2 font-semibold text-white uppercase  text-[2rem] sm:text-[3.18rem] md:text-[4.3rem] lg:text-[60px] leading-[0.9] drop-shadow-[0_6px_20px_rgba(0,0,0,0.49)]`}
                         >
                             global quality brands in Oman
                         </h1>
@@ -59,6 +48,12 @@ export default function DistributionDealershipPage() {
                         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-[1.35rem] bg-black/20 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                             {brands.map((brand, index) => {
                                 const isPlaceholder = brand.logo.includes("placehold.co");
+                                const brandZoomStyle = brand.zoom
+                                    ? {
+                                        transform: `scale(${brand.zoom})`,
+                                        transformOrigin: "center" as const,
+                                    }
+                                    : undefined;
 
                                 return (
                                     <Dialog key={brand.name}>
@@ -68,15 +63,18 @@ export default function DistributionDealershipPage() {
                                             >
                                                 #{index + 1}
                                             </span>
-                                            <img
-                                                src={brand.logo || `https://placehold.co/480x180/EFEFEF/111827?text=${encodeURIComponent(brand.name)}`}
-                                                alt={brand.name}
-                                                title={brand.name}
-                                                className={`hover:cursor-pointer h-12 w-auto max-w-full object-contain transition-all duration-300 group-hover:scale-105 sm:h-14 lg:h-16 ${isPlaceholder
+                                            <span className="inline-flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                                                <img
+                                                    src={brand.logo || `https://placehold.co/480x180/EFEFEF/111827?text=${encodeURIComponent(brand.name)}`}
+                                                    alt={brand.name}
+                                                    title={brand.name}
+                                                    style={brandZoomStyle}
+                                                    className={`h-12 w-auto max-w-full object-contain ${isPlaceholder
                                                         ? ""
                                                         : "grayscale contrast-150 group-hover:grayscale-0"
-                                                    } ${brand.invert ? "invert" : ""}`}
-                                            />
+                                                        } ${brand.invert ? "invert" : ""}`}
+                                                />
+                                            </span>
                                         </DialogTrigger>
 
                                         <DialogContent className="w-[calc(100%-2rem)] max-w-[calc(100%-2rem)] gap-0 overflow-hidden border border-black/35 bg-[#efefef] p-0 shadow-2xl sm:max-w-4xl">
@@ -103,6 +101,7 @@ export default function DistributionDealershipPage() {
                                                     <img
                                                         src={brand.logo}
                                                         alt={brand.name}
+                                                        style={brandZoomStyle}
                                                         className={`h-16 w-auto max-w-full object-contain sm:h-20 ${brand.invert ? "invert" : ""}`}
                                                     />
                                                 </div>
@@ -112,7 +111,7 @@ export default function DistributionDealershipPage() {
                                                 <DialogDescription
                                                     className={`${barlow.className} text-base leading-relaxed text-black/75 sm:text-[1.05rem]`}
                                                 >
-                                                    {brand.intro}
+                                                    {brand.description}
                                                 </DialogDescription>
                                             </div>
                                         </DialogContent>
