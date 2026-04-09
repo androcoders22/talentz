@@ -71,7 +71,7 @@ export default function DistributionDealershipPage() {
                                                     style={brandZoomStyle}
                                                     className={`h-12 w-auto max-w-full object-contain ${isPlaceholder
                                                         ? ""
-                                                        : "grayscale contrast-150 group-hover:grayscale-0"
+                                                        : "contrast-150"
                                                         } ${brand.invert ? "invert" : ""}`}
                                                 />
                                             </span>
