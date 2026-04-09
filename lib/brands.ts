@@ -25,8 +25,7 @@ const placeholderLogo = (label: string) =>
 const baseBrands: BaseBrand[] = [
   {
     name: "Roland",
-    logo: "https://static.roland.com/global/css/fonts/roland.svg",
-    invert: true,
+    logo: "/logo/Roland.png",
     tags: ["Keys", "Drums", "DJ", "Synthesizers", "Electronic", "MIDI"],
     description:
       "Founded in 1972 in Japan, Roland is a world-renowned manufacturer of electronic musical instruments, including synthesizers, digital pianos, electronic drum kits, and DJ gear. Their V-Drums, JUNO synths, and TR drum machines have shaped modern music production and performance across genres.",
@@ -77,7 +76,8 @@ const baseBrands: BaseBrand[] = [
   },
   {
     name: "Boss",
-    logo: "/boos-logo.png",
+    logo: "/logo/boss.svg",
+    invert: true,
     tags: ["Pedals", "Guitar", "Amplifiers", "Effects", "Looper", "Multi-FX"],
     description:
       "A subsidiary of Roland since 1973, Boss is the world's leading manufacturer of guitar effects pedals and compact amplifiers. Their rugged, road-tested stompboxes, from the iconic DS-1 Distortion to the GT multi-effects series, are a fixture on pedalboards across every genre and skill level.",
